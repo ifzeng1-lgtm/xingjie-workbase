@@ -1,0 +1,415 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>行界财务工作台</title><style>
+[hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#243348;font:14px system-ui,'Microsoft Yahei',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:7px;padding:10px 16px;background:#17665b;color:white}button.alt{background:#e9eef3;color:#31445a}button.bad{background:#a94949}aside{position:fixed;width:220px;height:100vh;background:#132d35;color:#c2d2d5;padding:28px 20px}h1{font-size:22px;color:white;margin:0 0 7px}aside small{color:#8eaeb4}nav{margin-top:35px}nav button{width:100%;text-align:left;background:transparent;margin:6px 0;color:#c2d2d5}nav button.active{background:#285057;color:white}main{margin-left:220px;padding:28px 36px;max-width:1450px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.muted{color:#7a8798}h2{font-size:25px;margin:8px 0}h3{font-size:17px}.banner{background:#fff4dc;color:#85641d;padding:12px 16px;border-radius:8px;margin:22px 0}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card,.panel{background:white;border:1px solid #e4e9ef;border-radius:12px;padding:22px;margin-bottom:20px}.num{font-size:28px;margin-top:10px;font-weight:650}.panelhead{display:flex;align-items:center;justify-content:space-between}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}label{display:block;color:#526177;font-size:13px}input,select,textarea{width:100%;border:1px solid #d6dee8;border-radius:7px;padding:10px;margin-top:7px;background:white;color:#243348}textarea{min-height:80px}.wide{grid-column:1/-1}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}table{border-collapse:collapse;width:100%;text-align:left}th,td{padding:15px 10px;border-bottom:1px solid #edf0f4}th{color:#7c899a;font-size:12px;font-weight:500}.tag{display:inline-block;background:#edf5f1;color:#276a58;padding:5px 9px;border-radius:5px;font-size:12px}.risk{color:#ba4343;font-size:12px;font-style:italic}.steps{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.step{padding:9px 12px;border-radius:6px;background:#f0f3f7}.step.now{background:#e0f0e9;color:#17665b}.log{border-left:2px solid #dbe7e4;padding:8px 15px;margin:10px 0}.empty{text-align:center;padding:35px;color:#8290a0}#toast{position:fixed;bottom:25px;right:25px;background:#132d35;color:white;padding:14px 22px;border-radius:8px;display:none}.note{font-size:12px;color:#8390a0;margin-top:10px}a{color:#17665b}@media(max-width:800px){aside{position:static;width:100%;height:auto;padding:18px}nav{margin-top:10px;display:flex;overflow:auto}nav button{white-space:nowrap}main{margin:0;padding:20px}.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.top{flex-wrap:wrap}.panel{overflow:auto}}
+.cost-group{margin:8px 0;border:1px solid #dce5ee;border-radius:8px;overflow:hidden}.cost-group summary{background:#edf4fa;padding:10px 12px;cursor:pointer}.cost-group summary span{float:right;font-variant-numeric:tabular-nums}.cost-table{overflow:auto}.cost-table table{min-width:430px}.cost-table td:nth-child(4){width:125px}.cost-table td:last-child{width:80px;white-space:nowrap}.cost-table td:last-child button{padding:7px 12px}.cost-table td:nth-child(2){width:110px}.cost-table input[type=number]{text-align:right}.cost-table small{display:block}.personnel-heading{border-top:1px solid #dce5ee;margin-top:8px;padding-top:16px}.personnel-heading h3{margin:0}.search-select{position:relative;display:block}.search-select input{padding-right:32px}.search-select .select-arrow{position:absolute;right:4px;top:3px;padding:6px;background:transparent;color:#53687b;border:0}.search-select [role=listbox]{position:absolute;top:100%;left:0;right:0;z-index:100;background:white;border:1px solid #cbd7e3;border-radius:8px;box-shadow:0 8px 24px #1232;max-height:240px;overflow:auto}.search-select [role=option]{display:block;width:100%;text-align:left;background:white;color:#25384b;border:0;border-radius:0;padding:9px 12px}.search-select [role=option]:hover,.search-select [role=option]:focus{background:#eaf3fc}.search-select .empty{padding:12px;color:#778}.native-search-select{position:absolute!important;width:1px!important;height:1px!important;opacity:0;pointer-events:none;padding:0!important} .cost-overview{margin:16px 0;padding:18px;border:1px solid #dce5ee;border-radius:10px;background:#f7fafb}.cost-grand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px}.cost-grand strong{font-size:26px;color:#17665b}.cost-grand small,.cost-category small{color:#7a8798}.cost-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.cost-category{display:flex;flex-direction:column;gap:7px;background:white;border:1px solid #e4e9ef;border-radius:8px;padding:12px}.cost-category strong{font-size:18px} </style><aside><h1>行界 · 财务</h1><small>FINANCE WORKSPACE</small><nav id="nav"></nav><div class="note">最小闭环原型 · v0.3<br>演示数据仅保存在当前浏览器</div></aside><main><div class="top"><div><span class="muted">行界旅业 / 财务协同</span><h2 id="title"></h2></div><label>当前演示角色<select id="role" onchange="activeRole=this.value;render()"><option>操作 / 江婧婕</option><option>销售 / 示例销售员</option><option>主管 / 刘婷茹</option><option>财务 / 杜川黔</option><option>总经理 / 刘婷茹</option></select></label></div><div class="banner">模拟环境：角色切换用于流程走查，不是真实登录。成本表在本浏览器解析，付款采用规则核对；尚未接入AI模型、真实付款及飞书。</div><div id="app"></div></main><div id="toast" role="status"></div>
+<script>
+const KEY='xingjie-demo-v1',esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let db;try{db=JSON.parse(localStorage.getItem(KEY))}catch{};db??={trips:[{id:'DZ-XJ-20261101',dep:'综合定制部',dest:'新疆',budget:20000,file:'示例成本报价表.xlsx'}],apps:[],logs:[],balance:100000,todos:[]};let page='概览',activeRole='操作 / 江婧婕',selected=null;
+function save(){localStorage.setItem(KEY,JSON.stringify(db))}function log(t){db.logs.unshift({t,time:new Date().toLocaleString('zh-CN')});save()}function toast(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',3000)}function go(p){page=p;render()}const money=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2});const statuses=['主管审核','财务审核','总经理审核','待付款','付款完成'];function state(a){return a.special||statuses[a.stage]}function getTrip(id){return db.trips.find(t=>t.id===id||t.uid===id)}function table(){return db.apps.length?`<table><tr><th>申请单 / 团号</th><th>用途 / 供应商</th><th>金额</th><th>当前状态</th><th></th></tr>${db.apps.map(a=>`<tr><td>${esc(a.id)}<div class="note">${esc(a.trip)}</div></td><td>${esc(a.note)}<div class="note">${esc(a.vendor)}</div></td><td>¥${money(a.amount)}</td><td><span class="tag">${state(a)}</span></td><td><button class="alt" onclick="selected='${a.id}';go('审批与付款')">查看</button></td></tr>`).join('')}</table>`:'<div class="empty">还没有付款申请。先创建一笔，体验完整审批流程。</div>'}
+function render(){document.getElementById('title').textContent=page;document.getElementById('nav').innerHTML=['概览','团档案','申请付款','审批与付款','待办与记录'].map(x=>`<button class="${x===page?'active':''}" onclick="go('${x}')">${x}</button>`).join('');let html='';
+if(page==='概览')html=`<div class="cards">${[['已建团',db.trips.length],['审批中',db.apps.filter(a=>a.stage<3&&!a.special).length],['待付款',db.apps.filter(a=>a.stage===3&&!a.special).length],['模拟账户余额','¥'+money(db.balance)]].map(([k,v])=>`<div class="card"><span class="muted">${k}</span><div class="num">${v}</div></div>`).join('')}</div><div class="panel"><h3>从一笔付款开始走查</h3><p class="muted">建团 → 操作提报 → 主管审核 → 财务审核 → 总经理审核 → 财务执行</p><div class="actions"><button onclick="go('团档案')">新建旅游团</button><button class="alt" onclick="go('申请付款')">使用示例团申请付款</button><button class="alt" onclick="seedApp()">载入一笔演示申请</button></div></div><div class="panel"><h3>最近付款申请</h3>${table()}</div>`;
+if(page==='团档案')html=`<div class="panel"><h3>新建团档案</h3>${tripForm()}</div><div class="panel"><h3>团档案</h3><div id="savedCosts"></div><table><tr><th>团号</th><th>归属 / 目的地</th><th>已确认成本</th><th>成本附件 / 清单</th></tr>${db.trips.map(t=>`<tr><td>${esc(t.id)}</td><td>${esc(t.dep)} / ${esc(t.dest)}</td><td>${t.costConfirmed?'¥'+money(t.budget):'待导入核对'}</td><td>${esc(t.file)}<br><button type="button" class="alt" onclick="showTripCosts('${t.id}')">查看成本清单</button></td></tr>`).join('')}</table></div>`;
+if(page==='申请付款')html=`<div class="panel"><h3>团相关付款申请</h3>${!activeRole.startsWith('操作')?'<p class="risk">请切换到操作角色填写申请。</p>':`<form onsubmit="submitApp(event)" class="grid"><label>财务方向<input disabled value="付款"></label><label>关联方式<input disabled value="关联旅游团"></label><label class="wide">团号<select id="trip" required onchange="paymentCostOptions()">${db.trips.map(t=>`<option value="${esc(tripReference(t))}">${esc(t.id)}</option>`).join('')}</select></label><label>费用类别<input disabled value="定制团 · 从档案带出"></label><label class="wide">对应成本明细<select id="costItem" onchange="paymentCostPreview()"></select><div id="costHint" class="note"></div></label><label>用途 / 备注<textarea id="note" required placeholder="如：酒店30%预付款"></textarea></label><label>金额（人民币）<input id="amount" oninput="paymentCostPreview()" type="number" min="0.01" step="0.01" required></label><label>供应商<select id="vendor"><option>示例酒店 · 已准入</option><option>示例车队 · 已准入</option></select></label><label>对方收款方式<select disabled><option>银行转账</option></select></label><label>对方收款信息<input disabled value="供应商测试账户 · 尾号0001"><div class="note">模拟账号，不可用于真实付款。</div></label><label class="wide">付款依据<input type="file" id="basis"><span class="note"><input id="demoBasis" type="checkbox" style="width:auto"> 使用演示账单（模拟附件）</span></label><label class="risk">是否未收款先垫款<select id="advance" onchange="document.getElementById('cancelwrap').hidden=this.value!=='是'"><option>否</option><option>是</option></select></label><label id="cancelwrap" hidden class="risk">最晚取消时间<input type="datetime-local" id="cancel"></label><div id="paymentCheck" class="wide"></div><div class="wide"><button>提交付款审批</button></div></form>`}</div>`;
+if(page==='审批与付款'){let a=db.apps.find(x=>x.id===selected);html=`<div class="panel"><h3>申请列表</h3>${table()}</div>`;if(a){let expected=['主管','财务','总经理','财务'][a.stage],can=activeRole.startsWith(expected)&&!a.special,spent=db.apps.filter(x=>sameTrip(x,a)&&x.stage===4).reduce((s,x)=>s+x.amount,0),check=checkPayment(a),risk=check.risk;html+=`<div class="panel"><div class="panelhead"><h3>${esc(a.id)}</h3><span class="tag">${state(a)}</span></div><div class="steps">${statuses.map((x,i)=>`<span class="step ${i===a.stage?'now':''}">${i+1} ${x}</span>`).join('')}</div><p>${esc(a.note)} · ${esc(a.trip)} · ¥${money(a.amount)}</p><p class="muted">成本明细：${esc(a.costName||'未关联')}　供应商：${esc(a.vendor)}　依据：${esc(a.basis)}</p>${checkPanel(check,a.check)}${a.stage<3&&!a.special?`<p>当前需要：<b>${expected}</b>处理。当前角色：${activeRole}</p>${can?`<label>审核意见<input id="opinion" placeholder="退回、拒绝时填写原因"></label>${risk&&a.stage===0?'<label><input id="riskack" type="checkbox" style="width:auto"> 已查看并确认本次成本风险</label>':''}<div class="actions"><button onclick="approve('${a.id}',${risk})">同意</button><button class="alt" onclick="reject('${a.id}','退回修改')">退回修改</button><button class="bad" onclick="reject('${a.id}','已拒绝')">拒绝申请</button></div>`:''}${activeRole.startsWith('操作')?`<div class="actions"><button class="alt" onclick="withdraw('${a.id}')">撤回申请</button></div>`:''}`:''}${a.stage===3&&!a.special?can?`<h3>财务付款执行</h3><form onsubmit="pay(event,'${a.id}')" class="grid"><label>结算方式<input disabled value="真实账户支付（模拟）"></label><label>公司付款账户<select id="account"><option>测试公司银行账户</option></select></label><label>实际付款日期<input type="date" id="paydate" required></label><label>付款水单<input type="file" id="slip"><span class="note"><input type="checkbox" id="mockslip" style="width:auto"> 使用演示水单（模拟附件）</span></label><label class="risk wide">跨月分摊设置<select disabled><option>本次团成本不做跨月分摊</option></select></label><div><button>确认付款完成（模拟）</button></div></form>`:'<p class="muted">全部审批通过，请切换财务角色执行付款。</p>':''}${a.stage===4?`<p class="tag">付款完成 · ${esc(a.account)} · ${esc(a.paydate)}</p><p>水单文件：${esc(a.slip)}（仅保存文件名）</p>`:''}${['退回修改','已撤回'].includes(a.special)&&activeRole.startsWith('操作')?`<form onsubmit="resubmit(event,'${a.id}')"><label>修改用途<textarea id="editnote" required>${esc(a.note)}</textarea></label><label>修改金额<input id="editamount" type="number" min="0.01" step="0.01" required value="${a.amount}"></label><div class="actions"><button>保留单号，重新提交首节点</button></div></form>`:''}<h3>申请轨迹</h3>${a.history.map(x=>`<div class="log">${esc(x)}</div>`).join('')}</div>`}}
+if(page==='待办与记录')html=`<div class="panel"><h3>模拟通知记录及追票提醒</h3><p class="muted">仅模拟工作台通知，未连接飞书。追票上传和核验的实际功能在后续迭代。</p>${db.todos.map(t=>`<div class="log">${esc(t)}</div>`).join('')||'<div class="empty">暂无待办</div>'}</div><div class="panel"><h3>诊断日志</h3><button type="button" class="alt" onclick="exportDiagnostics()">导出诊断日志</button><div>${diagnosticRows()}</div></div><div class="panel"><h3>操作记录</h3>${db.logs.map(l=>`<div class="log"><small class="muted">${esc(l.time)}</small><p>${esc(l.t)}</p></div>`).join('')}</div><button class="bad" onclick="if(confirm('清空本浏览器模拟数据？')){localStorage.removeItem(KEY);location.reload()}">重置演示数据</button>`;document.getElementById('app').innerHTML=html;if(page==='团档案'&&canCreateTrip()){updateDestinations();updateTripCategory();renderImport()}if(page==='申请付款'&&activeRole.startsWith('操作'))paymentCostOptions();}
+const PROVINCES=[{"name": "北京", "code": "BJ"}, {"name": "天津", "code": "TJ"}, {"name": "河北", "code": "HB"}, {"name": "山西", "code": "SX"}, {"name": "内蒙古", "code": "NMG"}, {"name": "辽宁", "code": "LN"}, {"name": "吉林", "code": "JL"}, {"name": "黑龙江", "code": "HLJ"}, {"name": "上海", "code": "SH"}, {"name": "江苏", "code": "JS"}, {"name": "浙江", "code": "ZJ"}, {"name": "安徽", "code": "AH"}, {"name": "福建", "code": "FJ"}, {"name": "江西", "code": "JX"}, {"name": "山东", "code": "SD"}, {"name": "河南", "code": "HN"}, {"name": "湖北", "code": "HB"}, {"name": "湖南", "code": "HN"}, {"name": "广东", "code": "GD"}, {"name": "广西", "code": "GX"}, {"name": "海南", "code": "HN"}, {"name": "重庆", "code": "CQ"}, {"name": "四川", "code": "SC"}, {"name": "贵州", "code": "GZ"}, {"name": "云南", "code": "YN"}, {"name": "西藏", "code": "XZ"}, {"name": "陕西", "code": "SX"}, {"name": "甘肃", "code": "GS"}, {"name": "青海", "code": "QH"}, {"name": "宁夏", "code": "NX"}, {"name": "新疆", "code": "XJ"}];
+const COUNTRIES=[{"code": "AD", "name_en": "Andorra", "name_zh": "安道尔", "category": "主权国家"}, {"code": "AE", "name_en": "United Arab Emirates", "name_zh": "阿拉伯联合酋长国", "category": "主权国家"}, {"code": "AF", "name_en": "Afghanistan", "name_zh": "阿富汗", "category": "主权国家"}, {"code": "AG", "name_en": "Antigua and Barbuda", "name_zh": "安提瓜和巴布达", "category": "主权国家"}, {"code": "AI", "name_en": "Anguilla", "name_zh": "安圭拉", "category": "属地或地区"}, {"code": "AL", "name_en": "Albania", "name_zh": "阿尔巴尼亚", "category": "主权国家"}, {"code": "AM", "name_en": "Armenia", "name_zh": "亚美尼亚", "category": "主权国家"}, {"code": "AO", "name_en": "Angola", "name_zh": "安哥拉", "category": "主权国家"}, {"code": "AQ", "name_en": "Antarctica", "name_zh": "南极洲", "category": "属地或地区"}, {"code": "AR", "name_en": "Argentina", "name_zh": "阿根廷", "category": "主权国家"}, {"code": "AS", "name_en": "American Samoa", "name_zh": "美属萨摩亚", "category": "属地或地区"}, {"code": "AT", "name_en": "Austria", "name_zh": "奥地利", "category": "主权国家"}, {"code": "AU", "name_en": "Australia", "name_zh": "澳大利亚", "category": "主权国家"}, {"code": "AW", "name_en": "Aruba", "name_zh": "阿鲁巴", "category": "属地或地区"}, {"code": "AX", "name_en": "Åland Islands", "name_zh": "奥兰群岛", "category": "属地或地区"}, {"code": "AZ", "name_en": "Azerbaijan", "name_zh": "阿塞拜疆", "category": "主权国家"}, {"code": "BA", "name_en": "Bosnia and Herzegovina", "name_zh": "波斯尼亚和黑塞哥维那", "category": "主权国家"}, {"code": "BB", "name_en": "Barbados", "name_zh": "巴巴多斯", "category": "主权国家"}, {"code": "BD", "name_en": "Bangladesh", "name_zh": "孟加拉国", "category": "主权国家"}, {"code": "BE", "name_en": "Belgium", "name_zh": "比利时", "category": "主权国家"}, {"code": "BF", "name_en": "Burkina Faso", "name_zh": "布基纳法索", "category": "主权国家"}, {"code": "BG", "name_en": "Bulgaria", "name_zh": "保加利亚", "category": "主权国家"}, {"code": "BH", "name_en": "Bahrain", "name_zh": "巴林", "category": "主权国家"}, {"code": "BI", "name_en": "Burundi", "name_zh": "布隆迪", "category": "主权国家"}, {"code": "BJ", "name_en": "Benin", "name_zh": "贝宁", "category": "主权国家"}, {"code": "BL", "name_en": "Saint Barthélemy", "name_zh": "圣巴泰勒米", "category": "属地或地区"}, {"code": "BM", "name_en": "Bermuda", "name_zh": "百慕大", "category": "属地或地区"}, {"code": "BN", "name_en": "Brunei Darussalam", "name_zh": "文莱", "category": "主权国家"}, {"code": "BO", "name_en": "Bolivia, Plurinational State of", "name_zh": "玻利维亚", "category": "主权国家"}, {"code": "BQ", "name_en": "Bonaire, Sint Eustatius and Saba", "name_zh": "博奈尔、圣尤斯特歇斯和萨巴", "category": "属地或地区"}, {"code": "BR", "name_en": "Brazil", "name_zh": "巴西", "category": "主权国家"}, {"code": "BS", "name_en": "Bahamas", "name_zh": "巴哈马", "category": "主权国家"}, {"code": "BT", "name_en": "Bhutan", "name_zh": "不丹", "category": "主权国家"}, {"code": "BV", "name_en": "Bouvet Island", "name_zh": "布韦岛", "category": "属地或地区"}, {"code": "BW", "name_en": "Botswana", "name_zh": "博茨瓦纳", "category": "主权国家"}, {"code": "BY", "name_en": "Belarus", "name_zh": "白俄罗斯", "category": "主权国家"}, {"code": "BZ", "name_en": "Belize", "name_zh": "伯利兹", "category": "主权国家"}, {"code": "CA", "name_en": "Canada", "name_zh": "加拿大", "category": "主权国家"}, {"code": "CC", "name_en": "Cocos (Keeling) Islands", "name_zh": "科科斯（基林）群岛", "category": "属地或地区"}, {"code": "CD", "name_en": "Congo, Democratic Republic of the", "name_zh": "刚果民主共和国", "category": "主权国家"}, {"code": "CF", "name_en": "Central African Republic", "name_zh": "中非共和国", "category": "主权国家"}, {"code": "CG", "name_en": "Congo", "name_zh": "刚果共和国", "category": "主权国家"}, {"code": "CH", "name_en": "Switzerland", "name_zh": "瑞士", "category": "主权国家"}, {"code": "CI", "name_en": "Côte d'Ivoire", "name_zh": "科特迪瓦", "category": "主权国家"}, {"code": "CK", "name_en": "Cook Islands", "name_zh": "库克群岛", "category": "主权国家"}, {"code": "CL", "name_en": "Chile", "name_zh": "智利", "category": "主权国家"}, {"code": "CM", "name_en": "Cameroon", "name_zh": "喀麦隆", "category": "主权国家"}, {"code": "CO", "name_en": "Colombia", "name_zh": "哥伦比亚", "category": "主权国家"}, {"code": "CR", "name_en": "Costa Rica", "name_zh": "哥斯达黎加", "category": "主权国家"}, {"code": "CU", "name_en": "Cuba", "name_zh": "古巴", "category": "主权国家"}, {"code": "CV", "name_en": "Cabo Verde", "name_zh": "佛得角", "category": "主权国家"}, {"code": "CW", "name_en": "Curaçao", "name_zh": "库拉索", "category": "属地或地区"}, {"code": "CX", "name_en": "Christmas Island", "name_zh": "圣诞岛", "category": "属地或地区"}, {"code": "CY", "name_en": "Cyprus", "name_zh": "塞浦路斯", "category": "主权国家"}, {"code": "CZ", "name_en": "Czechia", "name_zh": "捷克", "category": "主权国家"}, {"code": "DE", "name_en": "Germany", "name_zh": "德国", "category": "主权国家"}, {"code": "DJ", "name_en": "Djibouti", "name_zh": "吉布提", "category": "主权国家"}, {"code": "DK", "name_en": "Denmark", "name_zh": "丹麦", "category": "主权国家"}, {"code": "DM", "name_en": "Dominica", "name_zh": "多米尼克", "category": "主权国家"}, {"code": "DO", "name_en": "Dominican Republic", "name_zh": "多米尼加共和国", "category": "主权国家"}, {"code": "DZ", "name_en": "Algeria", "name_zh": "阿尔及利亚", "category": "主权国家"}, {"code": "EC", "name_en": "Ecuador", "name_zh": "厄瓜多尔", "category": "主权国家"}, {"code": "EE", "name_en": "Estonia", "name_zh": "爱沙尼亚", "category": "主权国家"}, {"code": "EG", "name_en": "Egypt", "name_zh": "埃及", "category": "主权国家"}, {"code": "EH", "name_en": "Western Sahara", "name_zh": "西撒哈拉", "category": "属地或地区"}, {"code": "ER", "name_en": "Eritrea", "name_zh": "厄立特里亚", "category": "主权国家"}, {"code": "ES", "name_en": "Spain", "name_zh": "西班牙", "category": "主权国家"}, {"code": "ET", "name_en": "Ethiopia", "name_zh": "埃塞俄比亚", "category": "主权国家"}, {"code": "FI", "name_en": "Finland", "name_zh": "芬兰", "category": "主权国家"}, {"code": "FJ", "name_en": "Fiji", "name_zh": "斐济", "category": "主权国家"}, {"code": "FK", "name_en": "Falkland Islands (Malvinas)", "name_zh": "福克兰群岛（马尔维纳斯群岛）", "category": "属地或地区"}, {"code": "FM", "name_en": "Micronesia, Federated States of", "name_zh": "密克罗尼西亚联邦", "category": "主权国家"}, {"code": "FO", "name_en": "Faroe Islands", "name_zh": "法罗群岛", "category": "属地或地区"}, {"code": "FR", "name_en": "France", "name_zh": "法国", "category": "主权国家"}, {"code": "GA", "name_en": "Gabon", "name_zh": "加蓬", "category": "主权国家"}, {"code": "GB", "name_en": "United Kingdom of Great Britain and Northern Ireland", "name_zh": "英国", "category": "主权国家"}, {"code": "GD", "name_en": "Grenada", "name_zh": "格林纳达", "category": "主权国家"}, {"code": "GE", "name_en": "Georgia", "name_zh": "格鲁吉亚", "category": "主权国家"}, {"code": "GF", "name_en": "French Guiana", "name_zh": "法属圭亚那", "category": "属地或地区"}, {"code": "GG", "name_en": "Guernsey", "name_zh": "根西岛", "category": "属地或地区"}, {"code": "GH", "name_en": "Ghana", "name_zh": "加纳", "category": "主权国家"}, {"code": "GI", "name_en": "Gibraltar", "name_zh": "直布罗陀", "category": "属地或地区"}, {"code": "GL", "name_en": "Greenland", "name_zh": "格陵兰", "category": "属地或地区"}, {"code": "GM", "name_en": "Gambia", "name_zh": "冈比亚", "category": "主权国家"}, {"code": "GN", "name_en": "Guinea", "name_zh": "几内亚", "category": "主权国家"}, {"code": "GP", "name_en": "Guadeloupe", "name_zh": "瓜德罗普", "category": "属地或地区"}, {"code": "GQ", "name_en": "Equatorial Guinea", "name_zh": "赤道几内亚", "category": "主权国家"}, {"code": "GR", "name_en": "Greece", "name_zh": "希腊", "category": "主权国家"}, {"code": "GS", "name_en": "South Georgia and the South Sandwich Islands", "name_zh": "南乔治亚和南桑威奇群岛", "category": "属地或地区"}, {"code": "GT", "name_en": "Guatemala", "name_zh": "危地马拉", "category": "主权国家"}, {"code": "GU", "name_en": "Guam", "name_zh": "关岛", "category": "属地或地区"}, {"code": "GW", "name_en": "Guinea-Bissau", "name_zh": "几内亚比绍", "category": "主权国家"}, {"code": "GY", "name_en": "Guyana", "name_zh": "圭亚那", "category": "主权国家"}, {"code": "HK", "name_en": "Hong Kong", "name_zh": "中国香港", "category": "中国港澳台地区"}, {"code": "HM", "name_en": "Heard Island and McDonald Islands", "name_zh": "赫德岛和麦克唐纳群岛", "category": "属地或地区"}, {"code": "HN", "name_en": "Honduras", "name_zh": "洪都拉斯", "category": "主权国家"}, {"code": "HR", "name_en": "Croatia", "name_zh": "克罗地亚", "category": "主权国家"}, {"code": "HT", "name_en": "Haiti", "name_zh": "海地", "category": "主权国家"}, {"code": "HU", "name_en": "Hungary", "name_zh": "匈牙利", "category": "主权国家"}, {"code": "ID", "name_en": "Indonesia", "name_zh": "印度尼西亚", "category": "主权国家"}, {"code": "IE", "name_en": "Ireland", "name_zh": "爱尔兰", "category": "主权国家"}, {"code": "IL", "name_en": "Israel", "name_zh": "以色列", "category": "主权国家"}, {"code": "IM", "name_en": "Isle of Man", "name_zh": "马恩岛", "category": "属地或地区"}, {"code": "IN", "name_en": "India", "name_zh": "印度", "category": "主权国家"}, {"code": "IO", "name_en": "British Indian Ocean Territory", "name_zh": "英属印度洋领地", "category": "属地或地区"}, {"code": "IQ", "name_en": "Iraq", "name_zh": "伊拉克", "category": "主权国家"}, {"code": "IR", "name_en": "Iran, Islamic Republic of", "name_zh": "伊朗", "category": "主权国家"}, {"code": "IS", "name_en": "Iceland", "name_zh": "冰岛", "category": "主权国家"}, {"code": "IT", "name_en": "Italy", "name_zh": "意大利", "category": "主权国家"}, {"code": "JE", "name_en": "Jersey", "name_zh": "泽西岛", "category": "属地或地区"}, {"code": "JM", "name_en": "Jamaica", "name_zh": "牙买加", "category": "主权国家"}, {"code": "JO", "name_en": "Jordan", "name_zh": "约旦", "category": "主权国家"}, {"code": "JP", "name_en": "Japan", "name_zh": "日本", "category": "主权国家"}, {"code": "KE", "name_en": "Kenya", "name_zh": "肯尼亚", "category": "主权国家"}, {"code": "KG", "name_en": "Kyrgyzstan", "name_zh": "吉尔吉斯斯坦", "category": "主权国家"}, {"code": "KH", "name_en": "Cambodia", "name_zh": "柬埔寨", "category": "主权国家"}, {"code": "KI", "name_en": "Kiribati", "name_zh": "基里巴斯", "category": "主权国家"}, {"code": "KM", "name_en": "Comoros", "name_zh": "科摩罗", "category": "主权国家"}, {"code": "KN", "name_en": "Saint Kitts and Nevis", "name_zh": "圣基茨和尼维斯", "category": "主权国家"}, {"code": "KP", "name_en": "Korea, Democratic People's Republic of", "name_zh": "朝鲜", "category": "主权国家"}, {"code": "KR", "name_en": "Korea, Republic of", "name_zh": "韩国", "category": "主权国家"}, {"code": "KW", "name_en": "Kuwait", "name_zh": "科威特", "category": "主权国家"}, {"code": "KY", "name_en": "Cayman Islands", "name_zh": "开曼群岛", "category": "属地或地区"}, {"code": "KZ", "name_en": "Kazakhstan", "name_zh": "哈萨克斯坦", "category": "主权国家"}, {"code": "LA", "name_en": "Lao People's Democratic Republic", "name_zh": "老挝", "category": "主权国家"}, {"code": "LB", "name_en": "Lebanon", "name_zh": "黎巴嫩", "category": "主权国家"}, {"code": "LC", "name_en": "Saint Lucia", "name_zh": "圣卢西亚", "category": "主权国家"}, {"code": "LI", "name_en": "Liechtenstein", "name_zh": "列支敦士登", "category": "主权国家"}, {"code": "LK", "name_en": "Sri Lanka", "name_zh": "斯里兰卡", "category": "主权国家"}, {"code": "LR", "name_en": "Liberia", "name_zh": "利比里亚", "category": "主权国家"}, {"code": "LS", "name_en": "Lesotho", "name_zh": "莱索托", "category": "主权国家"}, {"code": "LT", "name_en": "Lithuania", "name_zh": "立陶宛", "category": "主权国家"}, {"code": "LU", "name_en": "Luxembourg", "name_zh": "卢森堡", "category": "主权国家"}, {"code": "LV", "name_en": "Latvia", "name_zh": "拉脱维亚", "category": "主权国家"}, {"code": "LY", "name_en": "Libya", "name_zh": "利比亚", "category": "主权国家"}, {"code": "MA", "name_en": "Morocco", "name_zh": "摩洛哥", "category": "主权国家"}, {"code": "MC", "name_en": "Monaco", "name_zh": "摩纳哥", "category": "主权国家"}, {"code": "MD", "name_en": "Moldova, Republic of", "name_zh": "摩尔多瓦", "category": "主权国家"}, {"code": "ME", "name_en": "Montenegro", "name_zh": "黑山", "category": "主权国家"}, {"code": "MF", "name_en": "Saint Martin (French part)", "name_zh": "法属圣马丁", "category": "属地或地区"}, {"code": "MG", "name_en": "Madagascar", "name_zh": "马达加斯加", "category": "主权国家"}, {"code": "MH", "name_en": "Marshall Islands", "name_zh": "马绍尔群岛", "category": "主权国家"}, {"code": "MK", "name_en": "North Macedonia", "name_zh": "北马其顿", "category": "主权国家"}, {"code": "ML", "name_en": "Mali", "name_zh": "马里", "category": "主权国家"}, {"code": "MM", "name_en": "Myanmar", "name_zh": "缅甸", "category": "主权国家"}, {"code": "MN", "name_en": "Mongolia", "name_zh": "蒙古", "category": "主权国家"}, {"code": "MO", "name_en": "Macao", "name_zh": "中国澳门", "category": "中国港澳台地区"}, {"code": "MP", "name_en": "Northern Mariana Islands", "name_zh": "北马里亚纳群岛", "category": "属地或地区"}, {"code": "MQ", "name_en": "Martinique", "name_zh": "马提尼克", "category": "属地或地区"}, {"code": "MR", "name_en": "Mauritania", "name_zh": "毛里塔尼亚", "category": "主权国家"}, {"code": "MS", "name_en": "Montserrat", "name_zh": "蒙特塞拉特", "category": "属地或地区"}, {"code": "MT", "name_en": "Malta", "name_zh": "马耳他", "category": "主权国家"}, {"code": "MU", "name_en": "Mauritius", "name_zh": "毛里求斯", "category": "主权国家"}, {"code": "MV", "name_en": "Maldives", "name_zh": "马尔代夫", "category": "主权国家"}, {"code": "MW", "name_en": "Malawi", "name_zh": "马拉维", "category": "主权国家"}, {"code": "MX", "name_en": "Mexico", "name_zh": "墨西哥", "category": "主权国家"}, {"code": "MY", "name_en": "Malaysia", "name_zh": "马来西亚", "category": "主权国家"}, {"code": "MZ", "name_en": "Mozambique", "name_zh": "莫桑比克", "category": "主权国家"}, {"code": "NA", "name_en": "Namibia", "name_zh": "纳米比亚", "category": "主权国家"}, {"code": "NC", "name_en": "New Caledonia", "name_zh": "新喀里多尼亚", "category": "属地或地区"}, {"code": "NE", "name_en": "Niger", "name_zh": "尼日尔", "category": "主权国家"}, {"code": "NF", "name_en": "Norfolk Island", "name_zh": "诺福克岛", "category": "属地或地区"}, {"code": "NG", "name_en": "Nigeria", "name_zh": "尼日利亚", "category": "主权国家"}, {"code": "NI", "name_en": "Nicaragua", "name_zh": "尼加拉瓜", "category": "主权国家"}, {"code": "NL", "name_en": "Netherlands, Kingdom of the", "name_zh": "荷兰", "category": "主权国家"}, {"code": "NO", "name_en": "Norway", "name_zh": "挪威", "category": "主权国家"}, {"code": "NP", "name_en": "Nepal", "name_zh": "尼泊尔", "category": "主权国家"}, {"code": "NR", "name_en": "Naoero", "name_zh": "瑙鲁", "category": "主权国家"}, {"code": "NU", "name_en": "Niue", "name_zh": "纽埃", "category": "主权国家"}, {"code": "NZ", "name_en": "New Zealand", "name_zh": "新西兰", "category": "主权国家"}, {"code": "OM", "name_en": "Oman", "name_zh": "阿曼", "category": "主权国家"}, {"code": "PA", "name_en": "Panama", "name_zh": "巴拿马", "category": "主权国家"}, {"code": "PE", "name_en": "Peru", "name_zh": "秘鲁", "category": "主权国家"}, {"code": "PF", "name_en": "French Polynesia", "name_zh": "法属波利尼西亚", "category": "属地或地区"}, {"code": "PG", "name_en": "Papua New Guinea", "name_zh": "巴布亚新几内亚", "category": "主权国家"}, {"code": "PH", "name_en": "Philippines", "name_zh": "菲律宾", "category": "主权国家"}, {"code": "PK", "name_en": "Pakistan", "name_zh": "巴基斯坦", "category": "主权国家"}, {"code": "PL", "name_en": "Poland", "name_zh": "波兰", "category": "主权国家"}, {"code": "PM", "name_en": "Saint Pierre and Miquelon", "name_zh": "圣皮埃尔和密克隆", "category": "属地或地区"}, {"code": "PN", "name_en": "Pitcairn", "name_zh": "皮特凯恩群岛", "category": "属地或地区"}, {"code": "PR", "name_en": "Puerto Rico", "name_zh": "波多黎各", "category": "属地或地区"}, {"code": "PS", "name_en": "Palestine, State of", "name_zh": "巴勒斯坦国", "category": "主权国家"}, {"code": "PT", "name_en": "Portugal", "name_zh": "葡萄牙", "category": "主权国家"}, {"code": "PW", "name_en": "Palau", "name_zh": "帕劳", "category": "主权国家"}, {"code": "PY", "name_en": "Paraguay", "name_zh": "巴拉圭", "category": "主权国家"}, {"code": "QA", "name_en": "Qatar", "name_zh": "卡塔尔", "category": "主权国家"}, {"code": "RE", "name_en": "Réunion", "name_zh": "留尼汪", "category": "属地或地区"}, {"code": "RO", "name_en": "Romania", "name_zh": "罗马尼亚", "category": "主权国家"}, {"code": "RS", "name_en": "Serbia", "name_zh": "塞尔维亚", "category": "主权国家"}, {"code": "RU", "name_en": "Russian Federation", "name_zh": "俄罗斯", "category": "主权国家"}, {"code": "RW", "name_en": "Rwanda", "name_zh": "卢旺达", "category": "主权国家"}, {"code": "SA", "name_en": "Saudi Arabia", "name_zh": "沙特阿拉伯", "category": "主权国家"}, {"code": "SB", "name_en": "Solomon Islands", "name_zh": "所罗门群岛", "category": "主权国家"}, {"code": "SC", "name_en": "Seychelles", "name_zh": "塞舌尔", "category": "主权国家"}, {"code": "SD", "name_en": "Sudan", "name_zh": "苏丹", "category": "主权国家"}, {"code": "SE", "name_en": "Sweden", "name_zh": "瑞典", "category": "主权国家"}, {"code": "SG", "name_en": "Singapore", "name_zh": "新加坡", "category": "主权国家"}, {"code": "SH", "name_en": "Saint Helena, Ascension and Tristan da Cunha", "name_zh": "圣赫勒拿、阿森松和特里斯坦-达库尼亚", "category": "属地或地区"}, {"code": "SI", "name_en": "Slovenia", "name_zh": "斯洛文尼亚", "category": "主权国家"}, {"code": "SJ", "name_en": "Svalbard and Jan Mayen", "name_zh": "斯瓦尔巴和扬马延", "category": "属地或地区"}, {"code": "SK", "name_en": "Slovakia", "name_zh": "斯洛伐克", "category": "主权国家"}, {"code": "SL", "name_en": "Sierra Leone", "name_zh": "塞拉利昂", "category": "主权国家"}, {"code": "SM", "name_en": "San Marino", "name_zh": "圣马力诺", "category": "主权国家"}, {"code": "SN", "name_en": "Senegal", "name_zh": "塞内加尔", "category": "主权国家"}, {"code": "SO", "name_en": "Somalia", "name_zh": "索马里", "category": "主权国家"}, {"code": "SR", "name_en": "Suriname", "name_zh": "苏里南", "category": "主权国家"}, {"code": "SS", "name_en": "South Sudan", "name_zh": "南苏丹", "category": "主权国家"}, {"code": "ST", "name_en": "Sao Tome and Principe", "name_zh": "圣多美和普林西比", "category": "主权国家"}, {"code": "SV", "name_en": "El Salvador", "name_zh": "萨尔瓦多", "category": "主权国家"}, {"code": "SX", "name_en": "Sint Maarten (Dutch part)", "name_zh": "荷属圣马丁", "category": "属地或地区"}, {"code": "SY", "name_en": "Syrian Arab Republic", "name_zh": "叙利亚", "category": "主权国家"}, {"code": "SZ", "name_en": "Eswatini", "name_zh": "斯威士兰", "category": "主权国家"}, {"code": "TC", "name_en": "Turks and Caicos Islands", "name_zh": "特克斯和凯科斯群岛", "category": "属地或地区"}, {"code": "TD", "name_en": "Chad", "name_zh": "乍得", "category": "主权国家"}, {"code": "TF", "name_en": "French Southern Territories", "name_zh": "法属南部领地", "category": "属地或地区"}, {"code": "TG", "name_en": "Togo", "name_zh": "多哥", "category": "主权国家"}, {"code": "TH", "name_en": "Thailand", "name_zh": "泰国", "category": "主权国家"}, {"code": "TJ", "name_en": "Tajikistan", "name_zh": "塔吉克斯坦", "category": "主权国家"}, {"code": "TK", "name_en": "Tokelau", "name_zh": "托克劳", "category": "属地或地区"}, {"code": "TL", "name_en": "Timor-Leste", "name_zh": "东帝汶", "category": "主权国家"}, {"code": "TM", "name_en": "Turkmenistan", "name_zh": "土库曼斯坦", "category": "主权国家"}, {"code": "TN", "name_en": "Tunisia", "name_zh": "突尼斯", "category": "主权国家"}, {"code": "TO", "name_en": "Tonga", "name_zh": "汤加", "category": "主权国家"}, {"code": "TR", "name_en": "Türkiye", "name_zh": "土耳其", "category": "主权国家"}, {"code": "TT", "name_en": "Trinidad and Tobago", "name_zh": "特立尼达和多巴哥", "category": "主权国家"}, {"code": "TV", "name_en": "Tuvalu", "name_zh": "图瓦卢", "category": "主权国家"}, {"code": "TW", "name_en": "Taiwan, Province of China", "name_zh": "中国台湾", "category": "中国港澳台地区"}, {"code": "TZ", "name_en": "Tanzania, United Republic of", "name_zh": "坦桑尼亚", "category": "主权国家"}, {"code": "UA", "name_en": "Ukraine", "name_zh": "乌克兰", "category": "主权国家"}, {"code": "UG", "name_en": "Uganda", "name_zh": "乌干达", "category": "主权国家"}, {"code": "UM", "name_en": "United States Minor Outlying Islands", "name_zh": "美国本土外小岛屿", "category": "属地或地区"}, {"code": "US", "name_en": "United States of America", "name_zh": "美国", "category": "主权国家"}, {"code": "UY", "name_en": "Uruguay", "name_zh": "乌拉圭", "category": "主权国家"}, {"code": "UZ", "name_en": "Uzbekistan", "name_zh": "乌兹别克斯坦", "category": "主权国家"}, {"code": "VA", "name_en": "Holy See", "name_zh": "梵蒂冈", "category": "主权国家"}, {"code": "VC", "name_en": "Saint Vincent and the Grenadines", "name_zh": "圣文森特和格林纳丁斯", "category": "主权国家"}, {"code": "VE", "name_en": "Venezuela, Bolivarian Republic of", "name_zh": "委内瑞拉", "category": "主权国家"}, {"code": "VG", "name_en": "Virgin Islands (British)", "name_zh": "英属维尔京群岛", "category": "属地或地区"}, {"code": "VI", "name_en": "Virgin Islands (U.S.)", "name_zh": "美属维尔京群岛", "category": "属地或地区"}, {"code": "VN", "name_en": "Viet Nam", "name_zh": "越南", "category": "主权国家"}, {"code": "VU", "name_en": "Vanuatu", "name_zh": "瓦努阿图", "category": "主权国家"}, {"code": "WF", "name_en": "Wallis and Futuna", "name_zh": "瓦利斯和富图纳", "category": "属地或地区"}, {"code": "WS", "name_en": "Samoa", "name_zh": "萨摩亚", "category": "主权国家"}, {"code": "YE", "name_en": "Yemen", "name_zh": "也门", "category": "主权国家"}, {"code": "YT", "name_en": "Mayotte", "name_zh": "马约特", "category": "属地或地区"}, {"code": "ZA", "name_en": "South Africa", "name_zh": "南非", "category": "主权国家"}, {"code": "ZM", "name_en": "Zambia", "name_zh": "赞比亚", "category": "主权国家"}, {"code": "ZW", "name_en": "Zimbabwe", "name_zh": "津巴布韦", "category": "主权国家"}];
+function submitApp(e){e.preventDefault();if(!document.getElementById('basis').files[0]&&!document.getElementById('demoBasis').checked)return toast('请上传付款依据或选择演示账单');if(document.getElementById('advance').value==='是'&&!document.getElementById('cancel').value)return toast('请填写最晚取消时间');let id='FK-'+Date.now();db.apps.push({id,trip:getTrip(document.getElementById('trip').value).id,tripUid:getTrip(document.getElementById('trip').value).uid,note:document.getElementById('note').value,amount:+document.getElementById('amount').value,vendor:document.getElementById('vendor').value,basis:document.getElementById('basis').files[0]?.name||'演示账单.png',costId:document.getElementById('costItem').value,costName:document.getElementById('costItem').selectedOptions[0].text,stage:0,history:['操作提交申请'],advance:document.getElementById('advance').value,cancel:document.getElementById('cancel').value});let a=db.apps.at(-1);a.check=checkPayment(a);a.history.push('付款辅助检查（规则）：'+a.check.messages.join('；'));db.todos.unshift(id+' 待主管审核（模拟通知）');log('提交付款 '+id);selected=id;go('审批与付款')}
+function approve(id,risk){let a=db.apps.find(x=>x.id===id);if(!activeRole.startsWith(['主管','财务','总经理'][a.stage])||a.special)return;if(a.stage===0&&checkPayment(a).risk){if(!document.getElementById('riskack')?.checked)return toast('请先确认成本风险');if(!document.getElementById('opinion').value.trim())return toast('请填写主管风险确认意见');a.history.push('主管确认成本风险：'+document.getElementById('opinion').value.trim());}a.history.push(activeRole+' 同意：'+(document.getElementById('opinion').value||'无补充意见'));a.stage++;db.todos.unshift(id+' '+(a.stage===3?'审批通过，财务待付款':'进入'+statuses[a.stage]));log(activeRole+'通过 '+id);render()}
+function reject(id,status){let a=db.apps.find(x=>x.id===id),op=document.getElementById('opinion').value.trim();if(!op)return toast('请填写原因');a.special=status;a.history.push(activeRole+' '+status+'：'+op);log(id+' '+status);render()}
+function withdraw(id){let a=db.apps.find(x=>x.id===id);if(a.stage>=3)return;a.special='已撤回';a.history.push('操作撤回申请');log(id+' 已撤回');render()}
+function resubmit(e,id){e.preventDefault();let a=db.apps.find(x=>x.id===id);a.history.push('修改前：'+a.note+' / '+a.amount);a.note=document.getElementById('editnote').value;a.amount=+document.getElementById('editamount').value;a.special=null;a.stage=0;a.check=checkPayment(a);a.history.push('操作修改后重新提交至主管');log(id+' 重新提交');render()}
+function seedApp(){let id='FK-'+Date.now();db.apps.push({id,trip:db.trips[0].id,note:'酒店30%预付款（演示）',amount:3000,vendor:'示例酒店',basis:'演示酒店账单.png',costId:getTrip(db.trips[0].id).costItems?.[0]?.id||'',costName:getTrip(db.trips[0].id).costItems?.[0]?.name||'未关联成本明细',stage:0,history:['操作提交演示申请'],advance:'否'});log('载入演示申请 '+id);selected=id;go('审批与付款')}
+function pay(e,id){e.preventDefault();let a=db.apps.find(x=>x.id===id);if(a.stage!==3||a.special||!activeRole.startsWith('财务'))return;if(a.amount>db.balance)return toast('模拟付款账户余额不足');a.account=document.getElementById('account').value;let file=document.getElementById('slip').files[0];if(!file&&!document.getElementById('mockslip').checked)return toast('请上传水单或选择演示水单');a.slip=file?file.name:'演示付款水单.png';a.paydate=document.getElementById('paydate').value;a.stage=4;db.balance=Math.round((db.balance-a.amount)*100)/100;a.history.push('财务付款完成，生成模拟流水 LS-'+Date.now());db.todos.unshift(id+' 付款完成，通知江婧婕；待追回发票 ¥'+money(a.amount));log(id+' 付款完成 ¥'+money(a.amount));render()}
+</script><script>const DIAGNOSTIC_KEY='xingjie-diagnostics-v1';
+let diagnosticMemory=[];
+function readDiagnostics(){try{return JSON.parse(localStorage.getItem(DIAGNOSTIC_KEY))||diagnosticMemory}catch{return diagnosticMemory}}
+function diagnostic(action,result,stage,detail=''){
+ const entry={time:new Date().toISOString(),action,result,stage,detail,role:typeof activeRole==='string'?activeRole:'',reference:Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7)};
+ diagnosticMemory=[entry,...readDiagnostics()].slice(0,200);
+ try{localStorage.setItem(DIAGNOSTIC_KEY,JSON.stringify(diagnosticMemory))}catch{}
+}
+function diagnosticRows(){return readDiagnostics().map(x=>`<div class="log"><small>${esc(x.time)} · ${esc(x.reference)}</small><p>${esc(x.action)} · ${esc(x.result)} · ${esc(x.stage)}</p><p>${esc(x.detail)}</p></div>`).join('')||'<p class="muted">暂无诊断记录</p>'}
+function exportDiagnostics(){const url=URL.createObjectURL(new Blob([JSON.stringify({version:1,logs:readDiagnostics()},null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='行界工作台_诊断日志.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+window.addEventListener('error',event=>diagnostic('页面运行','异常','前端',event.message));
+window.addEventListener('unhandledrejection',event=>diagnostic('异步操作','异常','前端',String(event.reason?.message||event.reason)));
+</script><script>const TRIP_CATEGORIES = {
+  DZ:'定制团', RJ:'定制入境团', DL:'代理团', DF:'单订房', DC:'单订交通',
+  JP:'单机票', QZ:'单签证', BX:'单保险', COTA:'国内平台订单'
+};
+const TRIP_PLATFORMS = {XC:'携程', FZ:'飞猪', RB:'小红书'};
+const TRIP_PRODUCTS = {HH:'花火大会', DL:'代理团', BCY:'包车定制', QZ:'签证', MP:'门票', QT:'其他单项'};
+const TRIP_DEPARTMENTS = ['总经办','综合定制部','电商部','业务部','土耳其项目部'];
+const TRIP_PROJECTS = ['新疆车队','新疆项目','赤兔项目','OTA车','广告推广','新媒体','海外地接社'];
+const TRIP_PEOPLE = ['江婧婕','示例操作员','示例销售员'];
+const tripField = id => document.getElementById(id);
+const tripOptions = entries => '<option value="">请选择</option>'+entries.map(([key,label]) =>
+  `<option value="${esc(key)}">${esc(label)}</option>`).join('');
+const canCreateTrip = () => /^(操作|销售) \/ /.test(activeRole);
+const tripReference = trip => trip?.uid || trip?.id;
+const sameTrip = (a,b) => (a.tripUid && b.tripUid) ? a.tripUid === b.tripUid : a.trip === b.trip;
+function destinationOptions(scope) {
+  return scope === 'domestic' ? PROVINCES.map(x=>[x.name,x.name]) :
+    scope === 'overseas' ? COUNTRIES.map(x=>[x.code,x.name_zh]) : [];
+}
+function chosenDestination() {
+  const value = tripField('dest').value;
+  if (tripField('destScope').value === 'domestic') {
+    const p = PROVINCES.find(x=>x.name===value);
+    return p && {key:'domestic:'+p.name, code:p.code, name:p.name};
+  }
+  const c = COUNTRIES.find(x=>x.code===value);
+  return c && {key:'overseas:'+c.code, code:c.code, name:c.name_zh};
+}
+function updateDestinations() {
+  const scope = tripField('destScope').value;
+  const options = destinationOptions(scope);
+  tripField('dest').innerHTML = tripOptions(options);
+  tripField('destLabel').textContent = scope==='domestic'?'主目的地 · 省级':scope==='overseas'?'主目的地 · 国家／地区':'主目的地';
+  tripField('destNotice').textContent = scope && !options.length?'目的地字典不可用，请联系配置人员。':'';
+  updateTripPreview();
+}
+function updateTripCategory() {
+  const category = tripField('tripCategory').value;
+  for (const [id,visible] of [['foreignSource',category==='RJ'],['tripPlatform',category==='COTA'],['tripProduct',category==='COTA']]) {
+    const field = tripField(id);
+    field.closest('label').hidden = !visible;
+    field.disabled = !visible;
+    field.required = visible;
+    if (!visible) field.value='';
+  }
+  updateTripPreview();
+}
+function tripBaseCode(category,destCode,date,platform,product) {
+  if (!Object.hasOwn(TRIP_CATEGORIES,category) || !destCode || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return '';
+  if (category==='COTA' && (!Object.hasOwn(TRIP_PLATFORMS,platform)||!Object.hasOwn(TRIP_PRODUCTS,product))) return '';
+  const components = category==='COTA'?[category,platform,product]:[category,destCode];
+  return [...components,date.replaceAll('-','')].join('-');
+}
+function nextTripCode(base,trips) {
+  const used = new Set(trips.map(t=>t.id));
+  if (!used.has(base)) return base;
+  let index=1;
+  while (used.has(base+'-'+String(index).padStart(2,'0'))) index++;
+  return base+'-'+String(index).padStart(2,'0');
+}
+function currentTripBase() {
+  return tripBaseCode(tripField('tripCategory').value,chosenDestination()?.code,tripField('date').value,tripField('tripPlatform').value,tripField('tripProduct').value);
+}
+function updateTripPreview() {
+  const base=currentTripBase();
+  tripField('tripPreview').textContent=base?nextTripCode(base,db.trips):'填完编号所需字段后显示';
+}
+function tripForm() {
+  if (!canCreateTrip()) return '<p class="risk">当前演示角色无建团权限，请切换为操作或销售。</p>';
+  const named = items=>items.map(x=>[x,x]);
+  const people = tripOptions(named(TRIP_PEOPLE));
+  const groups = [['部门',TRIP_DEPARTMENTS],['项目',TRIP_PROJECTS]].map(([group,items])=>
+    `<optgroup label="${group}">${items.map(x=>`<option value="${group}:${esc(x)}">${esc(x)}</option>`).join('')}</optgroup>`).join('');
+  return `<form id="tripForm" novalidate onsubmit="createTrip(event)" class="grid">
+    <h3 class="wide">团基础信息</h3>
+    <label>部门／项目<select id="tripOwner" required><option value="">请选择</option>${groups}</select></label>
+    <label>业务类别<select id="tripCategory" onchange="updateTripCategory()" required>${tripOptions(Object.entries(TRIP_CATEGORIES))}</select></label>
+    <label hidden>平台<select id="tripPlatform" onchange="updateTripPreview()" disabled>${tripOptions(Object.entries(TRIP_PLATFORMS))}</select></label>
+    <label hidden>业务项目<select id="tripProduct" onchange="updateTripPreview()" disabled>${tripOptions(Object.entries(TRIP_PRODUCTS))}</select></label>
+    <label>目的地范围<select id="destScope" onchange="updateDestinations()" required>${tripOptions([['domestic','境内'],['overseas','境外']])}</select></label>
+    <label><span id="destLabel">主目的地</span><select id="dest" onchange="updateTripPreview()" required></select><span class="note" id="destNotice"></span></label>
+    <label hidden>外宾来源<select id="foreignSource" disabled>${tripOptions(destinationOptions('overseas'))}</select></label>
+    <label>出发日期<input id="date" type="date" onchange="updateTripPreview()" required></label>
+    <div class="wide personnel-heading"><h3>负责人员信息</h3></div>
+    <label>销售责任人<select id="tripSales" required>${people}</select></label>
+    <label>操作 A<select id="tripOperatorA" required>${people}</select></label>
+    <label>操作 B<select id="tripOperatorB" required>${people}</select></label>
+    <div class="wide note">团号预览 <b id="tripPreview" aria-live="polite"></b> · 以保存成功后显示的团号为准。</div>
+    <div class="wide"><h3>成本表识别与核对</h3><p class="muted">上传、核对并确认成本明细后保存建团。首次建团免审批。</p>
+    <label>成本报价表<input id="costfile" type="file" accept=".xlsx" onchange="importCostFile(this.files[0])"></label>
+    <div class="note">支持 .xlsx 分项表及列映射。原文件及确认明细保存在当前浏览器。</div>
+    <div class="actions"><button type="button" class="alt" onclick="loadExampleCost()">读取示例成本表</button><a href="data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,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" download>下载示例模板</a></div><div id="costImport"></div></div>
+    <div id="tripFeedback" class="wide" role="alert" hidden></div><div class="wide"><button type="button" id="tripSave" onclick="createTrip(event)">保存并生成团号</button></div>
+  </form>`;
+}
+async function tripAttachment(mode, action) {
+  const dbHandle=await new Promise((resolve,reject)=>{
+    let expired=false;
+    const timer=setTimeout(()=>{expired=true;reject(new Error('成本附件存储连接超时，请关闭其他原型页面后重试'));},10000);
+    const request=indexedDB.open('xingjie-trip-files',1);
+    request.onupgradeneeded=()=>request.result.createObjectStore('files');
+    request.onsuccess=()=>{clearTimeout(timer);if(expired){request.result.close();return;}request.result.onversionchange=()=>request.result.close();resolve(request.result);};
+    request.onerror=()=>{clearTimeout(timer);reject(request.error);};
+    request.onblocked=()=>{clearTimeout(timer);expired=true;reject(new Error('成本附件存储被其他页面占用，请关闭其他原型页面后重试'));};
+  });
+  try {
+    return await new Promise((resolve,reject)=>{
+      const transaction=dbHandle.transaction('files',mode);
+      const timer=setTimeout(()=>transaction.abort(),10000);
+      const request=action(transaction.objectStore('files'));
+      transaction.oncomplete=()=>{clearTimeout(timer);resolve(request.result);};
+      transaction.onabort=()=>{clearTimeout(timer);reject(transaction.error||new Error('附件保存超时或已中止'));};
+    });
+  } finally { dbHandle.close(); }
+}
+async function downloadTripAttachment(uid) {
+  try {
+    const file=await tripAttachment('readonly',store=>store.get(uid));
+    if (!file) return toast('当前浏览器没有该成本原文件');
+    const url=URL.createObjectURL(file);
+    const link=document.createElement('a');
+    link.href=url;
+    link.download=file.name;
+    link.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  } catch { toast('成本原文件读取失败'); }
+}
+let tripSaving=false;
+async function createTrip(event) {
+  event.preventDefault();
+  if(tripSaving)return;
+  if(!canCreateTrip())return tripFeedback('当前角色无建团权限','权限校验');
+  const invalid=[...document.getElementById('tripForm').elements].filter(el=>el.willValidate&&!el.validity.valid);
+  if(invalid.length){
+    const names=invalid.map(el=>el.getAttribute('aria-label')||el.closest('label')?.firstChild?.textContent?.trim()||el.id||'表单字段');
+    tripFeedback('请补齐或修正：'+names.join('、'),'字段校验');
+    const field=invalid[0];
+    const visible=field.tagName==='SELECT'?field.previousElementSibling?.querySelector('input'):field;
+    visible?.scrollIntoView({block:'center',behavior:'smooth'});visible?.focus();return;
+  }
+  diagnostic('建团保存','开始','校验');
+  if (!costDraft.file || !costDraft.confirmed || !costDraft.items.length) return tripFeedback('请先上传、核对并确认成本明细','成本校验');
+  const date=tripField('date').value;
+  const destination=chosenDestination(), base=currentTripBase();
+  if (!base) return tripFeedback('请补齐团号所需字段','团号校验');
+  const category=tripField('tripCategory').value;
+  const owner=tripField('tripOwner').value;
+  const record={
+    uid:typeof crypto.randomUUID==='function'?crypto.randomUUID():'trip-'+Date.now()+'-'+Math.random().toString(36).slice(2), dep:owner.slice(owner.indexOf(':')+1), owner, category,
+    dest:destination.name, destinationId:destination.key, destinationScope:tripField('destScope').value,
+    destinationCode:destination.code, departureDate:date,
+    sales:tripField('tripSales').value, operatorA:tripField('tripOperatorA').value, operatorB:tripField('tripOperatorB').value,
+    budget:costTotal(), file:costDraft.filename, costConfirmed:true, costVersion:1,
+    costItems:structuredClone(costDraft.items), costSheet:costDraft.sheet, costConfirmedAt:new Date().toISOString()
+  };
+  if (category==='RJ') record.foreignSource=tripField('foreignSource').value;
+  if (category==='COTA') {
+    record.platform=tripField('tripPlatform').value;
+    record.product=tripField('tripProduct').value;
+  }
+  const attachment=costDraft.file;
+  const button=tripField('tripSave');
+  tripSaving=true;
+  button.disabled=true;
+  button.textContent='保存中…';
+  let storedFile=false;
+  try {
+    tripFeedback('正在保存成本附件，请稍候…','保存附件',false);
+    diagnostic('建团保存','进行中','保存附件');
+    await tripAttachment('readwrite',store=>store.put(attachment,record.uid));
+    storedFile=true;
+    const commit=()=>{
+      const latest=JSON.parse(localStorage.getItem(KEY)) || db;
+      record.id=nextTripCode(base,latest.trips);
+      const updated={...latest,trips:[...latest.trips,record],
+        logs:[{t:'建立团档案 '+record.id,time:new Date().toLocaleString('zh-CN')},...latest.logs]};
+      localStorage.setItem(KEY,JSON.stringify(updated));
+      db=updated;
+    };
+    if (navigator.locks) await navigator.locks.request(KEY+'-create-trip',{signal:AbortSignal.timeout(10000)},commit);
+    else commit();
+  } catch (error) {
+    diagnostic('建团保存','失败','本地保存',error.name+': '+error.message);
+    if (storedFile) await tripAttachment('readwrite',store=>store.delete(record.uid)).catch(()=>{});
+    tripFeedback('保存失败：'+error.message+'。填写内容已保留，可在「待办与记录」导出诊断日志。','本地保存',false);
+    return;
+  } finally {
+    tripSaving=false;
+    button.disabled=false;
+    button.textContent='保存并生成团号';
+  }
+  costDraft=emptyCostDraft();
+  render();
+  if (page==='团档案') showTripCosts(record.id);
+  diagnostic('建团保存','成功','完成',record.id);
+  tripFeedback('建团成功 · 团号：'+record.id+' · 成本合计 ¥'+money(record.budget),'完成',false);
+  document.getElementById('tripFeedback')?.scrollIntoView({block:'center',behavior:'smooth'});
+}
+
+function tripFeedback(message,stage,record=true){
+ const el=document.getElementById('tripFeedback');
+ if(el){el.hidden=false;el.className='wide banner';el.textContent=message;}
+ if(record)diagnostic('建团保存','未通过',stage,message);
+ toast(message);
+}
+const originalCreateTrip=createTrip;
+createTrip=async function(event){try{await originalCreateTrip(event);}catch(error){diagnostic('建团保存','异常','运行',error.name+': '+error.message);tripFeedback('建团未完成：'+error.message+'。填写内容已保留，可导出诊断日志。','运行',false);}};
+</script><script>// Local XLSX extraction and explicit cost confirmation. No model calls.
+const COST_CATEGORIES=['住宿','交通','餐饮','门票','保险','签证','导服','其他'];
+const emptyCostDraft=()=>({filename:'',sheets:[],sheet:'',rows:[],items:[],confirmed:false,error:'',warnings:[]});
+let costDraft=emptyCostDraft(),importSerial=0;
+function categoryGuess(value){let t=String(value||'');return /酒店|住宿|hotel/i.test(t)?'住宿':/交通|用车|车费|transport/i.test(t)?'交通':/餐|meal/i.test(t)?'餐饮':/门票|ticket/i.test(t)?'门票':/保险|insurance/i.test(t)?'保险':/签证|visa/i.test(t)?'签证':/导游|导服|guide/i.test(t)?'导服':''}
+function xmlDoc(s){let d=new DOMParser().parseFromString(s,'application/xml');if(d.querySelector('parsererror'))throw Error('表格XML无法读取');return d}
+async function unzipXlsx(buffer){let view=new DataView(buffer),bytes=new Uint8Array(buffer),end=-1;
+ for(let i=bytes.length-22;i>=Math.max(0,bytes.length-65557);i--)if(view.getUint32(i,true)===0x06054b50){end=i;break}
+ if(end<0)throw Error('不是可读取的xlsx文件，请在Excel中另存为.xlsx');let count=view.getUint16(end+10,true),pos=view.getUint32(end+16,true),out={},total=0;
+ if(count>2000)throw Error('工作簿文件过于复杂，请另存一份仅包含成本明细的表格');
+ for(let i=0;i<count;i++){if(view.getUint32(pos,true)!==0x02014b50)throw Error('工作簿目录损坏');let flags=view.getUint16(pos+8,true),method=view.getUint16(pos+10,true),size=view.getUint32(pos+20,true),rawSize=view.getUint32(pos+24,true),nl=view.getUint16(pos+28,true),el=view.getUint16(pos+30,true),cl=view.getUint16(pos+32,true),offset=view.getUint32(pos+42,true),name=new TextDecoder().decode(bytes.slice(pos+46,pos+46+nl));pos+=46+nl+el+cl;
+ if(!/^xl\/.*\.xml$/.test(name)&&name!=='xl/_rels/workbook.xml.rels')continue;if(flags&1)throw Error('不支持加密工作簿');total+=rawSize;if(total>20*1024*1024)throw Error('解压内容超过20MB，请简化工作簿');let start=offset+30+view.getUint16(offset+26,true)+view.getUint16(offset+28,true),data=bytes.slice(start,start+size);
+ if(method===8){let stream=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));data=new Uint8Array(await new Response(stream).arrayBuffer())}else if(method!==0)throw Error('该表格压缩格式不支持');out[name]=new TextDecoder().decode(data)}return out}
+function colIndex(ref){let n=0;for(let c of ref.replace(/\d/g,''))n=n*26+c.charCodeAt(0)-64;return n-1}
+function colName(n){let s='';for(n++;n;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s;return s}
+async function readWorkbook(buffer){let zip=await unzipXlsx(buffer);if(!zip['xl/workbook.xml']||!zip['xl/_rels/workbook.xml.rels'])throw Error('缺少工作簿信息');let ss=zip['xl/sharedStrings.xml']?Array.from(xmlDoc(zip['xl/sharedStrings.xml']).getElementsByTagName('si')).map(x=>Array.from(x.getElementsByTagName('t')).map(t=>t.textContent).join('')):[];
+ let rels={};for(let r of xmlDoc(zip['xl/_rels/workbook.xml.rels']).getElementsByTagName('Relationship')){let target=r.getAttribute('Target');rels[r.getAttribute('Id')]=target.startsWith('/')?target.slice(1):'xl/'+target.replace(/^\.\//,'')}
+ return Array.from(xmlDoc(zip['xl/workbook.xml']).getElementsByTagName('sheet')).map(sh=>{let path=rels[sh.getAttribute('r:id')],content=zip[path];if(!content)return {name:sh.getAttribute('name'),rows:[]};let rows=[];for(let row of xmlDoc(content).getElementsByTagName('row')){let cells=[];for(let c of row.getElementsByTagName('c')){let idx=colIndex(c.getAttribute('r')),type=c.getAttribute('t'),v=c.getElementsByTagName('v')[0]?.textContent,inline=Array.from(c.getElementsByTagName('t')).map(t=>t.textContent).join('');cells[idx]=type==='s'?ss[+v]:type==='inlineStr'?inline:type==='e'?'[公式错误]':v??''}rows.push({number:+row.getAttribute('r'),cells})}return {name:sh.getAttribute('name'),rows}})}
+async function importCostFile(file){if(!file)return;let serial=++importSerial;costDraft=emptyCostDraft();costDraft.filename=file.name;costDraft.file=file;costDraft.error='正在读取文件…';renderImport();try{if(!/\.xlsx$/i.test(file.name))throw Error('当前支持.xlsx，请将原文件另存为.xlsx后上传');if(file.size>5*1024*1024)throw Error('文件超过5MB，请上传精简成本表');let sheets=await readWorkbook(await file.arrayBuffer());if(serial!==importSerial)return;costDraft.sheets=sheets;costDraft.error='';selectCostSheet(0)}catch(e){if(serial!==importSerial)return;costDraft.error='读取失败：'+e.message;renderImport()}}
+async function loadExampleCost(){try{let r=await fetch('example-cost.xlsx');if(!r.ok)throw Error('示例读取失败');await importCostFile(new File([await r.arrayBuffer()],'示例成本表.xlsx'))}catch(e){toast(e.message)}}
+function selectCostSheet(index){costDraft.sheetIndex=+index;let sheet=costDraft.sheets[index];costDraft.sheet=sheet?.name||'';costDraft.rows=sheet?.rows||[];costDraft.items=[];costDraft.confirmed=false;costDraft.header=Math.max(0,costDraft.rows.findIndex(r=>r.cells.some(v=>/项目|明细|服务内容/.test(v))&&r.cells.some(v=>/合计|总额|金额|价格|total/i.test(v))));const section = groundCostSection(costDraft.rows);
+costDraft.ground = section;
+setupMapping();
+renderImport();
+if (section || costDraft.mapping.amount >= 0) extractCosts()}
+function groundCostSection(rows) {
+  const start = rows.findIndex(r => /^附\s*1\s*[:：]\s*地接明[细細]/.test(String(r.cells[1] || '').trim()));
+  if (start < 0) return null;
+  const end = rows.findIndex((r, i) => i > start && /^行程[費费]用[總总][額额]/.test(String(r.cells[1] || '').trim()));
+  const header = rows.findIndex((r, i) => i > start && i < end && /[項项]目/.test(r.cells[1]) && /[價价]格|金[額额]/.test(r.cells[6]));
+  return header < 0 ? null : {header, end, total: parseAmount(rows[end].cells[6])};
+}
+function setupMapping(){
+if (costDraft.ground) {
+  costDraft.header = costDraft.ground.header;
+  costDraft.mapping = {category:1, name:2, amount:6};
+  return;
+}
+let cells=costDraft.rows[costDraft.header]?.cells||[],find=re=>cells.findIndex(v=>re.test(v));costDraft.mapping={category:find(/分类|类别|project/i),name:find(/明细|服务内容|项目名称|费用名称/),amount:find(/采购金额|成本金额|成本合计|total|金额|合计|总价/i)};if(costDraft.mapping.name<0){let idx=find(/项目/);costDraft.mapping.name=idx>=0?idx:0}if(costDraft.mapping.category===costDraft.mapping.name)costDraft.mapping.name++;costDraft.mapping.unit=find(/单价/);costDraft.mapping.qty=find(/数量|间\/位/);costDraft.mapping.times=find(/夜\/次|天数|day\/time/i)}
+function selectHeader(value){costDraft.header=+value;costDraft.items=[];costDraft.confirmed=false;setupMapping();renderImport()}
+function columnSelect(key,label){let max=Math.min(40,Math.max(1,...costDraft.rows.slice(0,100).map(r=>r.cells.length))),header=costDraft.rows[costDraft.header]?.cells||[];return `<label>${label}<select id="map-${key}" onchange="costDraft.mapping['${key}']=+this.value;costDraft.confirmed=false;costDraft.items=[];renderImport()"><option value="-1">${key==='category'?'无分类列（按明细建议）':'请选择列'}</option>${Array.from({length:max},(_,i)=>`<option value="${i}" ${costDraft.mapping[key]===i?'selected':''}>${colName(i)} · ${esc(header[i]||'无标题')}</option>`).join('')}</select></label>`}
+function renderImport(){let el=document.getElementById('costImport');if(!el)return;if(!costDraft.filename){el.innerHTML='<p class="note">请上传成本表，或读取示例体验完整识别流程。</p>';return}let sheets=costDraft.sheets;el.innerHTML=`<p><b>${esc(costDraft.filename)}</b> · 本地表格解析，非AI识别</p>${costDraft.error?`<p class="risk">${esc(costDraft.error)}</p>`:''}${costDraft.ground?`<p class="note">附1：地接明细 · 类别 B 列 / 明细 C 列 / 金额 G 列</p>${sheets.length>1?`<label>工作表<select onchange="selectCostSheet(this.value)">${sheets.map((sh,i)=>`<option value="${i}" ${i===costDraft.sheetIndex?'selected':''}>${esc(sh.name)}</option>`).join('')}</select></label>`:''}`:sheets.length?`<div class="grid"><label>工作表<select onchange="selectCostSheet(this.value)">${sheets.map((sh,i)=>`<option value="${i}" ${i===costDraft.sheetIndex?'selected':''}>${esc(sh.name)}</option>`).join('')}</select></label><label>表头所在行<select onchange="selectHeader(this.value)">${costDraft.rows.slice(0,50).map((r,i)=>`<option value="${i}" ${costDraft.header===i?'selected':''}>第${r.number}行 · ${esc(r.cells.filter(Boolean).join(' / ').slice(0,65))}</option>`).join('')}</select></label>${columnSelect('category','费用分类列')}${columnSelect('name','费用明细列')}${columnSelect('amount','采购成本金额列')}</div><p class="note">请确认选中采购成本列；含销售价／服务费的对客报价不能直接作为成本。分项模板的分类空白行继承上一类别；合计及人均行不重复计入。</p><button type="button" class="alt" onclick="extractCosts()">按以上列识别明细</button><details><summary>查看原表前30行</summary><div style="overflow:auto;max-height:280px"><table>${costDraft.rows.slice(0,30).map(r=>`<tr><td>第${r.number}行</td>${r.cells.map(v=>`<td>${esc(String(v).slice(0,140))}</td>`).join('')}</tr>`).join('')}</table></div></details>`:''}<div id="costRows"></div>`;renderCostRows()}
+function parseAmount(v){if(typeof v==='number')return v;let t=String(v??'').trim().replace(/[,，￥¥\s]/g,'').replace(/元$/,'');return /^-?\d+(\.\d+)?$/.test(t)?Number(t):NaN}
+function extractCosts(){let m=costDraft.mapping;if(m.name<0||m.amount<0||m.name===m.amount)return toast('请正确选择明细列和成本金额列');let prev='',items=[],warnings=[];const ground=costDraft.ground;for(let r of costDraft.rows.slice(costDraft.header+1,ground?.end)){let c=r.cells,raw=String(c[m.category]||'').trim();if(raw)prev=raw;let name=String(c[m.name]||(ground?'':raw)||'').trim();if(/合计|总计|总额|人均|subtotal|grand total/i.test(raw+' '+name))continue;let av=c[m.amount],amount=parseAmount(av);if(!name&&!String(av||'').trim())continue;if(!String(av??'').trim()&&!Number.isFinite(amount)){if(name&&c.some(x=>x!==''&&x!=null))warnings.push({row:r.number,itemId:'C'+r.number,message:'第'+r.number+'行未提取金额；如非成本明细可忽略',dismissed:false});if(!ground||!name)continue}let cat=ground?prev:categoryGuess(prev+' '+name),id='C'+r.number;items.push({id,name,category:cat,amount:Number.isFinite(amount)?amount:'',source:costDraft.sheet+'!'+colName(m.name)+r.number+' / '+colName(m.amount)+r.number,sourceCategory:prev,allowBlankName:!!ground&&/^[服][務务][費费]$/.test(raw),sourceAmount:String(av??''),include:true})}costDraft.items=items;costDraft.warnings=warnings;costDraft.confirmed=false;renderCostRows()}
+function renderCostRows(){
+  const el=document.getElementById('costRows');
+  if(!el)return;
+  const items=costDraft.items;
+  const groups=new Map();
+  items.forEach((item,index)=>{
+    const key=item.sourceCategory||'其他明细';
+    if(!groups.has(key))groups.set(key,[]);
+    groups.get(key).push({item,index});
+  });
+  el.innerHTML=`<h3>成本明细核对 · ${items.length} 条</h3>
+    ${items.length?'':'<p class="note">尚无明细。可以重新识别，也可以手工补录。</p>'}
+    ${Array.from(groups,([group,rows],i)=>`<details class="cost-group" ${i===0?'open':''}>
+      <summary>${esc(group)} · ${rows.length} 条 <span id="cost-subtotal-${i}"></span></summary>
+      <div class="cost-table"><table><thead><tr><th>计入</th><th>类别</th><th>明细</th><th>金额（元）</th><th>操作</th></tr></thead><tbody>
+      ${rows.map(({item:x,index:j})=>`<tr>
+      <td><input aria-label="计入第${j+1}条" style="width:auto" type="checkbox" ${x.include?'checked':''} onchange="changeCost(${j},'include',this.checked)"></td>
+      <td><input aria-label="第${j+1}条类别" value="${esc(x.category)}" oninput="changeCost(${j},'category',this.value)"></td>
+      <td><input aria-label="第${j+1}条明细" value="${esc(x.name)}" placeholder="${x.allowBlankName?'原表明细为空':''}" oninput="changeCost(${j},'name',this.value)"><small class="note">${esc(x.source)}</small></td>
+      <td><input aria-label="第${j+1}条金额" type="number" min="0" step="0.01" value="${esc(x.amount)}" oninput="changeCost(${j},'amount',this.value)"></td><td><button type="button" class="bad" aria-label="删除第${j+1}条明细" onclick="deleteCostRow(${j})">删除</button></td></tr>`).join('')}
+      </tbody></table></div></details>`).join('')}
+    <div id="costSummary"></div><div id="costWarnings">${costWarningHtml()}</div>
+    <div class="actions"><button type="button" class="alt" onclick="addCostRow()">手工补录明细</button></div>
+    <label><input id="costAck" type="checkbox" style="width:auto" ${costDraft.confirmed?'checked':''} onchange="invalidateCosts()"> 我已核对明细、金额及计入范围</label>
+    <div class="actions">
+      ${Number.isFinite(costDraft.ground?.total)?`<span class="muted">原表合计 ¥${money(costDraft.ground.total)}</span>`:''}
+      <b>当前明细合计 ¥<span id="costTotal" aria-live="polite"></span></b>
+      <button type="button" onclick="confirmCosts()">确认成本明细</button>
+      <span id="costConfirmed" class="tag" aria-live="polite">${costDraft.confirmed?'已确认，可保存建团':'待确认'}</span>
+    </div>`;
+  refreshCostTotals();
+}
+function costTotal(items=costDraft.items){
+  return items.filter(x=>x.include).reduce((n,x)=>n+Math.round((Number(x.amount)||0)*100),0)/100;
+}
+function refreshCostTotals(){
+  const groups=new Map();
+  for(const item of costDraft.items){
+    const key=item.sourceCategory||'其他明细';
+    if(!groups.has(key))groups.set(key,[]);
+    groups.get(key).push(item);
+  }
+  Array.from(groups.values()).forEach((items,i)=>{
+    document.getElementById('cost-subtotal-'+i).textContent='¥'+money(costTotal(items));
+  });
+  document.getElementById('costTotal').textContent=money(costTotal());
+  const summary=document.getElementById('costSummary');if(summary)summary.innerHTML=costSummaryHtml(costDraft.items.filter(x=>x.include));
+  const warnings=document.getElementById('costWarnings');if(warnings)warnings.innerHTML=costWarningHtml();
+}
+function invalidateCosts(){
+  costDraft.confirmed=false;
+  document.getElementById('costConfirmed').textContent='待确认';
+}
+function changeCost(i,key,value){
+  costDraft.items[i][key]=value;
+  invalidateCosts();
+  document.getElementById('costAck').checked=false;
+  refreshCostTotals();
+}
+function deleteCostRow(index){
+  if(!Number.isInteger(index)||index<0||index>=costDraft.items.length)return;
+  costDraft.items.splice(index,1);
+  costDraft.confirmed=false;
+  renderCostRows();
+  toast('已删除明细，请重新核对并确认成本');
+}
+function addCostRow(){costDraft.items.push({id:'M'+Date.now(),name:'',category:'',amount:'',source:'人工补录',sourceAmount:'',sourceCategory:'',include:true});costDraft.confirmed=false;renderCostRows()}
+function confirmCosts(){let items=costDraft.items.filter(x=>x.include);if(!items.length)return toast('至少需要一条有效成本明细');if(items.some(x=>!x.category.trim()||(!x.allowBlankName&&!x.name.trim())||String(x.amount??'').trim()===''||!Number.isFinite(+x.amount)||+x.amount<0))return toast('请补齐每条成本的分类、明细和有效金额（可为0，不可为空或负数）');if(!document.getElementById('costAck').checked)return toast('请先勾选采购成本核对声明');costDraft.items=items.map(x=>({...x,amount:Math.round(+x.amount*100)/100}));costDraft.confirmed=true;renderCostRows();document.getElementById('costAck').checked=true;document.getElementById('costConfirmed').textContent='已确认，可保存建团';toast('成本清单已确认，保存建团后生效')}
+function showTripCosts(id){let t=getTrip(id),el=document.getElementById('savedCosts');el.innerHTML=t.costConfirmed?`<h3>${esc(id)} · 成本版本 V${t.costVersion}</h3>${costSummaryHtml(t.costItems)}<p>附件：${esc(t.file)} ${t.uid?`<button type="button" class="alt" onclick="downloadTripAttachment('${t.uid}')">下载原文件</button>`:""} · 已核对合计 ¥${money(t.budget)}</p><table><tr><th>分类</th><th>明细</th><th>成本</th><th>原表依据</th></tr>${t.costItems.map(x=>`<tr><td>${esc(x.category)}</td><td>${esc(x.name)}</td><td>¥${money(x.amount)}</td><td>${esc(x.source)}</td></tr>`).join('')}</table>`:'<p class="risk">历史示例团尚无已确认成本明细，请新建团并上传成本表。旧手填预算不会作为成本核对依据。</p>'}
+function paymentCostOptions(){let t=getTrip(document.getElementById('trip').value),el=document.getElementById('costItem');el.innerHTML='<option value="">新增成本／未匹配</option>'+(t?.costConfirmed?(t.costItems||[]).map(x=>`<option value="${esc(x.id)}">${esc(x.category)} · ${esc(x.name||x.category)} · ¥${money(x.amount)}</option>`).join(''):'');paymentCostPreview()}
+function paymentCostPreview(){let trip=document.getElementById('trip');if(!trip)return;let selected=getTrip(trip.value);let a={trip:selected?.id,tripUid:selected?.uid,costId:document.getElementById('costItem').value,amount:+document.getElementById('amount').value||0},check=checkPayment(a);document.getElementById('costHint').textContent='分次付款每次填本次实际金额；系统同时核对同明细已付及审批中金额。';document.getElementById('paymentCheck').innerHTML=checkPanel(check)}
+function checkPayment(a){let t=getTrip(a.tripUid||a.trip),messages=[],item=t?.costItems?.find(x=>x.id===a.costId),v=t?.costVersion||null,used=0,risk=false;if(!t?.costConfirmed){risk=true;messages.push('无法判断：该团尚无已确认成本清单，不能按原手填预算判定通过。')}else if(!item){risk=true;messages.push('新增成本／未匹配：本次申请未关联已确认成本明细。')}else{used=db.apps.filter(x=>x.id!==a.id&&(typeof sameTrip==='function'?sameTrip(x,a):x.trip===a.trip)&&x.costId===a.costId&&!x.special).reduce((n,x)=>n+Number(x.amount),0);let cumulative=Math.round((used+a.amount)*100)/100;risk=cumulative>item.amount;messages.push('对应 '+item.category+' / '+item.name+'；成本额度 ¥'+money(item.amount)+'；其他已付及审批中 ¥'+money(used)+'；本次 ¥'+money(a.amount)+'；累计 ¥'+money(cumulative)+'。');messages.push(risk?'超出该明细成本额度 ¥'+money(cumulative-item.amount)+'，需主管确认风险。':'金额在该明细成本额度内，仍需主管审核。')}return {risk,messages,version:v,source:item?.source||'',time:new Date().toISOString(),engine:'规则核对（未接AI）'}}
+function checkPanel(c,submitted){return `<div class="banner"><b>付款辅助检查 · ${c.risk?'需主管确认风险':'金额规则核对完成'}</b><p>${c.messages.map(esc).join('<br>')}</p><div class="note">依据：${c.version?'已确认成本 V'+c.version+' · '+esc(c.source||'无匹配明细'):'无已确认成本版本'}。当前为表格解析＋金额规则核对，未接AI模型；不判断服务范围、价格合理性或付款依据真伪，不自动批准。${submitted?' 提交检查时间：'+esc(new Date(submitted.time).toLocaleString('zh-CN')):''}</div>${submitted&&submitted.messages.join()!==c.messages.join()?`<details><summary>查看提交时检查快照</summary>${submitted.messages.map(esc).join('<br>')}</details>`:''}</div>`}
+
+function costWarningHtml(){return costDraft.warnings.map((warning,index)=>{
+ if(typeof warning==='string')return '';
+ if(warning.dismissed)return '';
+ const item=costDraft.items.find(x=>x.id===warning.itemId);
+ if(item&&(!item.include||String(item.amount??'').trim()!==''&&Number.isFinite(Number(item.amount))&&Number(item.amount)>=0))return '';
+ if(!item&&warning.hadItem)return '';
+ if(item)warning.hadItem=true;
+ return `<div class="banner">${esc(warning.message)} <button type="button" class="alt" onclick="dismissCostWarning(${index})">忽略此行</button></div>`;
+}).join('');}
+function dismissCostWarning(index){costDraft.warnings[index].dismissed=true;document.getElementById('costWarnings').innerHTML=costWarningHtml();}
+
+function aggregateCostItems(items){
+ const categories=new Map();let totalCents=0;
+ for(const item of items){const cents=Math.round((Number(item.amount)||0)*100);totalCents+=cents;const category=String(item.category||'未分类').trim()||'未分类';categories.set(category,(categories.get(category)||0)+cents);}
+ return {total:totalCents/100,categories:[...categories].map(([name,cents])=>({name,amount:cents/100,share:totalCents?cents/totalCents:0}))};
+}
+function costSummaryHtml(items){
+ const summary=aggregateCostItems(items);
+ return `<section class="cost-overview"><div class="cost-grand"><span>行程总成本</span><strong>¥${money(summary.total)}</strong><small>按当前计入明细汇总</small></div><div class="cost-categories">${summary.categories.map(x=>`<div class="cost-category"><span>${esc(x.name)}</span><strong>¥${money(x.amount)}</strong><small>占总成本 ${(x.share*100).toFixed(1)}%</small></div>`).join('')||'<p class="muted">暂无计入明细</p>'}</div></section>`;
+}
+</script><script>render();</script><script>// Keep native values and change handlers as the single source of truth.
+(() => {
+ let count=0;
+ function enhance(select){
+  if(select.dataset.searchable)return;
+  select.dataset.searchable='true';
+  const box=document.createElement('span'),input=document.createElement('input'),arrow=document.createElement('button'),list=document.createElement('span');
+  box.className='search-select';input.type='text';input.autocomplete='off';input.setAttribute('role','combobox');input.setAttribute('aria-autocomplete','list');input.setAttribute('aria-expanded','false');
+  list.id='select-options-'+(++count);list.setAttribute('role','listbox');list.hidden=true;input.setAttribute('aria-controls',list.id);
+  const label=select.closest('label');input.setAttribute('aria-label',(label?.firstChild?.textContent||'请选择').trim());
+  arrow.type='button';arrow.className='select-arrow';arrow.textContent='⌄';arrow.setAttribute('aria-label','展开选项');arrow.tabIndex=-1;
+  select.before(box);box.append(input,arrow,list);select.classList.add('native-search-select');select.tabIndex=-1;
+  const text=()=>select.selectedOptions[0]?.textContent||'';
+  function close(){list.hidden=true;input.value=text();input.setAttribute('aria-expanded','false');}
+  function sync(){input.disabled=select.disabled;arrow.disabled=select.disabled;input.value=text();input.setAttribute('aria-required',String(select.required));if(select.disabled)close();}
+  function open(query=''){
+   if(select.disabled)return;
+   list.replaceChildren();
+   Array.from(select.options).filter(o=>!o.disabled&&o.textContent.toLowerCase().includes(query.trim().toLowerCase())).forEach(o=>{
+    const button=document.createElement('button');button.type='button';button.setAttribute('role','option');button.setAttribute('aria-selected',String(o.selected));button.textContent=(o.parentElement.tagName==='OPTGROUP'?o.parentElement.label+' · ':'')+o.textContent;
+    button.onmousedown=e=>e.preventDefault();button.onclick=e=>{e.preventDefault();select.value=o.value;select.dispatchEvent(new Event('change',{bubbles:true}));close();input.focus();};list.append(button);
+   });
+   if(!list.children.length){const empty=document.createElement('span');empty.className='empty';empty.textContent='无匹配选项';list.append(empty);}
+   list.hidden=false;input.setAttribute('aria-expanded','true');
+  }
+  input.addEventListener('focus',()=>open());input.addEventListener('click',()=>open());input.addEventListener('input',()=>open(input.value));
+  input.addEventListener('keydown',e=>{if(e.key==='Escape'){close();e.preventDefault();}if(e.key==='ArrowDown'){if(list.hidden)open();list.querySelector('button')?.focus();e.preventDefault();}if(e.key==='Enter'){if(!list.hidden){list.querySelector('button')?.click();e.preventDefault();}}});
+  list.addEventListener('keydown',e=>{const buttons=[...list.querySelectorAll('button')],i=buttons.indexOf(document.activeElement);if(e.key==='ArrowDown'||e.key==='ArrowUp'){buttons[(i+(e.key==='ArrowDown'?1:-1)+buttons.length)%buttons.length]?.focus();e.preventDefault();}if(e.key==='Escape'){close();input.focus();close();}});
+  box.addEventListener('focusout',()=>setTimeout(()=>{if(!box.contains(document.activeElement))close();},0));
+  arrow.onclick=e=>{e.preventDefault();if(list.hidden){input.focus();open();}else close();};
+  select.addEventListener('change',sync);select.addEventListener('invalid',()=>{input.focus();input.setCustomValidity('请从下拉选项中选择');input.reportValidity();input.setCustomValidity('');});
+  new MutationObserver(sync).observe(select,{childList:true,subtree:true,attributes:true});sync();
+ }
+ const scan=()=>document.querySelectorAll('select:not([data-searchable])').forEach(enhance);
+ new MutationObserver(scan).observe(document.body,{childList:true,subtree:true});scan();
+})();
+</script></html>
