@@ -1,12 +1,14 @@
 <!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>行界财务工作台</title><style>
 [hidden]{display:none!important}*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#243348;font:14px system-ui,'Microsoft Yahei',sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:7px;padding:10px 16px;background:#17665b;color:white}button.alt{background:#e9eef3;color:#31445a}button.bad{background:#a94949}aside{position:fixed;width:220px;height:100vh;background:#132d35;color:#c2d2d5;padding:28px 20px}h1{font-size:22px;color:white;margin:0 0 7px}aside small{color:#8eaeb4}nav{margin-top:35px}nav button{width:100%;text-align:left;background:transparent;margin:6px 0;color:#c2d2d5}nav button.active{background:#285057;color:white}main{margin-left:220px;padding:28px 36px;max-width:1450px}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}.muted{color:#7a8798}h2{font-size:25px;margin:8px 0}h3{font-size:17px}.banner{background:#fff4dc;color:#85641d;padding:12px 16px;border-radius:8px;margin:22px 0}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card,.panel{background:white;border:1px solid #e4e9ef;border-radius:12px;padding:22px;margin-bottom:20px}.num{font-size:28px;margin-top:10px;font-weight:650}.panelhead{display:flex;align-items:center;justify-content:space-between}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}label{display:block;color:#526177;font-size:13px}input,select,textarea{width:100%;border:1px solid #d6dee8;border-radius:7px;padding:10px;margin-top:7px;background:white;color:#243348}textarea{min-height:80px}.wide{grid-column:1/-1}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}table{border-collapse:collapse;width:100%;text-align:left}th,td{padding:15px 10px;border-bottom:1px solid #edf0f4}th{color:#7c899a;font-size:12px;font-weight:500}.tag{display:inline-block;background:#edf5f1;color:#276a58;padding:5px 9px;border-radius:5px;font-size:12px}.risk{color:#ba4343;font-size:12px;font-style:italic}.steps{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.step{padding:9px 12px;border-radius:6px;background:#f0f3f7}.step.now{background:#e0f0e9;color:#17665b}.log{border-left:2px solid #dbe7e4;padding:8px 15px;margin:10px 0}.empty{text-align:center;padding:35px;color:#8290a0}#toast{position:fixed;bottom:25px;right:25px;background:#132d35;color:white;padding:14px 22px;border-radius:8px;display:none}.note{font-size:12px;color:#8390a0;margin-top:10px}a{color:#17665b}@media(max-width:800px){aside{position:static;width:100%;height:auto;padding:18px}nav{margin-top:10px;display:flex;overflow:auto}nav button{white-space:nowrap}main{margin:0;padding:20px}.cards{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.top{flex-wrap:wrap}.panel{overflow:auto}}
 .cost-group{margin:8px 0;border:1px solid #dce5ee;border-radius:8px;overflow:hidden}.cost-group summary{background:#edf4fa;padding:10px 12px;cursor:pointer}.cost-group summary span{float:right;font-variant-numeric:tabular-nums}.cost-table{overflow:auto}.cost-table table{min-width:430px}.cost-table td:nth-child(4){width:125px}.cost-table td:last-child{width:80px;white-space:nowrap}.cost-table td:last-child button{padding:7px 12px}.cost-table td:nth-child(2){width:110px}.cost-table input[type=number]{text-align:right}.cost-table small{display:block}.personnel-heading{border-top:1px solid #dce5ee;margin-top:8px;padding-top:16px}.personnel-heading h3{margin:0}.search-select{position:relative;display:block}.search-select input{padding-right:32px}.search-select .select-arrow{position:absolute;right:4px;top:3px;padding:6px;background:transparent;color:#53687b;border:0}.search-select [role=listbox]{position:absolute;top:100%;left:0;right:0;z-index:100;background:white;border:1px solid #cbd7e3;border-radius:8px;box-shadow:0 8px 24px #1232;max-height:240px;overflow:auto}.search-select [role=option]{display:block;width:100%;text-align:left;background:white;color:#25384b;border:0;border-radius:0;padding:9px 12px}.search-select [role=option]:hover,.search-select [role=option]:focus{background:#eaf3fc}.search-select .empty{padding:12px;color:#778}.native-search-select{position:absolute!important;width:1px!important;height:1px!important;opacity:0;pointer-events:none;padding:0!important} .cost-overview{margin:16px 0;padding:18px;border:1px solid #dce5ee;border-radius:10px;background:#f7fafb}.cost-grand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:16px}.cost-grand strong{font-size:26px;color:#17665b}.cost-grand small,.cost-category small{color:#7a8798}.cost-categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}.cost-category{display:flex;flex-direction:column;gap:7px;background:white;border:1px solid #e4e9ef;border-radius:8px;padding:12px}.cost-category strong{font-size:18px} </style><style>.table-scroll{overflow:auto}.table-scroll table{min-width:660px}.change-editor,.change-detail{margin:24px 0;padding-top:20px;border-top:1px solid #dce5ee}.change-editor textarea,.change-detail textarea{min-height:85px}.change-totals{display:flex;gap:24px;flex-wrap:wrap;background:#f1f7f6;padding:18px;border-radius:10px;margin:18px 0}.change-totals span{display:flex;flex-direction:column;gap:8px}.change-totals b{font-size:22px;color:#17665b}.change-mapping{padding:14px;background:#f7fafb;border:1px solid #dce5ee;border-radius:10px;margin-bottom:18px}.version-history{margin-top:24px;padding:15px;border:1px solid #dce5ee;border-radius:10px}.version-history details{padding:10px}.version-history summary{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}.change-editor #changeFeedback{color:#a94949}#savedCosts{margin-bottom:18px}
-</style><aside><h1>行界 · 财务</h1><small>FINANCE WORKSPACE</small><nav id="nav"></nav><div class="note">最小闭环原型 · v0.4<br>演示数据仅保存在当前浏览器</div></aside><main><div class="top"><div><span class="muted">行界旅业 / 财务协同</span><h2 id="title"></h2></div><label>当前演示角色<select id="role" onchange="activeRole=this.value;render()"><option>操作 / 江婧婕</option><option>销售 / 示例销售员</option><option>主管 / 刘婷茹</option><option>财务 / 杜川黔</option><option>总经理 / 刘婷茹</option></select></label></div><div class="banner">模拟环境：角色切换用于流程走查，不是真实登录。成本表在本浏览器解析，付款采用规则核对；尚未接入AI模型、真实付款及飞书。</div><div id="app"></div></main><div id="toast" role="status"></div>
+.archive-hint{background:#edf6f3;border:1px solid #d6e8df;border-radius:9px;padding:14px 18px;color:#286759}.archive-hint p{margin-bottom:0}#paymentForm details{border:1px solid #e0e7ed;border-radius:9px;padding:14px}#paymentForm summary{cursor:pointer;color:#3c6571}#paymentForm .note{display:block;line-height:1.65}#paymentForm h3{margin:0}.payment-facts{line-height:1.8;overflow-wrap:anywhere}#p-errors ul{padding-left:20px}.table-scroll{overflow:auto}#archiveForm{margin-top:22px}#paymentForm input[type=checkbox]{margin-right:6px}.payment-facts button{padding:5px 9px}
+.receipt-section{background:#f7fafb;border:1px solid #dce5eb;border-radius:10px;padding:18px;margin:8px 0}.receipt-section h3{margin:0 0 14px}.qr-preview{display:block;margin:12px 0}.qr-preview img{display:block;max-width:220px;max-height:220px;object-fit:contain;background:#fff;border:1px solid #dce5eb;padding:8px}#settlementForm input[type=checkbox]{width:auto;min-width:18px}#settlementForm table input[type=number]{min-width:120px}.receipt-section small{display:block;line-height:1.6}#settleError:empty{display:none}
+</style><aside><h1>行界 · 财务</h1><small>FINANCE WORKSPACE</small><nav id="nav"></nav><div class="note">付款规则新版 · v2.0<br>演示数据仅保存在当前浏览器</div></aside><main><div class="top"><div><span class="muted">行界旅业 / 财务协同</span><h2 id="title"></h2></div><label>当前演示角色<select id="role" onchange="activeRole=this.value;render()"><option>操作 / 江婧婕</option><option>销售 / 示例销售员</option><option>主管 / 刘婷茹</option><option>财务 / 杜川黔</option><option>总经理 / 刘婷茹</option></select></label></div><div class="banner">模拟环境：角色切换用于流程走查，不是真实登录。成本表在本浏览器解析，付款采用规则核对；尚未接入AI模型、真实付款及飞书。</div><div id="app"></div></main><div id="toast" role="status"></div>
 <script>
-const KEY='xingjie-demo-v1',esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let db;try{db=JSON.parse(localStorage.getItem(KEY))}catch{};db??={trips:[{id:'DZ-XJ-20261101',dep:'综合定制部',dest:'新疆',budget:20000,file:'示例成本报价表.xlsx'}],apps:[],logs:[],balance:100000,todos:[]};let page='概览',activeRole='操作 / 江婧婕',selected=null;
+const KEY='xingjie-finance-rules-v2',esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));let db;try{db=JSON.parse(localStorage.getItem(KEY))}catch{};db??={trips:[],apps:[],logs:[],balance:100000,todos:[]};let page='概览',activeRole='操作 / 江婧婕',selected=null;
 function save(){localStorage.setItem(KEY,JSON.stringify(db))}function log(t){db.logs.unshift({t,time:new Date().toLocaleString('zh-CN')});save()}function toast(t){let el=document.getElementById('toast');el.textContent=t;el.style.display='block';setTimeout(()=>el.style.display='none',3000)}function go(p){page=p;render()}const money=n=>Number(n).toLocaleString('zh-CN',{minimumFractionDigits:2});const statuses=['主管审核','财务审核','总经理审核','待付款','付款完成'];function state(a){return a.special||statuses[a.stage]}function getTrip(id){return db.trips.find(t=>t.id===id||t.uid===id)}function table(){return db.apps.length?`<table><tr><th>申请单 / 团号</th><th>用途 / 供应商</th><th>金额</th><th>当前状态</th><th></th></tr>${db.apps.map(a=>`<tr><td>${esc(a.id)}<div class="note">${esc(a.trip)}</div></td><td>${esc(a.note)}<div class="note">${esc(a.vendor)}</div></td><td>¥${money(a.amount)}</td><td><span class="tag">${state(a)}</span></td><td><button class="alt" onclick="selected='${a.id}';go('审批与付款')">查看</button></td></tr>`).join('')}</table>`:'<div class="empty">还没有付款申请。先创建一笔，体验完整审批流程。</div>'}
 function render(){document.getElementById('title').textContent=page;document.getElementById('nav').innerHTML=['概览','团档案','申请付款','审批与付款','待办与记录'].map(x=>`<button class="${x===page?'active':''}" onclick="go('${x}')">${x}</button>`).join('');let html='';
-if(page==='概览')html=`<div class="cards">${[['已建团',db.trips.length],['审批中',db.apps.filter(a=>a.stage<3&&!a.special).length],['待付款',db.apps.filter(a=>a.stage===3&&!a.special).length],['模拟账户余额','¥'+money(db.balance)]].map(([k,v])=>`<div class="card"><span class="muted">${k}</span><div class="num">${v}</div></div>`).join('')}</div><div class="panel"><h3>从一笔付款开始走查</h3><p class="muted">建团 → 操作提报 → 主管审核 → 财务审核 → 总经理审核 → 财务执行</p><div class="actions"><button onclick="go('团档案')">新建旅游团</button><button class="alt" onclick="go('申请付款')">使用示例团申请付款</button><button class="alt" onclick="seedApp()">载入一笔演示申请</button></div></div><div class="panel"><h3>最近付款申请</h3>${table()}</div>`;
+if(page==='概览')html=`<div class="cards">${[['已建团',db.trips.length],['审批中',db.apps.filter(a=>a.stage<3&&!a.special).length],['待付款',db.apps.filter(a=>a.stage===3&&!a.special).length],['模拟账户余额','¥'+money(db.balance)]].map(([k,v])=>`<div class="card"><span class="muted">${k}</span><div class="num">${v}</div></div>`).join('')}</div><div class="panel"><h3>从一笔付款开始走查</h3><p class="muted">建团 → 操作提报 → 主管审核 → 财务审核 → 总经理审核 → 财务执行</p><div class="actions"><button onclick="go('团档案')">新建业务团档</button><button class="alt" onclick="go('申请付款')">发起付款申请</button><button class="alt" onclick="seedApp()">载入虚构测试团档</button></div></div><div class="panel"><h3>最近付款申请</h3>${table()}</div>`;
 if(page==='团档案')html=`<div class="panel"><h3>新建团档案</h3>${tripForm()}</div><div class="panel"><h3>团档案</h3><div id="savedCosts"></div><table><tr><th>团号</th><th>归属 / 目的地</th><th>已确认成本</th><th>成本附件 / 清单</th></tr>${db.trips.map(t=>`<tr><td>${esc(t.id)}</td><td>${esc(t.dep)} / ${esc(t.dest)}</td><td>${t.costConfirmed?'¥'+money(t.budget):'待导入核对'}</td><td>${esc(t.file)}<br><button type="button" class="alt" onclick="showTripCosts('${t.id}')">查看成本清单</button></td></tr>`).join('')}</table></div>`;
 if(page==='申请付款')html=`<div class="panel"><h3>团相关付款申请</h3>${!activeRole.startsWith('操作')?'<p class="risk">请切换到操作角色填写申请。</p>':`<form onsubmit="submitApp(event)" class="grid"><label>财务方向<input disabled value="付款"></label><label>关联方式<input disabled value="关联旅游团"></label><label class="wide">团号<select id="trip" required onchange="paymentCostOptions()">${db.trips.map(t=>`<option value="${esc(tripReference(t))}">${esc(t.id)}</option>`).join('')}</select></label><label>费用类别<input disabled value="定制团 · 从档案带出"></label><label class="wide">对应成本明细<select id="costItem" onchange="paymentCostPreview()"></select><div id="costHint" class="note"></div></label><label>用途 / 备注<textarea id="note" required placeholder="如：酒店30%预付款"></textarea></label><label>金额（人民币）<input id="amount" oninput="paymentCostPreview()" type="number" min="0.01" step="0.01" required></label><label>供应商<select id="vendor"><option>示例酒店 · 已准入</option><option>示例车队 · 已准入</option></select></label><label>对方收款方式<select disabled><option>银行转账</option></select></label><label>对方收款信息<input disabled value="供应商测试账户 · 尾号0001"><div class="note">模拟账号，不可用于真实付款。</div></label><label class="wide">付款依据<input type="file" id="basis"><span class="note"><input id="demoBasis" type="checkbox" style="width:auto"> 使用演示账单（模拟附件）</span></label><label class="risk">是否未收款先垫款<select id="advance" onchange="document.getElementById('cancelwrap').hidden=this.value!=='是'"><option>否</option><option>是</option></select></label><label id="cancelwrap" hidden class="risk">最晚取消时间<input type="datetime-local" id="cancel"></label><div id="paymentCheck" class="wide"></div><div class="wide"><button>提交付款审批</button></div></form>`}</div>`;
 if(page==='审批与付款'){let a=db.apps.find(x=>x.id===selected);html=`<div class="panel"><h3>申请列表</h3>${table()}</div>`;if(a){let expected=['主管','财务','总经理','财务'][a.stage],can=activeRole.startsWith(expected)&&!a.special&&(!(a.stage===0&&a.reviewer)||activeRole===a.reviewer),spent=db.apps.filter(x=>sameTrip(x,a)&&x.stage===4).reduce((s,x)=>s+x.amount,0),check=checkPayment(a),risk=check.risk;html+=`<div class="panel"><div class="panelhead"><h3>${esc(a.id)}</h3><span class="tag">${state(a)}</span></div><div class="steps">${statuses.map((x,i)=>`<span class="step ${i===a.stage?'now':''}">${i+1} ${x}</span>`).join('')}</div><p>${esc(a.note)} · ${esc(a.trip)} · ¥${money(a.amount)}</p><p class="muted">成本明细：${esc(a.costName||'未关联')}　供应商：${esc(a.vendor)}　依据：${esc(a.basis)}</p>${checkPanel(check,a.check)}${a.stage<3&&!a.special?`<p>当前需要：<b>${expected}</b>处理。当前角色：${activeRole}</p>${can?`<label>审核意见<input id="opinion" placeholder="退回、拒绝时填写原因"></label>${risk&&a.stage===0?'<label><input id="riskack" type="checkbox" style="width:auto"> 已查看并确认本次成本风险</label>':''}<div class="actions"><button onclick="approve('${a.id}',${risk})">同意</button><button class="alt" onclick="reject('${a.id}','退回修改')">退回修改</button><button class="bad" onclick="reject('${a.id}','已拒绝')">拒绝申请</button></div>`:''}${activeRole.startsWith('操作')?`<div class="actions"><button class="alt" onclick="withdraw('${a.id}')">撤回申请</button></div>`:''}`:''}${a.stage===3&&!a.special?can?`<h3>财务付款执行</h3><form onsubmit="pay(event,'${a.id}')" class="grid"><label>结算方式<input disabled value="真实账户支付（模拟）"></label><label>公司付款账户<select id="account"><option>测试公司银行账户</option></select></label><label>实际付款日期<input type="date" id="paydate" required></label><label>付款水单<input type="file" id="slip"><span class="note"><input type="checkbox" id="mockslip" style="width:auto"> 使用演示水单（模拟附件）</span></label><label class="risk wide">跨月分摊设置<select disabled><option>本次团成本不做跨月分摊</option></select></label><div><button>确认付款完成（模拟）</button></div></form>`:'<p class="muted">全部审批通过，请切换财务角色执行付款。</p>':''}${a.stage===4?`<p class="tag">付款完成 · ${esc(a.account)} · ${esc(a.paydate)}</p><p>水单文件：${esc(a.slip)}（仅保存文件名）</p>`:''}${['退回修改','已撤回'].includes(a.special)&&activeRole.startsWith('操作')?`<form onsubmit="resubmit(event,'${a.id}')"><label>修改用途<textarea id="editnote" required>${esc(a.note)}</textarea></label><label>修改金额<input id="editamount" type="number" min="0.01" step="0.01" required value="${a.amount}"></label><div class="actions"><button>保留单号，重新提交首节点</button></div></form>`:''}<h3>申请轨迹</h3>${a.history.map(x=>`<div class="log">${esc(x)}</div>`).join('')}</div>`}}
@@ -34,7 +36,7 @@ window.addEventListener('error',event=>diagnostic('页面运行','异常','前�
 window.addEventListener('unhandledrejection',event=>diagnostic('异步操作','异常','前端',String(event.reason?.message||event.reason)));
 </script><script>const TRIP_CATEGORIES = {
   DZ:'定制团', RJ:'定制入境团', DL:'代理团', DF:'单订房', DC:'单订交通',
-  JP:'单机票', QZ:'单签证', BX:'单保险', COTA:'国内平台订单'
+  JP:'单机票', QZ:'单签证', BX:'单保险', COTA:'国内平台订单', OVERSEAS:'海外平台订单'
 };
 const TRIP_PLATFORMS = {XC:'携程', FZ:'飞猪', RB:'小红书'};
 const TRIP_PRODUCTS = {HH:'花火大会', DL:'代理团', BCY:'包车定制', QZ:'签证', MP:'门票', QT:'其他单项'};
@@ -70,7 +72,9 @@ function updateDestinations() {
 }
 function updateTripCategory() {
   const category = tripField('tripCategory').value;
-  for (const [id,visible] of [['foreignSource',category==='RJ'],['tripPlatform',category==='COTA'],['tripProduct',category==='COTA']]) {
+  const overseas=category==='OVERSEAS';
+  if(tripField('tripPlatform').dataset.kind!==category){tripField('tripPlatform').innerHTML=tripOptions(Object.entries(overseas?OVERSEAS_PLATFORMS:TRIP_PLATFORMS));tripField('tripProduct').innerHTML=tripOptions(Object.entries(overseas?OVERSEAS_PRODUCTS:TRIP_PRODUCTS));tripField('tripPlatform').dataset.kind=category;}
+  for (const [id,visible] of [['foreignSource',category==='RJ'],['tripPlatform',['COTA','OVERSEAS'].includes(category)],['tripProduct',['COTA','OVERSEAS'].includes(category)],['tripOrder',['COTA','OVERSEAS'].includes(category)]]) {
     const field = tripField(id);
     field.closest('label').hidden = !visible;
     field.disabled = !visible;
@@ -81,8 +85,9 @@ function updateTripCategory() {
 }
 function tripBaseCode(category,destCode,date,platform,product) {
   if (!Object.hasOwn(TRIP_CATEGORIES,category) || !destCode || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return '';
+  if (category==='OVERSEAS' && (!Object.hasOwn(OVERSEAS_PLATFORMS,platform)||!Object.hasOwn(OVERSEAS_PRODUCTS,product))) return '';
   if (category==='COTA' && (!Object.hasOwn(TRIP_PLATFORMS,platform)||!Object.hasOwn(TRIP_PRODUCTS,product))) return '';
-  const components = category==='COTA'?[category,platform,product]:[category,destCode];
+  const components = category==='OVERSEAS'?[platform,product,destCode]:category==='COTA'?[category,platform,product]:[category,destCode];
   return [...components,date.replaceAll('-','')].join('-');
 }
 function nextTripCode(base,trips) {
@@ -106,12 +111,12 @@ function tripForm() {
   const groups = [['部门',TRIP_DEPARTMENTS],['项目',TRIP_PROJECTS]].map(([group,items])=>
     `<optgroup label="${group}">${items.map(x=>`<option value="${group}:${esc(x)}">${esc(x)}</option>`).join('')}</optgroup>`).join('');
   return `<form id="tripForm" novalidate onsubmit="createTrip(event)" class="grid">
-    <h3 class="wide">团基础信息</h3>
+    <h3 class="wide">团基础信息</h3><p class="wide note">有预算成本、需计算提成：先完成独立团档和预算确认，再申请付款。平台月度结算另由财务核对。</p><label>团名称／客户（便于检索）<input id="tripName"></label>
     <label>部门／项目<select id="tripOwner" required><option value="">请选择</option>${groups}</select></label>
     <label>业务类别<select id="tripCategory" onchange="updateTripCategory()" required>${tripOptions(Object.entries(TRIP_CATEGORIES))}</select></label>
     <label hidden>平台<select id="tripPlatform" onchange="updateTripPreview()" disabled>${tripOptions(Object.entries(TRIP_PLATFORMS))}</select></label>
     <label hidden>业务项目<select id="tripProduct" onchange="updateTripPreview()" disabled>${tripOptions(Object.entries(TRIP_PRODUCTS))}</select></label>
-    <label>目的地范围<select id="destScope" onchange="updateDestinations()" required>${tripOptions([['domestic','境内'],['overseas','境外']])}</select></label>
+    <label hidden>平台订单号<input id="tripOrder" disabled></label><label>目的地范围<select id="destScope" onchange="updateDestinations()" required>${tripOptions([['domestic','境内'],['overseas','境外']])}</select></label>
     <label><span id="destLabel">主目的地</span><select id="dest" onchange="updateTripPreview()" required></select><span class="note" id="destNotice"></span></label>
     <label hidden>外宾来源<select id="foreignSource" disabled>${tripOptions(destinationOptions('overseas'))}</select></label>
     <label>出发日期<input id="date" type="date" onchange="updateTripPreview()" required></label>
@@ -188,7 +193,10 @@ async function createTrip(event) {
     costItems:structuredClone(costDraft.items), costSheet:costDraft.sheet, costConfirmedAt:new Date().toISOString()
   };
   if (category==='RJ') record.foreignSource=tripField('foreignSource').value;
-  if (category==='COTA') {
+  record.name=tripField('tripName')?.value.trim()||record.dest;
+  record.archiveKind='single';
+  if (['COTA','OVERSEAS'].includes(category)) {
+    record.externalOrder=tripField('tripOrder').value.trim();
     record.platform=tripField('tripPlatform').value;
     record.product=tripField('tripProduct').value;
   }
@@ -205,6 +213,7 @@ async function createTrip(event) {
     storedFile=true;
     const commit=()=>{
       const latest=JSON.parse(localStorage.getItem(KEY)) || db;
+      if(record.externalOrder&&latest.trips.some(t=>t.owner===record.owner&&t.platform===record.platform&&t.externalOrder===record.externalOrder))throw new Error('该平台订单已有团档，请查找并复用');
       record.id=nextTripCode(base,latest.trips);
       const updated={...latest,trips:[...latest.trips,record],
         logs:[{t:'建立团档案 '+record.id,time:new Date().toLocaleString('zh-CN')},...latest.logs]};
@@ -724,6 +733,580 @@ const changeBaseCost=changeCost,changeBaseDelete=deleteCostRow,changeBaseAdd=add
 changeCost=function(index,key,value){if(costEditor)costEditor.mappingAck=false;changeBaseCost(index,key,value);};
 deleteCostRow=function(index){if(costEditor)costEditor.mappingAck=false;changeBaseDelete(index);};
 addCostRow=function(){if(costEditor)costEditor.mappingAck=false;changeBaseAdd();};
+</script><script>/* Payment prototype: shared dictionaries, per-business archives and monthly overseas aggregation.
+   Browser-local simulation only; no production identity, payroll, tax filing or bank integration. */
+const PAYMENT_TYPES=['业务付款','管销付款','资金往来','员工薪酬','税费缴纳'];
+const PAYMENT_GROUPS={
+ '管理费用':['办公用品及耗材','办公场地租赁','水电及能源','物业及场地服务','通讯及网络','市内交通费','管理差旅费','管理车辆使用费','业务招待费','内部会议费','专业服务费','软件及信息服务费','招聘服务费','办公维修及维护费','固定资产购置','其他管理支出'],
+ '销售费用':['销售差旅及交通费','广告宣传费','渠道佣金','平台服务费','产品审核及上架费','活动会务费','客户维护费','推广素材及达人合作费','其他销售费用'],
+ '财务费用':['银行及汇款手续费','支付结算手续费','账户服务费','利息支出','其他财务费用']
+};
+const BUSINESS_FEES=['地接款','游轮产品','豪华列车产品','住宿','交通','门票','导游','餐饮','机票','签证','保险','客户退款','其他'];
+const TRANSFER_FEES=['借出款','归还借款本金','平台保证金','押金及其他保证金','内部资金调拨','其他往来'];
+const PAYROLL_FEES=['基础工资','绩效及奖金','业务提成','津贴及补贴','社会保险费','住房公积金','职工福利费','其他薪酬'];
+const TAX_FEES=['增值税','企业所得税','城市维护建设税','教育费附加','地方教育附加','印花税','房产税','城镇土地使用税','车船税','代扣代缴个人所得税','其他税费'];
+const OVERSEAS_PLATFORMS={VIA:'Viator',GYG:'GetYourGuide',KKD:'KKday',RAK:'Rakuten',HEAD:'Headout',KLOOK:'Klook',MRT:'Myrealtrip',AIR:'Airbnb'};
+const OVERSEAS_PRODUCTS={JZ:'橘子屋形船',RJT:'入境团',OTHER:'其他'};
+const PAYMENT_BUSINESSES={...TRIP_CATEGORIES,OVERSEAS:'海外平台订单'};
+const OWNER_ENTRIES=[...TRIP_DEPARTMENTS.map(x=>['部门:'+x,x]),...TRIP_PROJECTS.map(x=>['项目:'+x,x])];
+const PAYMENT_FEE_HINTS={
+ '市内交通费':'办理行政、银行、税务事项的市内交通和临时停车；销售活动、随团服务按实际用途归类。',
+ '固定资产购置':'这是购置提报入口；由财务判断资产登记及折旧，不自动全额计入当期费用。',
+ '物业及场地服务':'办公物业、保洁及场地服务；固定车位按合同固定归类，不重复报销。',
+ '专业服务费':'代理记账、审计、法律及税务咨询。税款走税费缴纳，办税停车走市内交通。',
+ '客户退款':'关联原业务及原收款，按退款事项核对，不作为新增采购成本。',
+ '汇兑损失':'汇兑损益由财务核算，不发起另一笔付款。',
+ '内部资金调拨':'仅同一主体自有账户之间转移，不形成收入或费用。',
+ '社会保险费':'单位承担与个人代扣分开；实际缴纳不再次增加已计提的人工费用。',
+ '住房公积金':'单位承担与个人代扣分开，合计对应本次缴纳金额。'
+};
+const payRead=id=>document.getElementById(id);
+const payVal=id=>payRead(id)?.value||'';
+const payCents=n=>Math.round(Number(n)*100);
+function payMigrate(data){
+ data.paymentDrafts??=[];data.businessOrders??=[];data.paymentReceipts??=[];
+ data.wallets??=[{id:'demo-wallet',name:'演示预存钱包',balance:20000}];
+ return data;
+}
+function paymentCanCreate(){return /^(操作|销售|财务) \/ /.test(activeRole);}
+function paymentCanSensitive(){return /^(财务|总经理) \/ /.test(activeRole);}
+function payNew(){return {draftId:costUid(),type:'业务付款',business:'DZ',fee:'',owner:'',platform:'',product:'',month:'',tripRef:'',orderNo:'',costId:'',note:'',amount:'',currency:'CNY',rate:'1',vendor:'',payee:'',channel:'银行转账',recipient:'',period:'',due:'',basisName:'',demoBasis:false,invoice:'待取得',advance:'否',cancel:'',staff:'',payrollDepartment:'',unitShare:'',personalShare:'',originalRef:'',originalAmount:'',refundReason:'',returnDate:'',returnTerms:'',sourceAccount:'模拟公司银行账户',targetAccount:'',company:'演示公司主体',attachmentKey:''};}
+let paymentDraft=payNew(),paymentBasis=null,paymentBusy=false,archiveMode='full',archiveSelected=null;
+function payInput(key,label,kind='text',hint=''){
+ return `<label>${esc(label)}<input id="p-${key}" type="${kind}" value="${esc(paymentDraft[key])}" ${kind==='number'?'min="0" step="0.01"':''} oninput="paymentDraft['${key}']=this.value;${['amount','rate','unitShare','personalShare'].includes(key)?'payRefreshCheck();':''}">${hint?'<small class="note">'+esc(hint)+'</small>':''}</label>`;
+}
+function paySelect(key,label,entries,change=false){
+ return `<label>${esc(label)}<select id="p-${key}" onchange="paySet('${key}',this.value,${change})"><option value="">请选择</option>${entries.map(([v,t])=>`<option value="${esc(v)}" ${paymentDraft[key]===v?'selected':''}>${esc(t)}</option>`).join('')}</select></label>`;
+}
+const payNamed=list=>list.map(x=>[x,x]);
+function paySet(key,value,rerender=false){
+ paymentDraft[key]=value;
+ if(key==='type'){
+  const shared={note:paymentDraft.note,amount:paymentDraft.amount,currency:paymentDraft.currency,rate:paymentDraft.rate,payee:paymentDraft.payee,recipient:paymentDraft.recipient,basisName:paymentDraft.basisName,demoBasis:paymentDraft.demoBasis,attachmentKey:paymentDraft.attachmentKey,vendor:paymentDraft.vendor,channel:paymentDraft.channel,company:paymentDraft.company,due:paymentDraft.due};
+  paymentDraft={...payNew(),...shared,type:value};
+ }
+ if(['business','platform','product','owner','month'].includes(key)){
+  paymentDraft.tripRef='';paymentDraft.costId='';
+  if(key==='business'){paymentDraft.platform='';paymentDraft.product='';paymentDraft.orderNo='';paymentDraft.month='';paymentDraft.fee='';}
+  if(key==='platform')paymentDraft.product='';
+ }
+ if(key==='tripRef'){
+  const t=costTrip(db,value);paymentDraft.costId='';
+  if(t){paymentDraft.owner=t.owner||'部门:'+t.dep;paymentDraft.platform=t.platform||paymentDraft.platform;paymentDraft.product=t.product||paymentDraft.product;paymentDraft.month=t.month||paymentDraft.month;}
+ }
+ if(key==='currency'){paymentDraft.rate=value==='CNY'?'1':'';}
+ if(rerender)render();else payRefreshCheck();
+}
+function monthlyKey(owner,platform,product,month){return JSON.stringify([owner,platform,product,month]);}
+function monthlyFind(data,owner,platform,product,month){return data.trips.find(t=>t.archiveKind==='monthly'&&monthlyKey(t.owner,t.platform,t.product,t.month)===monthlyKey(owner,platform,product,month));}
+function payArchiveMatches(t,d){
+ if(d.business==='OVERSEAS')return t.archiveKind==='monthly'&&t.owner===d.owner&&t.platform===d.platform&&t.product===d.product&&t.month===d.month;
+ const category=t.category||'DZ';return t.archiveKind!=='monthly'&&category===d.business&&(!d.platform||t.platform===d.platform)&&(!d.product||t.product===d.product);
+}
+function payArchiveOptions(d=paymentDraft){
+ const rows=db.trips.filter(t=>payArchiveMatches(t,d)).sort((a,b)=>(b.month||b.departureDate||'').localeCompare(a.month||a.departureDate||''));
+ const groups=new Map();for(const t of rows){const date=t.archiveKind==='monthly'?t.month:t.departureDate?.slice(0,7)||'未填写出发日期';if(!groups.has(date))groups.set(date,[]);groups.get(date).push(t);}
+ return '<option value="">请选择已有档案</option>'+[...groups].map(([label,items])=>`<optgroup label="${esc(label)}">${items.map(t=>`<option value="${esc(tripReference(t))}" ${d.tripRef===tripReference(t)?'selected':''}>${esc(t.id+' · '+(t.name||t.dest||'')+' · '+t.dep+(t.externalOrder?' · '+t.externalOrder:''))}</option>`).join('')}</optgroup>`).join('');
+}
+function payFeeEntries(d){
+ if(d.type==='管销付款')return Object.entries(PAYMENT_GROUPS).map(([g,items])=>`<optgroup label="${g}">${items.map(x=>`<option value="${g}|${x}" ${d.fee===g+'|'+x?'selected':''}>${esc(x)}</option>`).join('')}</optgroup>`).join('');
+ return (d.type==='业务付款'?BUSINESS_FEES:d.type==='资金往来'?TRANSFER_FEES:d.type==='员工薪酬'?PAYROLL_FEES:TAX_FEES).map(x=>`<option ${d.fee===x?'selected':''}>${esc(x)}</option>`).join('');
+}
+function payCostFields(){
+ const t=costTrip(db,paymentDraft.tripRef);if(!t)return '';
+ if(paymentDraft.fee==='客户退款')return '';
+ const old=t.costItems||[],pending=pendingCostChange(db,tripReference(t));
+ return `<label class="wide">对应成本明细<select id="p-costId" onchange="paySet('costId',this.value)"><option value="">新增／未匹配成本，提示主管核对</option>${old.map(x=>`<option value="${esc(x.id)}" ${paymentDraft.costId===x.id?'selected':''}>有效 V${t.costVersion||1} · ${esc(x.category+' / '+x.name)} · ¥${money(x.amount)}</option>`).join('')}${(pending?.items||[]).filter(x=>!old.some(o=>o.id===x.id)).map(x=>`<option value="${esc(x.id)}" ${paymentDraft.costId===x.id?'selected':''}>待审新增 · ${esc(x.name)} · ¥${money(x.amount)}</option>`).join('')}</select></label>`;
+}
+function paymentPage(){
+ payMigrate(db);const d=paymentDraft;
+ if(!paymentCanCreate())return '<div class="panel"><h3>付款提报</h3><p>请切换操作、销售或财务角色填写申请。</p></div>';
+ const fee=d.fee.split('|').at(-1),business=d.type==='业务付款',platform=business&&['COTA','OVERSEAS'].includes(d.business),monthly=business&&d.business==='OVERSEAS';
+ const sensitive=d.type==='员工薪酬'&&!paymentCanSensitive();
+ return `<div class="panel"><div class="panelhead"><div><h3>付款申请</h3><p class="note">按业务用途提报 · 草稿可暂存 · 正式提交前统一检查</p></div><span class="tag">付款</span></div>
+ <form id="paymentForm" class="grid" novalidate onsubmit="submitApp(event)">
+ ${paySelect('type','付款类型 *',payNamed(PAYMENT_TYPES),true)}${payInput('company','公司主体 *')}
+ ${business?paySelect('business','业务类别 *',Object.entries(PAYMENT_BUSINESSES),true):''}
+ ${paySelect('owner',business?'业务归属部门／项目 *':'承担部门／项目 *',OWNER_ENTRIES,true)}
+ ${platform?paySelect('platform','平台 *',Object.entries(monthly?OVERSEAS_PLATFORMS:TRIP_PLATFORMS),true)+paySelect('product','业务项目 *',Object.entries(monthly?OVERSEAS_PRODUCTS:TRIP_PRODUCTS),true):''}
+ ${monthly?`<label>所属月份 *<input id="p-month" type="month" value="${esc(d.month)}" onchange="paySet('month',this.value,true)"><small class="note">由操作人员提报，不根据收付款日期自动决定。</small></label><div class="wide archive-hint"><b>按月核对归集</b><p>相同归属＋平台＋业务项目＋月份复用一个月度团号；保留单笔订单明细。</p></div>`:''}
+ ${business?`<label class="wide">${monthly?'月度团号':'团号／业务档案'} *<select id="p-tripRef" onchange="paySet('tripRef',this.value,true)">${payArchiveOptions()}</select></label><div class="wide actions">${monthly?'<button type="button" class="alt" onclick="payCreateMonthly()">查找／建立对应月度档案</button>':['DZ','RJ'].includes(d.business)?'<button type="button" class="alt" onclick="go(\'团档案\')">前往完整建团与首次成本确认</button>':'<button type="button" class="alt" onclick="payOpenQuick()">没有找到？快速建立单笔档案</button>'}</div>${['COTA','OVERSEAS'].includes(d.business)?payInput('orderNo','平台订单号 *','text','同一订单的多次付款保留同一订单关联。'):''}`:''}
+ ${!business?payInput('period',d.type==='税费缴纳'?'税款所属期 *':d.type==='员工薪酬'?'薪酬所属月份 *':'费用所属月份／期间 *',d.type==='税费缴纳'?'text':'month',d.type==='税费缴纳'?'如2026-09、2026年第3季度或2026年度':'与实际付款日期分开'):''}
+ <label class="wide">${d.type==='员工薪酬'?'薪酬项目':d.type==='税费缴纳'?'税种':d.type==='资金往来'?'往来类别':'费用类别'} *<select id="p-fee" onchange="paySet('fee',this.value,true)"><option value="">请选择</option>${payFeeEntries(d)}</select>${PAYMENT_FEE_HINTS[fee]?'<small class="note">'+esc(PAYMENT_FEE_HINTS[fee])+'</small>':''}</label>
+ ${business?payCostFields():''}
+ ${!business&&d.type==='管销付款'?`<details class="wide"><summary>附加业务关联（选填）</summary><div class="grid">${paySelect('platform','相关平台',Object.entries({...TRIP_PLATFORMS,...OVERSEAS_PLATFORMS}),true)}${payInput('product','相关项目')}${payInput('originalRef','相关订单／团号')}</div></details>`:''}
+ ${fee==='客户退款'?payInput('originalRef','原收款编号 *')+payInput('originalAmount','原收款金额（人民币） *','number','核对历史已退及审批占用；原始依据由财务复核。')+payInput('refundReason','退款原因 *'):''}
+ ${d.type==='员工薪酬'?`${sensitive?'<p class="wide banner">薪酬属于敏感事项，请切换财务角色进行提报；普通角色不展示薪酬明细。</p>':payInput('staff','员工／本次薪酬批次 *')+paySelect('payrollDepartment','核算归属 *',payNamed(['业务人工成本','销售人员薪酬','管理人员薪酬']))+(['社会保险费','住房公积金'].includes(fee)?payInput('unitShare','单位承担金额 *','number')+payInput('personalShare','个人代扣金额 *','number'):'')+(fee==='业务提成'?payInput('originalRef','提成核算档案号 *','text','逐团／逐单，或海外平台月度档案；本轮不自动计算提成。'):'')}`:''}
+ ${d.type==='资金往来'&&fee==='归还借款本金'?payInput('originalRef','原借款编号／依据 *'):''}
+ ${d.type==='资金往来'&&['借出款','平台保证金','押金及其他保证金'].includes(fee)?payInput('returnDate','预计收回日期 *','date')+payInput('returnTerms','用途及归还／退还条件 *'):''}
+ ${d.type==='资金往来'&&fee==='内部资金调拨'?paySelect('sourceAccount','转出账户 *',payNamed(['模拟公司银行账户','模拟公司支付账户']),false)+paySelect('targetAccount','转入账户 *',payNamed(['模拟公司银行账户','模拟公司支付账户']),false):''}
+ <label class="wide">用途／备注 *<textarea id="p-note" oninput="paymentDraft.note=this.value" placeholder="说明实际用途；其他类别须具体说明">${esc(d.note)}</textarea></label>
+ ${payInput('amount','本次申请金额 *','number')}${paySelect('currency','币种 *',payNamed(['CNY','USD','EUR','JPY','HKD']),true)}
+ ${d.currency!=='CNY'?payInput('rate','折算汇率（1原币＝多少人民币） *','number','用于模拟成本核对和资金执行，须财务复核，保存本次汇率快照。'):''}
+ ${payInput('due','期望付款日期 *','date')}
+ ${d.type==='资金往来'&&fee==='内部资金调拨'?'':payInput('payee',d.type==='税费缴纳'?'收款机关／缴款对象 *':'收款人／收款单位 *')+paySelect('channel','对方收款渠道 *',payNamed(['银行转账','支付宝','微信','其他']),false)+payInput('recipient','收款信息／缴款识别信息 *','text','可填写账号、收款码附件名称或税款缴款识别信息。')}
+ <details class="wide"><summary>供应商（选填）</summary>${payInput('vendor','供应商名称','text','不选择供应商不会阻止提交；收款信息仍须明确。')}</details>
+ <label class="wide">付款依据 *<input id="p-basis" type="file" onchange="payBasisChanged(this.files[0])"><span id="p-basisLabel" class="note">${esc(d.basisName||'未上传附件')}</span><span class="note"><input type="checkbox" style="width:auto" ${d.demoBasis?'checked':''} onchange="paymentDraft.demoBasis=this.checked"> 使用演示依据（虚构测试资料）</span></label>
+ ${paySelect('invoice','发票状态',payNamed(['已取得','待取得','按规则无需']),false)}
+ ${business&&fee!=='客户退款'?paySelect('advance','是否未收款先垫款',payNamed(['否','是']),true)+(d.advance==='是'?payInput('cancel','最晚取消时间 *','datetime-local'):''):''}
+ <div class="wide" id="p-check"></div><div class="wide" id="p-errors" role="alert"></div>
+ <div class="wide actions"><button type="submit" ${sensitive?'disabled':''}>提交付款审批</button><button type="button" class="alt" onclick="savePaymentDraft()">保存草稿</button><button type="button" class="alt" onclick="paymentDraft=payNew();paymentBasis=null;go('概览')">取消并退出</button></div>
+ </form></div>${payDraftList()}`;
+}
+function payBasisChanged(file){paymentBasis=file||null;paymentDraft.basisName=file?.name||'';paymentDraft.attachmentKey='';const el=payRead('p-basisLabel');if(el)el.textContent=paymentDraft.basisName||'未上传附件';}
+function payDraftList(){const list=db.paymentDrafts.filter(d=>d.creator===activeRole);return `<div class="panel"><h3>我的付款草稿</h3>${list.map(d=>`<div class="log"><b>${esc(d.note||d.type)}</b> · ${esc(d.type)} · ${esc(d.updatedAt)}<div class="actions"><button type="button" class="alt" onclick="loadPaymentDraft('${d.draftId}')">继续填写</button><button type="button" class="alt" onclick="deletePaymentDraft('${d.draftId}')">删除草稿</button></div></div>`).join('')||'<p class="note">暂无保存的草稿</p>'}</div>`;}
+function payCheckInput(d=paymentDraft){const t=costTrip(db,d.tripRef);return {schema:3,paymentType:d.type,fee:d.fee.split('|').at(-1),trip:t?.id,tripUid:t?.uid,costId:d.costId,amount:Number(d.amount),amountCNY:payCents(Number(d.amount)*(d.currency==='CNY'?1:Number(d.rate)))/100,currency:d.currency};}
+function payRefreshCheck(){const el=payRead('p-check');if(!el)return;const d=paymentDraft,check=checkPayment(payCheckInput());el.innerHTML=`<div class="banner"><b>${check.risk?'需审核人关注':'提报说明'}</b><p>${check.messages.map(esc).join('<br>')}</p>${d.currency!=='CNY'?'<p>折合人民币 ¥'+money(payCheckInput().amountCNY||0)+'（按本次填写汇率）</p>':''}</div>`;}
+function paymentValidate(d,data){
+ const errors=[],required=(k,label)=>{if(!String(d[k]??'').trim())errors.push('请填写'+label);};
+ if(!PAYMENT_TYPES.includes(d.type))errors.push('请选择有效付款类型');
+ for(const [k,l] of [['company','公司主体'],['owner','部门／项目'],['fee','费用类别'],['note','用途'],['due','期望付款日期']])required(k,l);
+ if(!OWNER_ENTRIES.some(([k])=>k===d.owner))errors.push('请选择有效部门／项目');
+ if(!Number.isFinite(+d.amount)||+d.amount<=0)errors.push('付款金额须大于0');
+ if(!['CNY','USD','EUR','JPY','HKD'].includes(d.currency))errors.push('请选择有效币种');
+ if(d.currency!=='CNY'&&(!Number.isFinite(+d.rate)||+d.rate<=0))errors.push('请填写有效折算汇率');
+ if(!d.demoBasis&&!d.basisName)errors.push('请上传付款依据或使用演示依据');
+ const fee=d.fee.split('|').at(-1),transfer=d.type==='资金往来'&&fee==='内部资金调拨';
+ if(!transfer)for(const [k,l] of [['payee','收款对象'],['channel','收款渠道'],['recipient','收款信息']])required(k,l);
+ if(d.type==='业务付款'){
+  if(!PAYMENT_BUSINESSES[d.business])errors.push('请选择业务类别');
+  const t=costTrip(data,d.tripRef);if(!t)errors.push('请关联业务档案');
+  else{
+   if(!payArchiveMatches(t,d))errors.push('关联档案与当前业务类别、平台或月份不一致');
+   if(!costReviewer(t))errors.push('该归属的业务审核主管尚未配置，请联系配置人员；系统不会猜测审批人');
+   if(['DZ','RJ'].includes(d.business)&&fee!=='客户退款'&&!t.costConfirmed)errors.push('定制业务须先完整建档并确认首次成本单');
+  }
+  if(['COTA','OVERSEAS'].includes(d.business)){const platforms=d.business==='OVERSEAS'?OVERSEAS_PLATFORMS:TRIP_PLATFORMS,products=d.business==='OVERSEAS'?OVERSEAS_PRODUCTS:TRIP_PRODUCTS;if(!platforms[d.platform]||!products[d.product])errors.push('请选择有效平台与业务项目');required('orderNo','平台订单号');}
+  if(d.business==='OVERSEAS'&&!/^\d{4}-(0[1-9]|1[0-2])$/.test(d.month))errors.push('请由操作人员填写有效所属月份');
+  if(!BUSINESS_FEES.includes(fee))errors.push('请选择有效业务费用类别');
+  if(fee==='客户退款'){
+   required('originalRef','原收款编号');required('refundReason','退款原因');
+   if(!Number.isFinite(+d.originalAmount)||+d.originalAmount<=0)errors.push('请填写原收款金额');
+   const used=data.apps.filter(a=>a.schema===3&&a.paymentType==='业务付款'&&a.fee==='客户退款'&&!a.special&&a.tripUid===t?.uid&&a.originalRef===d.originalRef&&a.creatorDraftId!==d.draftId).reduce((sum,a)=>sum+(a.amountCNY??a.amount),0);
+   if(used+(+d.amount)*(d.currency==='CNY'?1:+d.rate)>+d.originalAmount)errors.push('本次及历史有效退款超过填报的原收款金额，请核对');
+  }
+  if(d.advance==='是'&&fee!=='客户退款')required('cancel','最晚取消时间');
+ }else{
+  required('period','所属月份／期间');
+  if(d.type==='管销付款'){const [g,c]=d.fee.split('|');if(!PAYMENT_GROUPS[g]?.includes(c))errors.push('请选择有效费用类别');}
+  if(d.type==='资金往来'){
+   if(!TRANSFER_FEES.includes(fee))errors.push('请选择有效往来类别');
+   if(transfer){required('sourceAccount','转出账户');required('targetAccount','转入账户');if(d.sourceAccount===d.targetAccount)errors.push('转入与转出账户不能相同');}
+   if(fee==='归还借款本金')required('originalRef','原借款依据');
+   if(['借出款','平台保证金','押金及其他保证金'].includes(fee)){required('returnDate','预计收回日期');required('returnTerms','归还／退还条件');}
+  }
+  if(d.type==='员工薪酬'){
+   if(!paymentCanSensitive())errors.push('当前角色无薪酬提报权限，请使用财务角色');
+   if(!PAYROLL_FEES.includes(fee))errors.push('请选择有效薪酬项目');
+   required('staff','员工或薪酬批次');required('payrollDepartment','核算归属');
+   if(['社会保险费','住房公积金'].includes(fee)){
+    if(d.unitShare===''||d.personalShare===''||!Number.isFinite(+d.unitShare)||!Number.isFinite(+d.personalShare)||+d.unitShare<0||+d.personalShare<0||payCents(+d.unitShare + +d.personalShare)!==payCents(d.amount))errors.push('单位承担＋个人代扣须等于本次缴纳金额');
+   }
+   if(fee==='业务提成'){required('originalRef','提成核算档案号');if(!data.trips.some(t=>t.id===d.originalRef||t.uid===d.originalRef))errors.push('提成须关联已有业务或月度档案');}
+  }
+  if(d.type==='税费缴纳'&&!TAX_FEES.includes(fee))errors.push('请选择有效税种');
+ }
+ return errors;
+}
+async function savePaymentDraft(){
+ if(paymentBusy)return;paymentBusy=true;
+ try{
+  if(paymentBasis){const key='payment:'+paymentDraft.draftId;await tripAttachment('readwrite',s=>s.put(paymentBasis,key));paymentDraft.attachmentKey=key;}
+  const draft=costClone(paymentDraft);draft.creator=activeRole;draft.updatedAt=costTime();
+  await costMutate(data=>{payMigrate(data);const old=data.paymentDrafts.find(x=>x.draftId===draft.draftId);if(old&&old.creator!==activeRole)throw Error('无草稿权限');data.paymentDrafts=data.paymentDrafts.filter(x=>x.draftId!==draft.draftId);data.paymentDrafts.push(draft);costAudit(data,'保存付款草稿 '+draft.draftId);});toast('草稿已保存');render();
+ }catch(e){toast('保存失败：'+e.message);}finally{paymentBusy=false;}
+}
+function loadPaymentDraft(id){const d=db.paymentDrafts.find(x=>x.draftId===id&&x.creator===activeRole);if(d){paymentDraft=costClone(d);paymentBasis=null;render();}}
+async function deletePaymentDraft(id){await costMutate(data=>{payMigrate(data);data.paymentDrafts=data.paymentDrafts.filter(x=>!(x.draftId===id&&x.creator===activeRole));});render();toast('草稿已删除');}
+function payError(messages){const el=payRead('p-errors');if(el){el.innerHTML='<div class="banner risk"><b>尚未提交</b><ul>'+messages.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>';el.scrollIntoView({block:'center'});}toast(messages[0]);}
+const priorCostCheck=checkPayment;
+checkPayment=function(a,data=db){
+ if(a.schema!==3)return priorCostCheck(a,data);
+ if(a.paymentType==='业务付款'&&a.fee!=='客户退款')return priorCostCheck({...a,amount:a.amountCNY??a.amount},data);
+ const messages=a.fee==='客户退款'?['客户退款按原收款和历史退款核对，不作为新增团采购成本。','原收款依据及退款金额须财务复核。']:a.paymentType==='员工薪酬'?['薪酬按项目、人员及所属期核对；实际支付不重复确认人工费用。']:a.paymentType==='税费缴纳'?['按税种、纳税主体及所属期缴纳；缴纳不自动增加当期费用。']:a.paymentType==='资金往来'?['按往来性质核对；本金、保证金及内部调拨不作为新增经营费用。']:['非团费用按部门、用途及所属期间核对，不要求团号。'];
+ return {risk:false,messages,version:null,source:'分类规则',time:new Date().toISOString(),engine:'付款分类核对'};
+};
+// Currency snapshots and non-procurement payments never occupy procurement cost lines.
+costLineUsage=function(data,ref,lineId,excludeId){return data.apps.filter(a=>a.id!==excludeId&&!a.special&&(a.tripUid===ref||a.trip===ref||tripReference(costTrip(data,a.tripUid||a.trip))===ref)&&a.costId===lineId&&(a.schema!==3||(a.paymentType==='业务付款'&&a.fee!=='客户退款'))).reduce((s,a)=>s+payCents(a.amountCNY??a.amount),0)/100;};
+const priorSubmit=submitApp;
+submitApp=async function(event){
+ if(!payRead('paymentForm'))return priorSubmit(event);
+ event.preventDefault();if(paymentBusy)return;
+ const errors=paymentValidate(paymentDraft,db);if(errors.length)return payError(errors);
+ const d=costClone(paymentDraft),actor=activeRole;paymentBusy=true;
+ try{
+  if(paymentBasis&&!d.attachmentKey){d.attachmentKey='payment:'+d.draftId;await tripAttachment('readwrite',s=>s.put(paymentBasis,d.attachmentKey));}
+  let resultId;
+  await costMutate(data=>{
+   payMigrate(data);if(!paymentCanCreate()||actor!==activeRole)throw Error('角色已变化，请重新核对');
+   const dup=data.apps.find(a=>a.creatorDraftId===d.draftId);if(dup){resultId=dup.id;return;}
+   const invalid=paymentValidate(d,data);if(invalid.length)throw Error(invalid.join('；'));
+   const t=d.type==='业务付款'?costTrip(data,d.tripRef):null,fee=d.fee.split('|').at(-1),id='FK-'+costUid();resultId=id;
+   const a={...d,id,schema:3,creatorDraftId:d.draftId,paymentType:d.type,fee,feeGroup:d.fee.includes('|')?d.fee.split('|')[0]:'',trip:t?.id||'非团事项',tripUid:t?.uid||null,amount:+d.amount,amountCNY:payCents(+d.amount*(d.currency==='CNY'?1:+d.rate))/100,rate:d.currency==='CNY'?1:+d.rate,vendor:d.vendor||'未关联供应商',basis:d.demoBasis?'演示依据（虚构）':d.basisName,creator:actor,stage:d.type==='业务付款'?0:1,history:[costTime()+' · '+actor+' 提交 '+d.type],reviewer:t?costReviewer(t):null};
+   if(t&&fee!=='客户退款'){paymentSnapshot(data,t,a);a.costName=t.costItems?.find(x=>x.id===d.costId)?.name||'新增／未匹配成本';}else a.check=checkPayment(a,data);
+   if(t&&d.orderNo){
+    const scope=t.archiveKind==='monthly'?[t.owner,t.platform,t.product]:[t.owner,t.platform];
+    const key=JSON.stringify([...scope,d.orderNo]),order=data.businessOrders.find(x=>x.key===key);
+    if(order&&order.tripRef!==tripReference(t))throw Error('该订单已关联其他档案／月份，请核对原归属，勿重复建档');
+    if(!order)data.businessOrders.push({id:costUid(),key,orderNo:d.orderNo,tripRef:tripReference(t),month:t.month||'',platform:d.platform,createdBy:actor});
+   }
+   data.apps.push(a);data.paymentDrafts=data.paymentDrafts.filter(x=>x.draftId!==d.draftId);data.todos.unshift(id+' 待'+statuses[a.stage]+'（模拟通知）');costAudit(data,'提交 '+d.type+' '+id+' '+fee);
+  });
+  selected=resultId;paymentDraft=payNew();paymentBasis=null;go('审批与付款');toast('提交成功 · '+resultId);
+ }catch(e){payError([e.message]);diagnostic('付款提报','失败','提交',e.message);}finally{paymentBusy=false;}
+};
+function archiveGroupBase(owner,platform,product,month){
+ // Monthly display code is a prototype convention; group uniqueness uses structured values.
+ const ownerIndex=OWNER_ENTRIES.findIndex(([k])=>k===owner)+1;return '月度-'+String(ownerIndex).padStart(2,'0')+'-'+platform+'-'+product+'-'+month.replace('-','');
+}
+function createMonthlyInData(data,d){
+ if(!OWNER_ENTRIES.some(([x])=>x===d.owner)||!OVERSEAS_PLATFORMS[d.platform]||!OVERSEAS_PRODUCTS[d.product]||!/^\d{4}-(0[1-9]|1[0-2])$/.test(d.month))throw Error('请先选择归属、平台、业务项目，并提报所属月份');
+ const found=monthlyFind(data,d.owner,d.platform,d.product,d.month);if(found)return {record:found,reused:true};
+ const t={uid:costUid(),id:nextTripCode(archiveGroupBase(d.owner,d.platform,d.product,d.month),data.trips),archiveKind:'monthly',category:'OVERSEAS',owner:d.owner,dep:d.owner.split(':').slice(1).join(':'),platform:d.platform,product:d.product,month:d.month,name:OVERSEAS_PLATFORMS[d.platform]+' / '+OVERSEAS_PRODUCTS[d.product]+' / '+d.month,dest:'月度归集',createdBy:activeRole,createdAt:costTime(),costConfirmed:false,costItems:[],budget:0,monthHistory:[]};
+ data.trips.push(t);costAudit(data,'建立海外月度档案 '+t.id);return {record:t,reused:false};
+}
+async function payCreateMonthly(){
+ if(paymentBusy)return;paymentBusy=true;
+ try{let result;await costMutate(data=>{result=createMonthlyInData(data,paymentDraft);});paymentDraft.tripRef=tripReference(result.record);render();toast(result.reused?'已关联已有月度团号':'月度档案已建立，同组合后续复用');}catch(e){payError([e.message]);}finally{paymentBusy=false;}
+}
+function payOpenQuick(){archiveMode='quick';archiveSelected=paymentDraft.business;go('团档案');}
+function archiveManager(){
+ const monthly=archiveMode==='monthly';
+ return `<div class="panel"><h3>按提成核算单位建档</h3><p class="muted">逐团／逐单归集；海外平台按归属＋平台＋项目＋月份归集。多次收付款复用档案。</p><div class="actions">${[['full','完整团档案'],['quick','单笔快速建档'],['monthly','海外平台月度档案']].map(([k,label])=>`<button type="button" class="${archiveMode===k?'':'alt'}" onclick="archiveMode='${k}';render()">${label}</button>`).join('')}</div>${archiveMode==='full'?'':`<form id="archiveForm" class="grid" novalidate onsubmit="saveQuickArchive(event)">
+ <label>归属部门／项目 *<select id="a-owner">${tripOptions(OWNER_ENTRIES)}</select></label>
+ ${monthly?'':`<label>业务类别 *<select id="a-category" onchange="archiveQuickCategory()">${Object.entries(PAYMENT_BUSINESSES).filter(([k])=>!['DZ','RJ','OVERSEAS'].includes(k)).map(([k,v])=>`<option value="${k}" ${archiveSelected===k?'selected':''}>${v}</option>`).join('')}</select></label>`}
+ <label id="a-platform-wrap" ${monthly?'':'hidden'}>平台 *<select id="a-platform">${tripOptions(Object.entries(monthly?OVERSEAS_PLATFORMS:TRIP_PLATFORMS))}</select></label>
+ <label id="a-product-wrap" ${monthly?'':'hidden'}>业务项目 *<select id="a-product">${tripOptions(Object.entries(monthly?OVERSEAS_PRODUCTS:TRIP_PRODUCTS))}</select></label>
+ ${monthly?'<label>所属月份 *<input id="a-month" type="month"><small class="note">操作提报；不自动使用当前月份。</small></label>':'<label>业务名称／客户标识 *<input id="a-name"></label><label>外部订单号／预订业务标识 *<input id="a-order"><small class="note">用于查重及复用，同一预订不重复建立。</small></label><label>出发／服务日期 *<input id="a-date" type="date"></label>'}
+ <label>销售责任人 *<select id="a-sales">${tripOptions(payNamed(TRIP_PEOPLE))}</select></label><label>操作 A *<select id="a-operator">${tripOptions(payNamed(TRIP_PEOPLE))}</select></label>
+ <div class="wide note">${monthly?'月度团号展示使用原型编号，正式编码规则待确认；本轮不自动结算提成。':'快速档案不代表成本已确认；无有效成本时提示主管核对。单笔编号为原型约定，正式编码待核定。定制团、定制入境团须使用完整建档。'}</div>
+ <div class="wide" id="archiveFeedback" role="alert"></div><div class="wide actions"><button>保存／查找并复用档案</button><button type="button" class="alt" onclick="go('申请付款')">返回付款申请</button></div></form>`}</div>`;
+}
+function archiveQuickCategory(){const platform=payVal('a-category')==='COTA';for(const id of ['a-platform-wrap','a-product-wrap'])payRead(id).hidden=!platform;}
+function quickArchiveInData(data,d){
+ if(!['DL','DF','DC','JP','QZ','BX','COTA'].includes(d.category))throw Error('定制团与定制入境团请使用完整建档；海外平台请使用月度建档');
+ if(!OWNER_ENTRIES.some(([x])=>x===d.owner)||!d.name.trim()||!d.externalOrder.trim()||!d.departureDate||!d.sales||!d.operatorA)throw Error('请补齐归属、业务名称、订单标识、服务日期及责任人');
+ if(d.category==='COTA'&&(!TRIP_PLATFORMS[d.platform]||!TRIP_PRODUCTS[d.product]))throw Error('请选择国内平台及业务项目');
+ const scope=[d.owner,d.category,d.category==='COTA'?d.platform:'',d.externalOrder.trim()],key=JSON.stringify(scope);
+ const found=data.trips.find(t=>t.orderKey===key||(t.archiveKind!=='monthly'&&t.owner===d.owner&&t.category===d.category&&(t.platform||'')===(d.platform||'')&&t.externalOrder===d.externalOrder.trim()));if(found)return {record:found,reused:true};
+ const base=d.category==='COTA'?['COTA',d.platform,d.product,d.departureDate.replaceAll('-','')].join('-'):[d.category,'单笔',d.departureDate.replaceAll('-','')].join('-');
+ const t={...d,uid:costUid(),id:nextTripCode(base,data.trips),orderKey:key,archiveKind:'single',dep:d.owner.split(':').slice(1).join(':'),externalOrder:d.externalOrder.trim(),dest:d.name.trim(),costConfirmed:false,costItems:[],budget:0,createdBy:activeRole,createdAt:costTime()};data.trips.push(t);costAudit(data,'建立单笔档案 '+t.id);return {record:t,reused:false};
+}
+async function saveQuickArchive(event){
+ event.preventDefault();if(paymentBusy||!canCreateTrip())return;paymentBusy=true;
+ const monthly=archiveMode==='monthly',d={owner:payVal('a-owner'),platform:payVal('a-platform'),product:payVal('a-product'),month:payVal('a-month'),category:payVal('a-category'),name:payVal('a-name'),externalOrder:payVal('a-order'),departureDate:payVal('a-date'),sales:payVal('a-sales'),operatorA:payVal('a-operator')};
+ if(d.category!=='COTA'&&!monthly){d.platform='';d.product='';}
+ try{if(!d.sales||!d.operatorA)throw Error('请填写销售责任人和操作 A');let result;await costMutate(data=>{result=monthly?createMonthlyInData(data,d):quickArchiveInData(data,d);if(!result.reused){result.record.sales=d.sales;result.record.operatorA=d.operatorA;}});
+  const t=result.record;paymentDraft={...paymentDraft,type:'业务付款',business:t.category,owner:t.owner,platform:t.platform||'',product:t.product||'',month:t.month||'',tripRef:tripReference(t),orderNo:t.externalOrder||paymentDraft.orderNo,costId:''};render();payRead('archiveFeedback').textContent=(result.reused?'已找到并复用：':'建档成功：')+t.id;toast('档案已就绪，可返回付款申请继续填写');
+ }catch(e){payRead('archiveFeedback').innerHTML='<p class="banner risk">'+esc(e.message)+'</p>';}finally{paymentBusy=false;}
+}
+function archiveListHtml(){return `<div class="panel"><h3>业务档案 · 提成核算归属</h3><div id="savedCosts"></div><div class="table-scroll"><table><tr><th>团号／业务名称</th><th>归属</th><th>核算单位</th><th>成本状态</th><th>操作</th></tr>${db.trips.slice().sort((a,b)=>(b.month||b.departureDate||'').localeCompare(a.month||a.departureDate||'')).map(t=>`<tr><td>${esc(t.id)}<div class="note">${esc(t.name||t.dest||'')}</div></td><td>${esc(t.dep)}</td><td>${t.archiveKind==='monthly'?esc(t.month)+' 月度归集':'一团／一单一提成'}</td><td>${t.costConfirmed?'有效 V'+(t.costVersion||1)+' · ¥'+money(t.budget):'暂无有效成本，付款提示风险'}</td><td><button class="alt" onclick="archiveDetails('${esc(tripReference(t))}')">查看归属与付款</button>${t.costConfirmed?` <button class="alt" onclick="showTripCosts('${esc(t.id)}')">成本明细</button>`:''}</td></tr>`).join('')}</table></div><div id="archiveDetails"></div></div>`;}
+function archiveDetails(ref){
+ const t=costTrip(db,ref),rows=db.apps.filter(a=>a.tripUid===ref||a.trip===t?.id);if(!t)return;
+ payRead('archiveDetails').innerHTML=`<section class="change-detail"><h3>${esc(t.id)}</h3><p>${esc(t.dep)} · ${esc(PAYMENT_BUSINESSES[t.category]||'定制团')} ${t.platform?' · '+esc(OVERSEAS_PLATFORMS[t.platform]||TRIP_PLATFORMS[t.platform]):''} ${t.month?' · 所属月份 '+esc(t.month):''}</p><p class="note">${t.archiveKind==='monthly'?'月度组合唯一，订单逐笔追溯；本轮不自动计算或结算提成。':'同一业务多次收付款复用此档案；提成算法另定。'}</p><table><tr><th>申请单／订单号</th><th>用途</th><th>金额</th><th>状态</th></tr>${rows.map(a=>`<tr><td>${esc(a.id)}<div class="note">${esc(a.orderNo||t.externalOrder||'')}</div></td><td>${esc(a.note)}</td><td>${esc(a.currency||'CNY')} ${money(a.amount)}</td><td>${esc(state(a))}</td></tr>`).join('')||'<tr><td colspan="4">暂无关联付款</td></tr>'}</table><p class="note">所属月份变更须留痕；已结算提成月份走调整流程。本轮不提供绕过调整的直接修改入口。</p></section>`;
+}
+function paymentTable(){const rows=db.apps.filter(a=>a.paymentType!=='员工薪酬'||paymentCanSensitive()||a.creator===activeRole);return rows.length?`<div class="table-scroll"><table><tr><th>申请单／归属</th><th>类型／费用类别</th><th>用途</th><th>金额</th><th>状态</th><th></th></tr>${rows.slice().reverse().map(a=>`<tr><td>${esc(a.id)}<div class="note">${esc(a.trip)} · ${esc(a.owner||'')}</div></td><td>${esc(a.paymentType||'业务付款')}<div class="note">${esc(a.fee||a.costName||'')}</div></td><td>${esc(a.note)}</td><td>${esc(a.currency||'CNY')} ${money(a.amount)}</td><td><span class="tag">${esc(state(a))}</span></td><td><button class="alt" onclick="selected='${a.id}';go('审批与付款')">查看</button></td></tr>`).join('')}</table></div>`:'<p class="empty">暂无可查看的付款申请</p>';}
+function newPaymentDetail(a){
+ if(a.paymentType==='员工薪酬'&&!paymentCanSensitive()&&a.creator!==activeRole)return '<div class="panel">当前演示角色无薪酬查看权限</div>';
+ const expected=['主管','财务','总经理','财务'][a.stage],can=!a.special&&activeRole.startsWith(expected)&&(!(a.stage===0&&a.reviewer)||activeRole===a.reviewer),check=checkPayment(a),refundable=['退回修改','已撤回'].includes(a.special),isOwner=a.creator===activeRole;
+ return `<div class="panel"><div class="panelhead"><h3>${esc(a.id)}</h3><span class="tag">${esc(state(a))}</span></div><div class="steps">${statuses.map((x,i)=>`<span class="step ${i===a.stage?'now':''}">${x}</span>`).join('')}</div>
+ <div class="payment-facts"><p><b>${esc(a.paymentType)} / ${esc(a.feeGroup||'')} ${esc(a.fee)}</b></p><p>${esc(a.note)}</p><p>本次 ${esc(a.currency)} ${money(a.amount)} ${a.currency!=='CNY'?' · 折合人民币 ¥'+money(a.amountCNY)+' · 汇率 '+esc(a.rate):''}</p><p>归属：${esc(a.owner)} · ${esc(a.trip)}${a.month?' · 业务所属月份 '+esc(a.month):''}${a.period?' · 所属期 '+esc(a.period):''}</p><p>平台／项目：${esc(OVERSEAS_PLATFORMS[a.platform]||TRIP_PLATFORMS[a.platform]||a.platform||'—')} / ${esc(OVERSEAS_PRODUCTS[a.product]||TRIP_PRODUCTS[a.product]||a.product||'—')} · 订单号 ${esc(a.orderNo||'—')}</p><p>收款对象：${esc(a.payee||a.targetAccount)} · ${esc(a.channel)} · ${esc(a.recipient||a.targetAccount)}</p><p>供应商：${esc(a.vendor)} · 付款依据：${esc(a.basis)} ${a.attachmentKey?`<button class="alt" onclick="downloadTripAttachment('${esc(a.attachmentKey)}')">下载依据</button>`:''}</p><p>提报人：${esc(a.creator)} · 期望付款日期：${esc(a.due)}</p>
+ ${a.paymentType==='员工薪酬'?`<p>员工／批次：${esc(a.staff)} · 核算归属：${esc(a.payrollDepartment)}</p>${['社会保险费','住房公积金'].includes(a.fee)?`<p>单位承担 ${esc(a.currency)} ${money(a.unitShare)} · 个人代扣 ${money(a.personalShare)}</p>`:''}`:''}
+ ${a.originalRef?`<p>原业务／收款／提成依据：${esc(a.originalRef)} ${a.refundReason?' · 退款原因 '+esc(a.refundReason):''}</p>`:''}${a.returnTerms?'<p>收回日期：'+esc(a.returnDate)+' · '+esc(a.returnTerms)+'</p>':''}
+ </div><div class="banner"><b>${check.risk?'需审核人确认风险':'规则核对'}</b><p>${check.messages.map(esc).join('<br>')}</p></div>
+ ${a.stage<3&&!a.special?`<p>当前需要：${a.stage===0&&a.reviewer?esc(a.reviewer):esc(expected)}</p>${can?`<input type="hidden" id="paymentReviewRisk" value="${esc(paymentRiskSignature(check))}"><label>审核意见<textarea id="opinion" placeholder="退回、拒绝或通过风险申请须填写意见"></textarea></label>${check.risk&&a.stage===0?'<label><input id="riskack" type="checkbox" style="width:auto"> 已核对风险并承担审核判断</label>':''}<div class="actions"><button onclick="approve('${a.id}')">同意</button><button class="alt" onclick="reject('${a.id}','退回修改')">退回</button><button class="bad" onclick="reject('${a.id}','已拒绝')">拒绝</button></div>`:''}${isOwner?`<button class="alt" onclick="withdraw('${a.id}')">撤回申请</button>`:''}`:''}
+ ${a.stage===3&&!a.special?(can?`<h3>财务执行（模拟）</h3><form id="paymentExecute" class="grid" novalidate onsubmit="pay(event,'${a.id}')"><label>资金来源<select id="x-source"><option value="bank">模拟公司银行账户 · ¥${money(db.balance)}</option>${a.fee==='内部资金调拨'?'':db.wallets.map(w=>`<option value="${esc(w.id)}">${esc(w.name)} · ¥${money(w.balance)}</option>`).join('')}</select></label><label>实际付款日期 *<input id="x-date" type="date"></label><label class="wide">水单／交易凭据 *<input id="x-slip" type="file"><span class="note"><input type="checkbox" id="x-demo" style="width:auto"> 使用演示水单</span></label><p class="wide note">本次按申请汇率折人民币执行模拟账户扣款；内部调拨只记录账户转移，不减少公司总资金。预存钱包不足会阻止扣款。</p><div id="executeError" class="wide" role="alert"></div><button>确认付款完成（模拟）</button></form>`:'<p>请切换财务角色执行付款。</p>'):''}
+ ${a.stage===4?`<p class="tag">已付款 · ${esc(a.account)} · ${esc(a.paydate)} · ${esc(a.slip)}</p>`:''}
+ ${refundable&&isOwner?`<form id="newResubmit" onsubmit="resubmit(event,'${a.id}')"><label>修改用途<textarea id="editnote">${esc(a.note)}</textarea></label><label>修改金额（${esc(a.currency)}）<input type="number" step="0.01" id="editamount" value="${a.amount}"></label><p class="note">本轮支持用途、金额修改；账号及业务归属调整请拒绝原单并重新提报，保留原记录。</p><button>保留单号重新提交</button></form>`:''}
+ <h3>申请轨迹</h3>${a.history.map(x=>'<div class="log">'+esc(x)+'</div>').join('')}
+ ${a.check?`<details><summary>提交时风险快照</summary>${a.check.messages.map(esc).join('<br>')}</details>`:''}${a.costSnapshot?`<details><summary>提交时有效成本 V${a.costSnapshot.version||'未确认'}</summary>${costItemsReadonly(a.costSnapshot.items)}</details>`:''}
+ </div>`;
+}
+const paymentPriorResubmit=resubmit,paymentPriorWithdraw=withdraw,paymentPriorPay=pay;
+withdraw=function(id){const a=db.apps.find(x=>x.id===id);if(a?.schema!==3)return paymentPriorWithdraw(id);if(a.creator!==activeRole||a.stage>=3||a.special)return toast('仅提报人可撤回审批中申请');costMutate(data=>{const x=data.apps.find(x=>x.id===id);if(x.stage>=3||x.special)throw Error('申请状态已变化');x.special='已撤回';x.history.push(costTime()+' · '+activeRole+' 撤回');costAudit(data,id+' 已撤回');}).then(()=>render()).catch(e=>toast(e.message));};
+resubmit=async function(e,id){
+ const a=db.apps.find(x=>x.id===id);if(a?.schema!==3)return paymentPriorResubmit(e,id);e.preventDefault();if(paymentBusy)return;
+ const note=payVal('editnote').trim(),amount=+payVal('editamount');if(!note||!Number.isFinite(amount)||amount<=0)return toast('请填写用途与有效金额');paymentBusy=true;
+ try{await costMutate(data=>{const x=data.apps.find(x=>x.id===id);if(x.creator!==activeRole||!['退回修改','已撤回'].includes(x.special))throw Error('无修改权限或状态已变化');const d={...x,type:x.paymentType,fee:x.feeGroup?x.feeGroup+'|'+x.fee:x.fee,tripRef:x.tripUid,amount,note,basisName:x.basis};const errors=paymentValidate(d,data);if(errors.length)throw Error(errors.join('；'));x.attempts??=[];x.attempts.push(costClone({amount:x.amount,note:x.note,check:x.check,costSnapshot:x.costSnapshot}));Object.assign(x,{note,amount,amountCNY:payCents(amount*x.rate)/100,special:null,stage:x.paymentType==='业务付款'?0:1});delete x.supervisorRisk;delete x.riskOpinion;const t=costTrip(data,x.tripUid);if(t&&x.fee!=='客户退款')paymentSnapshot(data,t,x);else x.check=checkPayment(x,data);x.history.push(costTime()+' · 修改后重新提交');costAudit(data,id+' 重新提交');});render();}catch(error){toast(error.message);}finally{paymentBusy=false;}
+};
+pay=async function(event,id){
+ const a=db.apps.find(x=>x.id===id);if(a?.schema!==3)return paymentPriorPay(event,id);event.preventDefault();if(paymentBusy)return;
+ const source=payVal('x-source'),date=payVal('x-date'),slip=payRead('x-slip')?.files[0]?.name||(payRead('x-demo')?.checked?'演示水单（虚构）':'');if(!date||!slip)return toast('请填写实际付款日期及交易凭据');paymentBusy=true;
+ try{await costMutate(data=>{payMigrate(data);const x=data.apps.find(x=>x.id===id);if(!activeRole.startsWith('财务')||x.stage!==3||x.special)throw Error('无执行权限或申请已处理');const amount=x.amountCNY;
+  if(x.fee==='内部资金调拨'){if(source!=='bank')throw Error('内部调拨请使用对应模拟公司账户');}
+  else if(source==='bank'){if(amount>data.balance)throw Error('模拟公司账户余额不足');data.balance=(payCents(data.balance)-payCents(amount))/100;}
+  else {const wallet=data.wallets.find(w=>w.id===source);if(!wallet||amount>wallet.balance)throw Error('预存钱包余额不足');wallet.balance=(payCents(wallet.balance)-payCents(amount))/100;}
+  Object.assign(x,{stage:4,paydate:date,slip,account:source==='bank'?x.fee==='内部资金调拨'?x.sourceAccount+' → '+x.targetAccount:'模拟公司银行账户':data.wallets.find(w=>w.id===source).name});x.history.push(costTime()+' · 财务执行完成，模拟流水 LS-'+costUid());data.paymentReceipts.push({id:costUid(),applicationId:x.id,amount:amount,source,date,internal:x.fee==='内部资金调拨'});costAudit(data,x.id+' 付款完成');if(!['资金往来','员工薪酬','税费缴纳'].includes(x.paymentType)&&x.invoice==='待取得')data.todos.unshift(x.id+' 追票待办 → '+x.creator);
+ });render();toast('付款完成，已记录模拟流水');}catch(e){payRead('executeError').textContent=e.message;toast(e.message);}finally{paymentBusy=false;}
+};
+const paymentPriorRender=render;
+render=function(){
+ payMigrate(db);
+ if(page==='申请付款'){
+  // Build sidebar and role picker through the existing renderer without constructing the old form.
+  const next=page;page='概览';paymentPriorRender();page=next;payRead('title').textContent=page;payRead('app').innerHTML=paymentPage();payRefreshCheck();
+ }else if(page==='审批与付款'&&db.apps.find(a=>a.id===selected)?.schema===3){
+  const next=page;page='概览';paymentPriorRender();page=next;payRead('title').textContent=page;payRead('app').innerHTML='<div class="panel"><h3>申请列表</h3>'+paymentTable()+'</div>'+newPaymentDetail(db.apps.find(a=>a.id===selected));
+ }else{
+  paymentPriorRender();
+  if(page==='团档案'){
+   const app=payRead('app'),full=payRead('tripForm')?.closest('.panel');
+   if(full){full.hidden=archiveMode!=='full';app.insertAdjacentHTML('afterbegin',archiveManager());const list=payRead('savedCosts')?.closest('.panel');if(list)list.outerHTML=archiveListHtml();if(archiveMode==='quick')archiveQuickCategory();}
+   else app.insertAdjacentHTML('afterbegin','<div class="panel"><p>请切换操作或销售角色建立业务档案。</p></div>');
+  }
+  if(page==='概览'){
+   const panels=payRead('app').querySelectorAll('.panel');if(panels.length)panels[panels.length-1].innerHTML='<h3>最近付款申请</h3>'+paymentTable();
+  }
+  if(page==='审批与付款'&&!db.apps.find(a=>a.id===selected))payRead('app').innerHTML='<div class="panel"><h3>申请列表</h3>'+paymentTable()+'</div>';
+ }
+ payRead('nav').innerHTML=['概览','团档案','成本变更','申请付款','审批与付款','待办与记录'].map(x=>`<button class="${page===x?'active':''}" onclick="go('${x}')">${x}</button>`).join('');
+ const role=payRead('role'),old=role.onchange;role.onchange=function(){const previous=activeRole;old.call(this);if(previous!==activeRole){paymentDraft=payNew();paymentBasis=null;render();}};
+};
+// Single source for list visibility, including the original review screens.
+table=paymentTable;
+let initialArchiveCostRef=null;
+function openInitialArchiveCost(ref){initialArchiveCostRef=ref;archiveMode='cost';costDraft=emptyCostDraft();render();}
+function initialArchiveCostHtml(){const t=costTrip(db,initialArchiveCostRef);return `<div class="panel"><h3>确认首版成本 · ${esc(t?.id)}</h3><p class="note">首版成本免变更审批；保存后，后续修改沿用成本版本和主管审核流程。</p><input type="file" accept=".xlsx" onchange="importCostFile(this.files[0])"><button type="button" class="alt" onclick="loadExampleCost()">读取示例成本表</button><div id="costImport"></div><div id="initialCostError" role="alert"></div><div class="actions"><button onclick="saveInitialArchiveCost()">保存首版有效成本</button><button class="alt" onclick="importSerial++;costDraft=emptyCostDraft();initialArchiveCostRef=null;archiveMode='quick';render()">取消并退出</button></div></div>`;}
+async function saveInitialArchiveCost(){
+ if(paymentBusy)return;if(!canCreateTrip())return toast('请切换操作或销售角色');
+ if(!costDraft.file||!costDraft.confirmed||!costDraft.items.length)return toast('请上传、核对并确认成本明细');
+ paymentBusy=true;const ref=initialArchiveCostRef,items=costClone(costDraft.items),file=costDraft.file,filename=costDraft.filename,sheet=costDraft.sheet,key='initial:'+ref+':'+costUid();
+ try{await tripAttachment('readwrite',s=>s.put(file,key));if(initialArchiveCostRef!==ref)throw Error('已退出编辑，本次未保存');await costMutate(data=>{const t=costTrip(data,ref);if(!t||t.costConfirmed)throw Error('档案不存在或已有有效成本，请使用成本变更流程');t.costConfirmed=true;t.costVersion=1;t.costItems=items;t.budget=aggregateCostItems(items).total;t.file=filename;t.costSheet=sheet;t.costConfirmedAt=new Date().toISOString();t.costVersions=[{number:1,items:costClone(items),total:t.budget,file:filename,attachmentKey:key,at:costTime(),actor:activeRole}];costAudit(data,'确认首版成本 '+t.id);});costDraft=emptyCostDraft();initialArchiveCostRef=null;archiveMode='quick';render();toast('首版成本已保存，后续修改须走成本变更');}catch(e){toast(e.message);}finally{paymentBusy=false;}
+}
+const finalArchiveList=archiveListHtml;
+archiveListHtml=function(){let html=finalArchiveList();for(const t of db.trips.filter(x=>!x.costConfirmed&&x.uid))html=html.replace(`archiveDetails('${esc(tripReference(t))}')">查看归属与付款</button>`,`archiveDetails('${esc(tripReference(t))}')">查看归属与付款</button> <button class="alt" onclick="openInitialArchiveCost('${esc(tripReference(t))}')">确认首版成本</button>`);return html;};
+const finalPaymentRender=render;
+render=function(){
+ if(page==='团档案'&&archiveMode==='cost'){
+  const next=page;page='概览';finalPaymentRender();page=next;payRead('title').textContent='团档案';payRead('app').innerHTML=initialArchiveCostHtml()+archiveListHtml();renderImport();return;
+ }
+ finalPaymentRender();
+ if(page==='团档案'&&archiveMode==='full'){
+  const category=payRead('tripCategory');if(category){for(const option of [...category.options])if(option.value&&!['DZ','RJ'].includes(option.value))option.remove();}
+ }
+};
+const finalPaymentGo=go;
+go=function(next){if(page==='团档案'&&archiveMode==='cost'&&next!=='团档案'){importSerial++;initialArchiveCostRef=null;costDraft=emptyCostDraft();archiveMode='quick';}finalPaymentGo(next);};
+</script><script>/* Current rules, 2026-11-15. Standalone browser-local prototype. */
+const COMPANY_OPTIONS=['一行界上','行界SUKHA','中港抚琴','懿行创合'];
+const RECEIPT_METHODS=['公账收款','私账收款','二维码收款'];
+const V2_SUPPLIERS=[
+ {id:'demo-hotel',name:'演示酒店（虚构供应商）',profiles:[{id:'hotel-public',method:'公账收款',payee:'演示酒店有限公司（虚构）',bank:'演示银行',card:'0000000000000000'},{id:'hotel-private',method:'私账收款',payee:'示例收款人（虚构）',bank:'演示银行',card:'0000000000000001'}]},
+ {id:'demo-car',name:'演示车队（虚构供应商）',profiles:[{id:'car-public',method:'公账收款',payee:'演示车队有限公司（虚构）',bank:'演示银行',card:'0000000000000002'},{id:'car-qr',method:'二维码收款',payee:'演示车队（虚构）',qrKey:'',qrName:''}]}
+];
+let paymentQr=null,viewQrUrl=null,settlementBusy=false;
+const oldPayNew=payNew;
+payNew=function(){const d=oldPayNew();delete d.due;delete d.month;return {...d,company:'',supplierId:'',profileId:'',supplierName:'',bank:'',card:'',channel:'',payee:'',qrName:'',qrKey:'',recipient:''};};
+paymentDraft=payNew();
+const v2BaseMigrate=payMigrate;
+payMigrate=function(data){v2BaseMigrate(data);data.suppliers??=costClone(V2_SUPPLIERS);data.settlements??=[];return data;};
+function supplierFlag(d){return db.suppliers?.some(s=>s.id===d.supplierId)?'在库供应商':d.supplierName?.trim()?'供应商未入库，请审核人核对':'未关联供应商档案，请审核人核对收款资料';}
+function currentSupplier(){return db.suppliers.find(s=>s.id===paymentDraft.supplierId);}
+function chooseSupplier(value){
+ Object.assign(paymentDraft,{supplierId:value,supplierName:'',profileId:'',vendor:'',channel:'',payee:'',bank:'',card:'',recipient:'',qrName:'',qrKey:''});paymentQr=null;
+ const s=currentSupplier();if(s){paymentDraft.vendor=s.name;paymentDraft.supplierName=s.name;}
+ render();
+}
+function chooseSupplierProfile(value){
+ const p=currentSupplier()?.profiles.find(p=>p.id===value);paymentDraft.profileId=value;paymentQr=null;
+ Object.assign(paymentDraft,{channel:p?.method||'',payee:p?.payee||'',bank:p?.bank||'',card:p?.card||'',qrKey:p?.qrKey||'',qrName:p?.qrName||'',recipient:''});render();
+}
+function chooseReceiptMethod(value){paymentDraft.channel=value;paymentDraft.bank='';paymentDraft.card='';paymentDraft.qrKey='';paymentDraft.qrName='';paymentDraft.profileId='';paymentQr=null;render();}
+function supplierFields(){
+ const d=paymentDraft,s=currentSupplier();return `<section class="wide receipt-section"><h3>供应商与收款信息</h3><div class="grid"><label class="wide">供应商（选填）<select id="v-supplier" onchange="chooseSupplier(this.value)"><option value="">暂不关联供应商</option>${db.suppliers.map(s=>`<option value="${esc(s.id)}" ${d.supplierId===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}<option value="manual" ${d.supplierId==='manual'?'selected':''}>未在库，手工填写</option></select><small class="note">可搜索供应商；未入库仅提醒，不拦截本次申请。</small></label>
+ ${d.supplierId==='manual'?payInput('supplierName','供应商名称（选填）'):''}
+ ${s?`<label class="wide">选择本次收款资料<select id="v-profile" onchange="chooseSupplierProfile(this.value)"><option value="">请选择一组已维护资料，或手工填写下方资料</option>${s.profiles.map(p=>`<option value="${esc(p.id)}" ${d.profileId===p.id?'selected':''}>${esc(p.method+' · '+(p.payee||'')+(p.card?' · 尾号'+p.card.slice(-4):''))}</option>`).join('')}</select></label>`:''}
+ <label>收款方式 *<select id="v-method" onchange="chooseReceiptMethod(this.value)">${tripOptions(payNamed(RECEIPT_METHODS)).replace('value="'+d.channel+'"','value="'+d.channel+'" selected')}</select></label>
+ ${['公账收款','私账收款'].includes(d.channel)?payInput('payee','收款人／收款单位 *')+payInput('bank','银行名称 *')+payInput('card','银行卡号 *','text','按文本保存；请核对户名、银行及账号。演示账号不可真实付款。'):''}
+ ${d.channel==='二维码收款'?`<label class="wide">收款二维码图片 *<input id="v-qr" type="file" accept="image/png,image/jpeg,image/webp" onchange="chooseQr(this.files[0])"><span class="note" id="qr-name">${esc(d.qrName||'请上传收款二维码图片')}</span><span id="qr-preview" class="qr-preview"></span><small class="note">图片仅用于人工核对，不自动判断收款人或二维码真伪。</small></label>`:''}
+ <div class="wide note">${esc(supplierFlag(d))}${s?'；如修改本次收款资料，将单独提示审核人核对。':''}</div></div></section>`;
+}
+function chooseQr(file){
+ if(viewQrUrl){URL.revokeObjectURL(viewQrUrl);viewQrUrl=null;}
+ if(file&&!['image/png','image/jpeg','image/webp'].includes(file.type)){toast('请上传PNG、JPEG或WebP图片');return;}
+ if(file?.size>5*1024*1024){toast('二维码图片不能超过5MB');return;}
+ paymentQr=file||null;paymentDraft.qrName=file?.name||'';paymentDraft.qrKey='';if(file)viewQrUrl=URL.createObjectURL(file);
+ if(payRead('qr-name'))payRead('qr-name').textContent=paymentDraft.qrName||'请上传收款二维码图片';renderQrPreview();
+}
+async function renderQrPreview(){
+ const el=payRead('qr-preview');if(!el)return;
+ if(paymentQr){if(!viewQrUrl)viewQrUrl=URL.createObjectURL(paymentQr);el.innerHTML='<img alt="本次收款二维码预览" src="'+esc(viewQrUrl)+'">';return;}
+ if(paymentDraft.qrKey){const key=paymentDraft.qrKey;try{const file=await tripAttachment('readonly',s=>s.get(key));if(!el.isConnected||paymentDraft.qrKey!==key)return;if(file){viewQrUrl=URL.createObjectURL(file);el.innerHTML='<img alt="已保存收款二维码预览" src="'+esc(viewQrUrl)+'">';}else el.textContent='当前浏览器未找到图片，请重新上传';}catch{el.textContent='二维码读取失败，请重新上传';}}
+}
+async function showPaymentQr(key){try{const file=await tripAttachment('readonly',s=>s.get(key));if(!file)return toast('当前浏览器没有该二维码图片');if(viewQrUrl)URL.revokeObjectURL(viewQrUrl);viewQrUrl=URL.createObjectURL(file);const el=payRead('receiptQr');if(el)el.innerHTML='<img alt="申请提交时收款二维码" src="'+esc(viewQrUrl)+'">';}catch(e){toast(e.message);}}
+// Existing archives only. No quick creation or monthly-tour creation from payment entry.
+payArchiveMatches=function(t,d){return t.archiveKind!=='monthly'&&(t.category||'DZ')===d.business&&(!d.owner||t.owner===d.owner||(!t.owner&&'部门:'+t.dep===d.owner))&&(!d.platform||t.platform===d.platform)&&(!d.product||t.product===d.product);};
+payArchiveOptions=function(d=paymentDraft){
+ const rows=db.trips.filter(t=>payArchiveMatches(t,d)).sort((a,b)=>(b.departureDate||'').localeCompare(a.departureDate||''));const groups=new Map();
+ for(const t of rows){const g=t.departureDate?.slice(0,7)||'无出行日期';if(!groups.has(g))groups.set(g,[]);groups.get(g).push(t);}
+ return '<option value="">请选择已建团号</option>'+[...groups].map(([g,rows])=>`<optgroup label="${esc(g)}">${rows.map(t=>`<option value="${esc(tripReference(t))}" ${d.tripRef===tripReference(t)?'selected':''}>${esc(t.id+' · '+(t.name||t.dest)+' · '+(t.externalOrder||'')+' · '+(t.departureDate||''))}</option>`).join('')}</optgroup>`).join('');
+};
+const oldPaySet=paySet;
+paySet=function(key,value,redraw=false){
+ const d=paymentDraft;if(key==='type'){paymentQr=null;if(viewQrUrl){URL.revokeObjectURL(viewQrUrl);viewQrUrl=null;}}oldPaySet(key,value,false);
+ if(key==='tripRef'){const t=costTrip(db,value);paymentDraft.orderNo=t?.externalOrder||'';paymentDraft.month='';}
+ if(key==='fee'&&d.fee==='客户退款')paymentDraft.costId='';
+ if(redraw)render();
+};
+paymentPage=function(){
+ payMigrate(db);const d=paymentDraft,fee=d.fee.split('|').at(-1),business=d.type==='业务付款',platform=business&&['COTA','OVERSEAS'].includes(d.business),sensitive=d.type==='员工薪酬'&&!paymentCanSensitive(),transfer=d.type==='资金往来'&&fee==='内部资金调拨';
+ if(!paymentCanCreate())return '<div class="panel">请切换操作、销售或财务角色填写付款申请。</div>';
+ return `<div class="panel"><div class="panelhead"><div><h3>付款申请</h3><p class="note">先建档，再提付款 · 供应商未入库只提醒 · 收款资料按方式填写</p></div><span class="tag">付款</span></div><form id="paymentForm" class="grid" novalidate onsubmit="submitApp(event)">
+ ${paySelect('type','付款类型 *',payNamed(PAYMENT_TYPES),true)}<label>公司主体（选填）<select id="p-company" onchange="paymentDraft.company=this.value">${tripOptions(payNamed(COMPANY_OPTIONS)).replace('value="'+d.company+'"','value="'+d.company+'" selected')}</select><small class="note">合同签署主体</small></label>
+ ${business?paySelect('business','业务类别 *',Object.entries(PAYMENT_BUSINESSES),true):''}${paySelect('owner',business?'归属部门／项目 *':'承担部门／项目 *',OWNER_ENTRIES,true)}
+ ${platform?paySelect('platform','平台 *',Object.entries(d.business==='OVERSEAS'?OVERSEAS_PLATFORMS:TRIP_PLATFORMS),true)+paySelect('product','业务项目 *',Object.entries(d.business==='OVERSEAS'?OVERSEAS_PRODUCTS:TRIP_PRODUCTS),true):''}
+ ${business?`<label class="wide">关联已建团号 *<select id="p-tripRef" onchange="paySet('tripRef',this.value,true)">${payArchiveOptions()}</select><small class="note">按出行日期分组，支持搜索团号、名称及平台订单号。找不到团号请先完成建档。</small></label>${d.tripRef?'<div class="wide archive-hint">'+esc(costTrip(db,d.tripRef)?.departureDate||'')+' · '+esc(costTrip(db,d.tripRef)?.name||'')+(d.orderNo?' · 平台订单号 '+esc(d.orderNo):'')+'</div>':''}`:payInput('period',d.type==='税费缴纳'?'税款所属期 *':d.type==='员工薪酬'?'薪酬所属月份 *':'费用所属月份／期间 *',d.type==='税费缴纳'?'text':'month')}
+ <label class="wide">${d.type==='员工薪酬'?'薪酬项目':d.type==='税费缴纳'?'税种':d.type==='资金往来'?'往来类别':'费用类别'} *<select id="p-fee" onchange="paySet('fee',this.value,true)"><option value="">请选择</option>${payFeeEntries(d)}</select>${PAYMENT_FEE_HINTS[fee]?'<small class="note">'+esc(PAYMENT_FEE_HINTS[fee])+'</small>':''}</label>
+ ${business?payCostFields():''}
+ ${fee==='客户退款'?payInput('originalRef','原收款编号 *')+payInput('originalAmount','原收款金额（人民币） *','number')+payInput('refundReason','退款原因 *'):''}
+ ${d.type==='管销付款'?`<details class="wide"><summary>关联平台／项目（选填）</summary><div class="grid">${paySelect('platform','相关平台',Object.entries({...TRIP_PLATFORMS,...OVERSEAS_PLATFORMS}),true)}${payInput('product','相关项目')}</div></details>`:''}
+ ${d.type==='员工薪酬'?(sensitive?'<p class="wide banner">薪酬属于敏感信息，请切换财务角色进行提报。</p>':payInput('staff','员工／薪酬批次 *')+paySelect('payrollDepartment','核算归属 *',payNamed(['业务人工成本','销售人员薪酬','管理人员薪酬']))+(['社会保险费','住房公积金'].includes(fee)?payInput('unitShare','单位承担金额 *','number')+payInput('personalShare','个人代扣金额 *','number'):'')+(fee==='业务提成'?payInput('originalRef','提成依据档案／核对记录编号 *'):'')):''}
+ ${d.type==='资金往来'&&fee==='归还借款本金'?payInput('originalRef','原借款编号／依据 *'):''}
+ ${d.type==='资金往来'&&['借出款','平台保证金','押金及其他保证金'].includes(fee)?payInput('returnDate','预计收回日期 *','date')+payInput('returnTerms','归还／退还条件 *'):''}
+ ${transfer?paySelect('sourceAccount','转出账户 *',payNamed(['模拟公司银行账户','模拟公司支付账户']))+paySelect('targetAccount','转入账户 *',payNamed(['模拟公司银行账户','模拟公司支付账户'])):''}
+ <label class="wide">用途／备注 *<textarea id="p-note" oninput="paymentDraft.note=this.value">${esc(d.note)}</textarea></label>${payInput('amount','本次申请金额 *','number')}${paySelect('currency','币种 *',payNamed(['CNY','USD','EUR','JPY','HKD']),true)}${d.currency!=='CNY'?payInput('rate','折算汇率 *','number','1原币折多少人民币，用于模拟核对。'):''}
+ ${transfer?'':supplierFields()}
+ <label class="wide">付款依据 *<input id="p-basis" type="file" onchange="payBasisChanged(this.files[0])"><span id="p-basisLabel" class="note">${esc(d.basisName||'未上传附件')}</span><span class="note"><input id="p-demo" type="checkbox" style="width:auto" ${d.demoBasis?'checked':''} onchange="paymentDraft.demoBasis=this.checked"> 使用演示依据（虚构）</span></label>
+ ${paySelect('invoice','发票状态',payNamed(['已取得','待取得','按规则无需']))}${business&&fee!=='客户退款'?paySelect('advance','是否未收款先垫款',payNamed(['否','是']),true)+(d.advance==='是'?payInput('cancel','最晚取消时间 *','datetime-local'):''):''}
+ <div class="wide" id="p-check"></div><div class="wide" id="p-errors" role="alert"></div><div class="wide actions"><button type="submit" ${sensitive?'disabled':''}>提交付款审批</button><button type="button" class="alt" onclick="savePaymentDraft()">保存草稿</button><button type="button" class="alt" onclick="paymentDraft=payNew();paymentBasis=null;paymentQr=null;go('概览')">取消并退出</button></div></form></div>${payDraftList()}`;
+};
+const inheritedValidate=paymentValidate;
+paymentValidate=function(d,data){
+ const fee=d.fee.split('|').at(-1),transfer=d.type==='资金往来'&&fee==='内部资金调拨',legacy={...d,due:'not-applicable',company:d.company||'选填',recipient:'由收款方式校验',channel:d.channel||'方式待选',payee:d.payee||'由条件字段校验',month:'not-applicable'};
+ // Base validation's monthly special case is obsolete; validate overseas archive as a per-order business.
+ const maskedData={...data,trips:data.trips.map(t=>({...t,category:t.category==='OVERSEAS'?'COTA':t.category}))};
+ let errors;
+ if(d.type==='业务付款'&&d.business==='OVERSEAS'){
+  const dummyPlatform=Object.keys(TRIP_PLATFORMS)[0],dummyProduct=Object.keys(TRIP_PRODUCTS)[0];
+  const t=costTrip(data,d.tripRef);legacy.business='COTA';legacy.platform=dummyPlatform;legacy.product=dummyProduct;legacy.orderNo=t?.externalOrder||'待校验';
+  maskedData.trips=maskedData.trips.map(x=>x.uid===t?.uid?{...x,platform:dummyPlatform,product:dummyProduct}:x);
+  errors=inheritedValidate(legacy,maskedData);
+  if(!OVERSEAS_PLATFORMS[d.platform]||!OVERSEAS_PRODUCTS[d.product])errors.push('请选择海外平台及业务项目');
+  if(t&&!payArchiveMatches(t,d))errors.push('团档与当前业务条件不一致');
+ }else{legacy.orderNo=d.type==='业务付款'?costTrip(data,d.tripRef)?.externalOrder||d.orderNo:d.orderNo;errors=inheritedValidate(legacy,data);}
+ if(d.type==='员工薪酬'&&fee==='业务提成'&&data.settlements?.some(x=>x.id===d.originalRef&&['confirmed','locked'].includes(x.status)))errors=errors.filter(x=>x!=='提成须关联已有业务或月度档案');
+ if(d.company&&!COMPANY_OPTIONS.includes(d.company))errors.push('请选择有效公司主体或留空');
+ if(d.type==='业务付款'){
+  const t=costTrip(data,d.tripRef);if(t?.archiveKind==='monthly')errors.push('付款必须关联独立团档，不能使用月度汇总档案');
+  if(t&&fee!=='客户退款'&&!t.costConfirmed)errors.push('请先在建档模块确认预算成本，再申请付款');
+  if(t&&!t.departureDate)errors.push('请先补齐团档出行日期');
+ }
+ if(!transfer){
+  if(!RECEIPT_METHODS.includes(d.channel))errors.push('请选择收款方式');
+  if(['公账收款','私账收款'].includes(d.channel)){for(const [key,label]of [['payee','收款人／收款单位'],['bank','银行名称'],['card','银行卡号']])if(!String(d[key]||'').trim())errors.push('请填写'+label);}
+  if(d.channel==='二维码收款'&&!d.qrName)errors.push('请上传收款二维码图片');
+ }
+ return [...new Set(errors)];
+};
+async function persistQr(){if(paymentQr){const key='qr:'+paymentDraft.draftId;await tripAttachment('readwrite',s=>s.put(paymentQr,key));paymentDraft.qrKey=key;}}
+const inheritedSaveDraft=savePaymentDraft;
+savePaymentDraft=async function(){try{await persistQr();await inheritedSaveDraft();}catch(e){payError(['二维码保存失败：'+e.message]);}};
+const inheritedSubmit=submitApp;
+submitApp=async function(e){
+ if(!payRead('paymentForm'))return inheritedSubmit(e);e.preventDefault();if(paymentBusy)return;
+ const errors=paymentValidate(paymentDraft,db);if(errors.length)return payError(errors);
+ try{await persistQr();const d=paymentDraft;
+  if(d.channel==='二维码收款'&&(!d.qrKey||!(await tripAttachment('readonly',s=>s.get(d.qrKey)))))return payError(['当前浏览器未找到二维码，请重新上传图片']);
+  if(d.channel!=='二维码收款'){d.qrKey='';d.qrName='';}else{d.bank='';d.card='';}
+  const supplier=currentSupplier();d.vendor=supplier?.name||d.supplierName?.trim()||'未关联供应商';d.supplierWarning=supplierFlag(d);
+  const profile=supplier?.profiles.find(p=>p.id===d.profileId);d.receiptChanged=!!supplier&&(!profile||['method','payee','bank','card','qrKey'].some(k=>(profile[k]||'')!==(d[k==='method'?'channel':k]||'')));
+  d.receiptSnapshot={supplierId:supplier?.id||null,supplierName:d.vendor,profileId:d.profileId||null,method:d.channel,payee:d.payee,bank:d.bank,card:d.card,qrKey:d.qrKey,qrName:d.qrName,changed:d.receiptChanged,at:costTime()};
+  d.recipient=d.channel==='二维码收款'?'二维码图片：'+d.qrName:d.bank+' / '+d.card;
+  await inheritedSubmit(e);paymentQr=null;
+ }catch(error){payError([error.message]);}
+};
+const inheritedCheck=checkPayment;
+checkPayment=function(a,data=db){const check=inheritedCheck(a,data);if(a.schema===3){check.messages=[...check.messages];if(a.supplierWarning)check.messages.push(a.supplierWarning+'（不拦截）');if(a.receiptChanged)check.messages.push('本次收款资料不同于库内资料，请审核人核对。');}return check;};
+const inheritedRefreshCheck=payRefreshCheck;
+payRefreshCheck=function(){inheritedRefreshCheck();const el=payRead('p-check');if(el)el.insertAdjacentHTML('beforeend','<p class="note">'+esc(supplierFlag(paymentDraft))+'；未入库不影响提交，收款资料仍须完整。</p>');};
+const inheritedDetail=newPaymentDetail;
+newPaymentDetail=function(a){
+ let html=inheritedDetail(a);html=html.replace(/ · 期望付款日期：[\s\S]*?<\/p>/,'</p>');
+ const snap=a.receiptSnapshot;
+ if(snap){const extra=`<section class="receipt-section"><h3>提交时收款资料</h3><p>${esc(snap.method)} · ${esc(a.supplierWarning||'')}</p>${snap.method==='二维码收款'?`<button type="button" class="alt" onclick="showPaymentQr('${esc(snap.qrKey)}')">查看二维码图片</button><div id="receiptQr" class="qr-preview"></div>`:`<p>收款人／单位：${esc(snap.payee)}<br>银行：${esc(snap.bank)}<br>银行卡号：${esc(snap.card)}</p>`}${snap.changed?'<p class="risk">收款资料与库内记录不同，请核对。</p>':''}<p class="note">申请保留提交时快照，供应商库后续修改不回写此记录。</p></section>`;html=html.replace('<h3>申请轨迹</h3>',extra+'<h3>申请轨迹</h3>');}
+ html=html.replace('<div class="payment-facts">','<div class="payment-facts"><p>合同签署主体：'+esc(a.company||'未填写（选填）')+'</p>');return html;
+};
+// All archives are created in the dedicated archive module, with confirmed budgets before procurement.
+function archivePageV2(){return `<div class="panel"><h3>新建业务团档</h3>${tripForm()}</div><div class="panel"><h3>已有团档</h3><p class="note">逐团／逐单预算、付款与提成依据；平台月度结算在“平台结算核对”中处理。</p><div id="savedCosts"></div><div class="table-scroll"><table><tr><th>团号／名称</th><th>业务类别／平台</th><th>出行日期</th><th>预算成本</th><th>操作</th></tr>${db.trips.filter(t=>t.archiveKind!=='monthly').slice().sort((a,b)=>(b.departureDate||'').localeCompare(a.departureDate||'')).map(t=>`<tr><td>${esc(t.id)}<div class="note">${esc(t.name||t.dest)}</div></td><td>${esc(PAYMENT_BUSINESSES[t.category]||'定制团')}<div class="note">${esc(OVERSEAS_PLATFORMS[t.platform]||TRIP_PLATFORMS[t.platform]||'')}${t.externalOrder?' / '+esc(t.externalOrder):''}</div></td><td>${esc(t.departureDate||'待补齐')}</td><td>${t.costConfirmed?'V'+t.costVersion+' · ¥'+money(t.budget):'待确认'}</td><td><button class="alt" onclick="showTripCosts('${esc(t.id)}')">成本／版本</button><button class="alt" onclick="chooseTripForPayment('${esc(tripReference(t))}')">提付款</button></td></tr>`).join('')||'<tr><td colspan="5">暂无团档。先在上方建档，或从概览载入虚构测试团档。</td></tr>'}</table></div></div>`;}
+function chooseTripForPayment(ref){const t=costTrip(db,ref);if(!t)return;paymentDraft={...payNew(),type:'业务付款',business:t.category||'DZ',owner:t.owner||'部门:'+t.dep,platform:t.platform||'',product:t.product||'',tripRef:tripReference(t),orderNo:t.externalOrder||''};go('申请付款');}
+seedApp=async function(){
+ await costMutate(data=>{payMigrate(data);for(const [i,category,dep,date]of [[1,'DZ','综合定制部','2026-09-15'],[2,'OVERSEAS','电商部','2026-09-20'],[3,'OVERSEAS','电商部','2026-10-02']]){
+  const id='DEMO-'+category+'-'+String(i).padStart(2,'0');if(data.trips.some(t=>t.id===id))continue;
+  const t={id,uid:costUid(),name:'虚构测试团 '+i,category,dep,owner:'部门:'+dep,archiveKind:'single',departureDate:date,dest:'演示目的地',sales:'示例销售员',operatorA:'江婧婕',operatorB:'示例操作员',budget:1000,costConfirmed:true,costVersion:1,file:'虚构测试预算（无原文件）',costItems:[{id:costUid(),category:'交通',name:'虚构交通预算',amount:1000,include:true,source:'虚构测试数据'}]};
+  if(category==='OVERSEAS')Object.assign(t,{platform:'VIA',product:'RJT',externalOrder:'VIA-DEMO-'+i});data.trips.push(t);
+ }costMigrate(data);costAudit(data,'载入虚构测试团档，未创建付款或收款');});render();toast('已载入3个虚构测试团档，可重复点击，不重复建档');
+};
+// Monthly settlement is a reconciliation record, never a tour archive or an automatic commission.
+let settlementDraft={id:'',owner:'',platform:'',product:'RJT',month:'',reference:'',receivedDate:'',currency:'CNY',net:'',deductions:'0',reason:'',selected:{},version:0};
+function settlementReset(){settlementDraft={id:'',owner:'',platform:'',product:'RJT',month:'',reference:'',receivedDate:'',currency:'CNY',net:'',deductions:'0',reason:'',selected:{},version:0};}
+function settlementScopeChange(key,value){settlementDraft[key]=value;settlementDraft.selected={};render();}
+function settlementCandidate(data,d){return data.trips.filter(t=>t.archiveKind!=='monthly'&&t.category==='OVERSEAS'&&t.owner===d.owner&&t.platform===d.platform&&t.product===d.product).sort((a,b)=>(b.departureDate||'').localeCompare(a.departureDate||''));}
+function settlementTotals(d){const gross=Object.values(d.selected).reduce((s,v)=>s+payCents(v||0),0),net=payCents(d.net||0),deductions=payCents(d.deductions||0);return {gross:gross/100,net:net/100,deductions:deductions/100,difference:(gross-net-deductions)/100};}
+function settleSummary(){const el=payRead('settleTotals');if(!el)return;const t=settlementTotals(settlementDraft);el.innerHTML=`<b>已选 ${Object.keys(settlementDraft.selected).length} 个团</b> · 归属金额 ${money(t.gross)} − 平台扣款 ${money(t.deductions)} − 实收 ${money(t.net)} ＝ 差额 <b>${money(t.difference)}</b><p class="note">金额均为本次结算币种。此处只做结算勾稽，不自动确认会计收入或计算提成。</p>`;}
+function settlementToggle(ref,on){if(on)settlementDraft.selected[ref]='';else delete settlementDraft.selected[ref];render();}
+function settlementValidate(d,data,confirm=false){
+ const errors=[];if(!OWNER_ENTRIES.some(([v])=>v===d.owner)||!OVERSEAS_PLATFORMS[d.platform]||d.product!=='RJT'||!/^\d{4}-(0[1-9]|1[0-2])$/.test(d.month))errors.push('请选择归属、海外平台、入境团项目和结算所属月份');
+ if(!d.reference.trim())errors.push('请填写平台结算单／收款核对编号');
+ if(!['CNY','USD','EUR','JPY','HKD'].includes(d.currency))errors.push('请选择有效结算币种');
+ const old=data.settlements.find(x=>x.id===d.id);if(old?.status==='locked')errors.push('该记录已锁定，须走调整流程，不能直接修改');
+ if(old&&old.version!==d.version)errors.push('核对记录已被其他页面更新，请重新打开');
+ if(confirm){
+  if(!d.receivedDate)errors.push('请填写实际收款日期');
+  if(!Number.isFinite(+d.net)||+d.net<=0||!Number.isFinite(+d.deductions)||+d.deductions<0)errors.push('实收须大于0，扣款合计不可为负数');
+  if(!Object.keys(d.selected).length)errors.push('请点选本次结算收入对应的团档');
+  const candidates=new Set(settlementCandidate(data,d).map(tripReference));
+  for(const [ref,amount]of Object.entries(d.selected))if(!candidates.has(ref)||amount===''||!Number.isFinite(+amount)||+amount<=0)errors.push('请核对所选团档范围，并为每个团填写正数归属金额');
+  if(settlementTotals(d).difference!==0)errors.push('归属金额减扣款须等于实收，请核对平台结算单');
+  if(+d.deductions>0&&!d.reason.trim())errors.push('存在平台扣款时请说明佣金／手续费／退款等构成');
+  if(data.settlements.some(x=>x.id!==d.id&&['confirmed','locked'].includes(x.status)&&x.owner===d.owner&&x.platform===d.platform&&x.reference.trim()===d.reference.trim()))errors.push('该平台结算编号已有已确认记录，请勿重复计入');
+ }
+ return [...new Set(errors)];
+}
+function settlementPage(){
+ payMigrate(db);if(!activeRole.startsWith('财务')&&!activeRole.startsWith('总经理'))return '<div class="panel"><h3>平台结算核对</h3><p>请切换财务角色点选平台结算收入对应的团档。</p><p class="note">单团付款与平台月度结算分开；此处不生成旅游团号。</p></div>';
+ const d=settlementDraft,editable=activeRole.startsWith('财务'),candidates=settlementCandidate(db,d);
+ const options=(list,value)=>tripOptions(list).replace('value="'+value+'"','value="'+value+'" selected');
+ return `<div class="panel"><div class="panelhead"><h3>海外平台入境团 · 月度结算核对</h3><span class="tag">财务点选，不建月度团号</span></div><p class="note">先选择结算范围，再勾选收入对应的团档。候选不限出行月份；9月出行的团可关联10月平台结算。</p><form id="settlementForm" class="grid" novalidate onsubmit="saveSettlement(event,true)">
+ <label>归属部门／项目 *<select id="s-owner" onchange="settlementScopeChange('owner',this.value)">${options(OWNER_ENTRIES,d.owner)}</select></label><label>平台 *<select id="s-platform" onchange="settlementScopeChange('platform',this.value)">${options(Object.entries(OVERSEAS_PLATFORMS),d.platform)}</select></label><label>业务项目<input disabled value="入境团 RJT"></label>
+ <label>平台结算所属月份 *<input id="s-month" type="month" value="${esc(d.month)}" oninput="settlementDraft.month=this.value"></label><label>平台结算单／收款核对编号 *<input id="s-reference" value="${esc(d.reference)}" oninput="settlementDraft.reference=this.value"></label><label>实际收款日期 *<input id="s-date" type="date" value="${esc(d.receivedDate)}" oninput="settlementDraft.receivedDate=this.value"></label>
+ <label>结算币种<select id="s-currency" onchange="settlementDraft.currency=this.value">${options(payNamed(['CNY','USD','EUR','JPY','HKD']),d.currency)}</select></label><label>平台实收金额 *<input id="s-net" type="number" min="0" step="0.01" value="${esc(d.net)}" oninput="settlementDraft.net=this.value;settleSummary()"></label><label>平台扣款合计<input id="s-deductions" type="number" min="0" step="0.01" value="${esc(d.deductions)}" oninput="settlementDraft.deductions=this.value;settleSummary()"></label>
+ <label class="wide">核对备注／扣款构成<input id="s-reason" value="${esc(d.reason)}" oninput="settlementDraft.reason=this.value" placeholder="如佣金、手续费、退款；请逐项核对平台结算资料"></label>
+ <div class="wide table-scroll"><table><tr><th>选择</th><th>团号／订单</th><th>出行日期</th><th>本次收入归属金额</th><th>其他结算关联</th></tr>${candidates.map(t=>{const ref=tripReference(t),selected=Object.hasOwn(d.selected,ref),prior=db.settlements.filter(s=>s.id!==d.id&&s.allocations?.some(a=>a.tripRef===ref)&&s.status!=='draft');return `<tr><td><input type="checkbox" aria-label="选择 ${esc(t.id)}" ${selected?'checked':''} onchange="settlementToggle('${esc(ref)}',this.checked)"></td><td>${esc(t.id)}<div class="note">${esc(t.name||t.dest)} / ${esc(t.externalOrder||'')}</div></td><td>${esc(t.departureDate)}</td><td>${selected?`<input type="number" aria-label="${esc(t.id)}归属金额" min="0" step="0.01" value="${esc(d.selected[ref])}" oninput="settlementDraft.selected['${esc(ref)}']=this.value;settleSummary()">`:'勾选后填写'}</td><td>${prior.length?'<span class="risk">已有关联：'+prior.map(s=>esc(s.month+' / '+s.reference)).join('；')+'，请核对是否分次结算</span>':'暂无'}</td></tr>`;}).join('')||'<tr><td colspan="5">选择范围后显示已建入境团。无团档时先在建档模块建立。</td></tr>'}</table></div>
+ <div id="settleTotals" class="wide archive-hint"></div><div id="settleError" role="alert" class="wide"></div><div class="actions wide">${editable?'<button type="submit">确认收入与团档关联</button><button type="button" class="alt" onclick="saveSettlement(event,false)">保存核对草稿</button>':''}<button type="button" class="alt" onclick="settlementReset();render()">新建／清空填写</button></div></form></div>
+ <div class="panel"><h3>月度核对记录</h3><div class="table-scroll"><table><tr><th>结算月份／平台</th><th>结算编号</th><th>关联团数</th><th>状态</th><th>操作</th></tr>${db.settlements.map(s=>`<tr><td>${esc(s.month)} / ${esc(OVERSEAS_PLATFORMS[s.platform])}</td><td>${esc(s.reference)}</td><td>${s.allocations.length}</td><td>${s.status==='locked'?'已锁定提成核对依据':s.status==='confirmed'?'已确认关联':'未完成核对（草稿）'}</td><td><button class="alt" onclick="openSettlement('${s.id}')">查看／继续</button>${editable&&s.status==='confirmed'?` <button class="alt" onclick="lockSettlement('${s.id}')">锁定核对依据</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5">暂无结算核对记录</td></tr>'}</table></div><div id="settlementHistory"></div><p class="note">本轮不自动计算提成、不做银行入账；锁定表示本记录不可直接覆盖，不代表提成已支付。跨月分次分配的累计上限及调整审批规则待定。</p></div>`;
+}
+async function saveSettlement(event,confirm){
+ event?.preventDefault();if(settlementBusy||!activeRole.startsWith('财务'))return;const d=costClone(settlementDraft);settlementBusy=true;
+ try{let id;await costMutate(data=>{payMigrate(data);const errors=settlementValidate(d,data,confirm);if(errors.length)throw Error(errors.join('；'));let s=data.settlements.find(s=>s.id===d.id);if(!s){s={id:'SET-'+costUid(),version:0,history:[]};data.settlements.push(s);}s.history.push({at:costTime(),actor:activeRole,action:confirm?'确认团档关联':'保存核对草稿',before:s.version?costClone({month:s.month,reference:s.reference,allocations:s.allocations,status:s.status}):null});Object.assign(s,{owner:d.owner,platform:d.platform,product:'RJT',month:d.month,reference:d.reference.trim(),receivedDate:d.receivedDate,currency:d.currency,net:+d.net||0,deductions:+d.deductions||0,reason:d.reason,allocations:Object.entries(d.selected).map(([tripRef,amount])=>({tripRef,amount:+amount||0})),status:confirm?'confirmed':'draft',version:s.version+1});id=s.id;costAudit(data,(confirm?'确认':'保存')+'平台月度结算核对 '+s.id);});settlementReset();render();toast(confirm?'关联已确认，可作为提成核对依据':'核对草稿已保存');}catch(e){const el=payRead('settleError');if(el)el.innerHTML='<p class="banner risk">'+esc(e.message)+'</p>';toast(e.message);}finally{settlementBusy=false;}
+}
+function openSettlement(id){const s=db.settlements.find(x=>x.id===id);if(!s)return;
+ if(s.status==='locked'){const el=payRead('settlementHistory');el.innerHTML=`<div class="change-detail"><h3>已锁定 · ${esc(s.reference)}</h3><p>${esc(s.month)} · 实收 ${esc(s.currency)} ${money(s.net)} · 扣款 ${money(s.deductions)}</p>${s.allocations.map(a=>'<p>'+esc(costTrip(db,a.tripRef)?.id||a.tripRef)+' · '+money(a.amount)+'</p>').join('')}<p class="risk">已锁定，不允许直接修改；后续须走调整流程。</p></div>`;return;}
+ settlementDraft={...costClone(s),selected:Object.fromEntries(s.allocations.map(a=>[a.tripRef,String(a.amount)]))};render();
+}
+async function lockSettlement(id){
+ if(!activeRole.startsWith('财务'))return;try{await costMutate(data=>{const s=data.settlements.find(x=>x.id===id);if(!s||s.status!=='confirmed')throw Error('状态已变化，请重新查看');s.status='locked';s.version++;s.history.push({at:costTime(),actor:activeRole,action:'锁定提成核对依据'});costAudit(data,'锁定平台核对 '+id);});render();toast('已锁定；不代表提成已支付');}catch(e){toast(e.message);}
+}
+// Only current routes are reachable; no quick-archive or monthly-tour UI is rendered.
+render=function(){
+ payMigrate(db);const requested=page;
+ if(['申请付款','团档案','平台结算核对'].includes(page)||(page==='审批与付款'&&db.apps.find(a=>a.id===selected)?.schema===3)){
+  page='概览';paymentPriorRender();page=requested;payRead('title').textContent=page;
+  if(page==='申请付款'){payRead('app').innerHTML=paymentPage();payRefreshCheck();renderQrPreview();}
+  else if(page==='团档案'){payRead('app').innerHTML=archivePageV2();if(canCreateTrip()){updateDestinations();updateTripCategory();renderImport();}}
+  else if(page==='平台结算核对'){payRead('app').innerHTML=settlementPage();settleSummary();}
+  else payRead('app').innerHTML='<div class="panel"><h3>申请列表</h3>'+paymentTable()+'</div>'+newPaymentDetail(db.apps.find(a=>a.id===selected));
+ }else{
+  paymentPriorRender();
+  if(page==='概览'){const panels=payRead('app').querySelectorAll('.panel');panels[panels.length-1].innerHTML='<h3>最近付款申请</h3>'+paymentTable();}
+  if(page==='审批与付款'&&!db.apps.find(a=>a.id===selected))payRead('app').innerHTML='<div class="panel"><h3>申请列表</h3>'+paymentTable()+'</div>';
+ }
+ payRead('nav').innerHTML=['概览','团档案','成本变更','申请付款','审批与付款','平台结算核对','待办与记录'].map(x=>`<button class="${page===x?'active':''}" onclick="go('${x}')">${x}</button>`).join('');
+ const role=payRead('role');role.onchange=function(){if(costEditor)discardCostEditor();activeRole=this.value;paymentDraft=payNew();paymentBasis=null;paymentQr=null;settlementReset();db=costReadLatest();render();};
+};
+const v2LoadDraft=loadPaymentDraft;
+loadPaymentDraft=function(id){paymentQr=null;v2LoadDraft(id);};
+// Reset obsolete archive mode before navigating; existing cost-editor exit behavior remains intact.
+go=function(next){archiveMode='full';if(costEditor&&page==='成本变更'&&next!==page)discardCostEditor();if(page==='团档案'&&next!=='团档案'){importSerial++;costDraft=emptyCostDraft();}db=costReadLatest();page=next;render();};
 </script><script>render();</script><script>// Keep native values and change handlers as the single source of truth.
 (() => {
  let count=0;
